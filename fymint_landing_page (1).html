@@ -1,0 +1,2095 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fymint | Personal Finance, Financial Tools & Education Platform</title>
+    <meta name="description" content="fymint brings your income, expenses, budgets, savings, investments, and financial learning together in one clean, powerful personal finance platform.">
+    <meta name="theme-color" content="#1C0D2B">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        fymint: {
+                            purple: '#1C0D2B',
+                            purpleLight: '#2D1645',
+                            purpleDark: '#12081C',
+                            green: '#20B86B',
+                            greenHover: '#1A9B59',
+                            greenLight: '#E8F8F0',
+                            gold: '#D4AF37',
+                            goldLight: '#FDF8E8',
+                            bg: '#F8F9FA',
+                            card: '#FFFFFF',
+                            border: '#E5E7EB',
+                            textMuted: '#6B7280'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px -2px rgba(28, 13, 43, 0.06)',
+                        'card': '0 10px 30px -5px rgba(28, 13, 43, 0.08)',
+                        'floating': '0 20px 40px -10px rgba(28, 13, 43, 0.15)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- FontAwesome Icons & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS for Range Sliders & Specific Enhancements -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FFFFFF;
+            color: #1F2937;
+            overflow-x: hidden;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F3F4F6;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #CBD5E1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94A3B8;
+        }
+
+        /* Styling range sliders */
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 6px;
+            background: #E5E7EB;
+            border-radius: 3px;
+            outline: none;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #20B86B;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(32, 184, 107, 0.4);
+            transition: all 0.2s ease;
+        }
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.15);
+            background: #1A9B59;
+        }
+
+        /* Advertisement space styles */
+        .ad-container {
+            border: 1px dashed #CBD5E1;
+            background-color: #F8FAFC;
+            border-radius: 0.5rem;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .ad-label {
+            position: absolute;
+            top: 4px;
+            right: 8px;
+            font-size: 10px;
+            letter-spacing: 0.05em;
+            color: #94A3B8;
+            font-weight: 600;
+        }
+
+        .tab-btn.active {
+            color: #20B86B;
+            border-bottom-color: #20B86B;
+        }
+
+        .badge-coming-soon {
+            background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+            color: #B45309;
+            border: 1px solid #FCD34D;
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-800 antialiased flex flex-col min-h-screen">
+
+    <!-- GLOBAL HEADER -->
+    <header class="sticky top-0 z-40 bg-fymint-purple text-white shadow-md transition-all duration-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                
+                <!-- Logo -->
+                <a href="#home" onclick="navigateTo('home')" class="flex items-center space-x-3 group">
+                    <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center p-2 border border-white/20 group-hover:bg-white/20 transition-all">
+                        <!-- fymint SVG Logo -->
+                        <svg viewBox="0 0 100 100" class="w-full h-full fill-current">
+                            <!-- Leaf dot over i in green -->
+                            <path d="M 50,15 C 65,15 75,25 75,40 C 75,60 50,85 50,85 C 50,85 25,60 25,40 C 25,25 35,15 50,15 Z" fill="#20B86B" />
+                            <path d="M 50,30 L 50,70 M 35,45 L 65,45" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-2xl font-black tracking-tight text-white">fymint<span class="text-fymint-green">.</span></span>
+                        <span class="text-[9px] uppercase tracking-widest text-fymint-gold font-semibold -mt-1">Technologies</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden md:flex items-center space-x-1 lg:space-x-6 text-sm font-medium">
+                    <a href="#home" onclick="navigateTo('home')" class="nav-link px-3 py-2 rounded-md hover:text-fymint-green transition-colors">Home</a>
+                    <a href="#blog" onclick="navigateTo('blog')" class="nav-link px-3 py-2 rounded-md hover:text-fymint-green transition-colors">Blog</a>
+                    <a href="#calculators" onclick="navigateTo('calculators')" class="nav-link px-3 py-2 rounded-md hover:text-fymint-green transition-colors">Calculators</a>
+                    <a href="#careers" onclick="navigateTo('careers')" class="nav-link px-3 py-2 rounded-md hover:text-fymint-green transition-colors">Careers</a>
+                    <a href="#about" onclick="navigateTo('about')" class="nav-link px-3 py-2 rounded-md hover:text-fymint-green transition-colors">About</a>
+                    <a href="#contact" onclick="navigateTo('contact')" class="nav-link px-3 py-2 rounded-md hover:text-fymint-green transition-colors">Contact</a>
+                </nav>
+
+                <!-- Desktop Header Actions -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <button onclick="openSearchModal()" class="p-2 text-gray-300 hover:text-white rounded-lg hover:bg-white/10 transition-colors" title="Search Platform">
+                        <i class="fa-solid fa-magnifying-glass text-lg"></i>
+                    </button>
+                    <a href="#explore" onclick="navigateTo('home'); scrollToSection('pricing-section')" class="bg-fymint-green hover:bg-fymint-greenHover text-white px-5 py-2.5 rounded-xl font-semibold shadow-md transition-all hover:shadow-lg flex items-center space-x-2">
+                        <span>Explore fymint</span>
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </a>
+                </div>
+
+                <!-- Mobile Hamburger Button -->
+                <div class="flex items-center space-x-3 md:hidden">
+                    <button onclick="openSearchModal()" class="p-2 text-gray-200 hover:text-white">
+                        <i class="fa-solid fa-magnifying-glass text-lg"></i>
+                    </button>
+                    <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="p-2 rounded-lg text-gray-200 hover:text-white hover:bg-white/10 focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl" id="menu-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Drawer -->
+        <div id="mobile-menu" class="hidden md:hidden bg-fymint-purpleDark border-t border-white/10 px-4 pt-3 pb-6 space-y-2">
+            <a href="#home" onclick="navigateTo('home'); toggleMobileMenu()" class="block px-3 py-2.5 rounded-lg text-base font-medium text-white hover:bg-white/10">Home</a>
+            <a href="#blog" onclick="navigateTo('blog'); toggleMobileMenu()" class="block px-3 py-2.5 rounded-lg text-base font-medium text-white hover:bg-white/10">Blog & Insights</a>
+            <a href="#calculators" onclick="navigateTo('calculators'); toggleMobileMenu()" class="block px-3 py-2.5 rounded-lg text-base font-medium text-white hover:bg-white/10">Financial Calculators</a>
+            <a href="#careers" onclick="navigateTo('careers'); toggleMobileMenu()" class="block px-3 py-2.5 rounded-lg text-base font-medium text-white hover:bg-white/10">Careers</a>
+            <a href="#about" onclick="navigateTo('about'); toggleMobileMenu()" class="block px-3 py-2.5 rounded-lg text-base font-medium text-white hover:bg-white/10">About Us</a>
+            <a href="#contact" onclick="navigateTo('contact'); toggleMobileMenu()" class="block px-3 py-2.5 rounded-lg text-base font-medium text-white hover:bg-white/10">Contact</a>
+            <div class="pt-2">
+                <a href="#pricing-section" onclick="navigateTo('home'); scrollToSection('pricing-section'); toggleMobileMenu()" class="w-full bg-fymint-green text-white text-center py-3 rounded-xl font-semibold block">
+                    Explore fymint
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- TOP HEADER ADVERTISEMENT BANNER PLACEHOLDER -->
+    <div class="bg-fymint-bg py-2 border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="ad-container h-12 w-full text-xs text-gray-400">
+                <span class="ad-label">ADVERTISEMENT</span>
+                <span class="flex items-center space-x-2"><i class="fa-solid fa-rectangle-ad text-gray-300"></i><span>Sponsor Placeholder — AdSense Top Responsive Banner</span></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN APP CONTAINER (SPA ROUTER TARGET) -->
+    <main id="app-content" class="flex-grow">
+        <!-- Content dynamically injected via JS router -->
+    </main>
+
+    <!-- GLOBAL FOOTER -->
+    <footer class="bg-fymint-purple text-gray-300 border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12">
+                
+                <!-- Brand Column -->
+                <div class="lg:col-span-2 space-y-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center p-2 border border-white/20">
+                            <svg viewBox="0 0 100 100" class="w-full h-full fill-current">
+                                <path d="M 50,15 C 65,15 75,25 75,40 C 75,60 50,85 50,85 C 50,85 25,60 25,40 C 25,25 35,15 50,15 Z" fill="#20B86B" />
+                                <path d="M 50,30 L 50,70 M 35,45 L 65,45" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <span class="text-2xl font-black text-white">fymint<span class="text-fymint-green">.</span></span>
+                    </div>
+                    <p class="text-sm text-gray-400 leading-relaxed max-w-sm">
+                        fymint Technologies is a modern fintech and financial education platform empowering individuals to track money, calculate loans, plan investments, and improve their financial well-being.
+                    </p>
+                    <div class="flex items-center space-x-3 pt-2">
+                        <span class="w-2 h-2 rounded-full bg-fymint-green animate-pulse"></span>
+                        <span class="text-xs text-fymint-green font-medium">Platform Status: Active & Secured</span>
+                    </div>
+                </div>
+
+                <!-- Navigation Columns -->
+                <div>
+                    <h3 class="text-sm font-semibold text-white uppercase tracking-wider mb-4">Platform</h3>
+                    <ul class="space-y-2.5 text-sm">
+                        <li><a href="#home" onclick="navigateTo('home')" class="hover:text-fymint-green transition-colors">Home Page</a></li>
+                        <li><a href="#blog" onclick="navigateTo('blog')" class="hover:text-fymint-green transition-colors">Financial Blog</a></li>
+                        <li><a href="#calculators" onclick="navigateTo('calculators')" class="hover:text-fymint-green transition-colors">Calculators Hub</a></li>
+                        <li><a href="#careers" onclick="navigateTo('careers')" class="hover:text-fymint-green transition-colors">Careers at fymint</a></li>
+                        <li><a href="#about" onclick="navigateTo('about')" class="hover:text-fymint-green transition-colors">About Us</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-sm font-semibold text-white uppercase tracking-wider mb-4">Calculators</h3>
+                    <ul class="space-y-2.5 text-sm">
+                        <li><a href="#calculators" onclick="navigateTo('calculators', 'emi')" class="hover:text-fymint-green transition-colors">EMI Calculator</a></li>
+                        <li><a href="#calculators" onclick="navigateTo('calculators', 'sip')" class="hover:text-fymint-green transition-colors">SIP Return Calculator</a></li>
+                        <li><a href="#calculators" onclick="navigateTo('calculators', 'budget')" class="hover:text-fymint-green transition-colors">Monthly Budget Tool</a></li>
+                        <li><a href="#calculators" onclick="navigateTo('calculators', 'salary')" class="hover:text-fymint-green transition-colors">In-Hand Salary Calculator</a></li>
+                        <li><a href="#calculators" onclick="navigateTo('calculators', 'gst')" class="hover:text-fymint-green transition-colors">GST Calculator</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-sm font-semibold text-white uppercase tracking-wider mb-4">Legal & Regulatory</h3>
+                    <ul class="space-y-2.5 text-sm">
+                        <li><a href="#privacy" onclick="navigateTo('legal', 'privacy')" class="hover:text-fymint-green transition-colors">Privacy Policy</a></li>
+                        <li><a href="#terms" onclick="navigateTo('legal', 'terms')" class="hover:text-fymint-green transition-colors">Terms of Service</a></li>
+                        <li><a href="#disclaimer" onclick="navigateTo('legal', 'disclaimer')" class="hover:text-fymint-green transition-colors">Financial Disclaimer</a></li>
+                        <li><a href="#cookie" onclick="navigateTo('legal', 'cookie')" class="hover:text-fymint-green transition-colors">Cookie Policy</a></li>
+                        <li><a href="#contact" onclick="navigateTo('contact')" class="hover:text-fymint-green transition-colors">Support & Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Disclaimer Banner -->
+            <div class="mt-12 pt-8 border-t border-white/10">
+                <p class="text-xs text-gray-400 leading-relaxed text-justify">
+                    <strong class="text-gray-300">Educational Disclaimer:</strong> All tools, calculators, guides, and articles provided by fymint Technologies are strictly for educational and informational purposes. Results generated by calculations are based on mathematical formulas and user input, and do not constitute formal financial advice, credit decisions, or investment guarantees.
+                </p>
+                <div class="mt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500 space-y-4 sm:space-y-0">
+                    <p>© 2026 fymint Technologies. All rights reserved.</p>
+                    <p class="flex items-center space-x-1">
+                        <span>Made with precision for personal finance</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- GLOBAL SEARCH MODAL -->
+    <div id="search-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-start justify-center pt-16 sm:pt-24 px-4">
+        <div class="bg-white w-full max-w-2xl rounded-2xl shadow-floating border border-gray-100 overflow-hidden transform transition-all">
+            <div class="p-4 border-b border-gray-100 flex items-center space-x-3">
+                <i class="fa-solid fa-magnifying-glass text-fymint-purple text-lg"></i>
+                <input type="text" id="global-search-input" onkeyup="handleGlobalSearch(this.value)" placeholder="Search articles, calculators, career roles..." class="w-full text-gray-800 placeholder-gray-400 text-base focus:outline-none bg-transparent">
+                <button onclick="closeSearchModal()" class="text-gray-400 hover:text-gray-600 p-1">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+            <div id="search-results-container" class="max-h-96 overflow-y-auto p-4 divide-y divide-gray-100">
+                <div class="text-center py-8 text-gray-400 text-sm">
+                    Start typing to search across articles, financial tools, and open positions.
+                </div>
+            </div>
+            <div class="bg-gray-50 px-4 py-2.5 text-xs text-gray-400 flex items-center justify-between border-t border-gray-100">
+                <span>Press <kbd class="px-1.5 py-0.5 bg-gray-200 text-gray-700 rounded text-[10px]">ESC</kbd> to exit search</span>
+                <span>fymint Search Engine</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- CAREER APPLICATION DRAWER / MODAL -->
+    <div id="application-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-lg rounded-2xl shadow-floating border border-gray-100 overflow-hidden max-h-[90vh] flex flex-col">
+            <div class="p-5 bg-fymint-purple text-white flex items-center justify-between">
+                <div>
+                    <h3 id="app-modal-title" class="text-lg font-bold">Apply for Position</h3>
+                    <p id="app-modal-subtitle" class="text-xs text-fymint-gold mt-0.5">fymint Technologies Careers</p>
+                </div>
+                <button onclick="closeApplicationModal()" class="text-white/80 hover:text-white">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+            <form id="career-form" onsubmit="submitCareerApplication(event)" class="p-6 overflow-y-auto space-y-4 text-sm">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 uppercase mb-1">Full Name *</label>
+                    <input type="text" required placeholder="e.g. Rahul Sharma" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-fymint-green focus:border-transparent outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 uppercase mb-1">Email Address *</label>
+                    <input type="email" required placeholder="rahul@example.com" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-fymint-green focus:border-transparent outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 uppercase mb-1">Phone Number *</label>
+                    <input type="tel" required placeholder="+91 98765 43210" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-fymint-green focus:border-transparent outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 uppercase mb-1">Portfolio / LinkedIn URL</label>
+                    <input type="url" placeholder="https://linkedin.com/in/profile" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-fymint-green focus:border-transparent outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 uppercase mb-1">Cover Note / Why fymint? *</label>
+                    <textarea rows="3" required placeholder="Briefly describe your experience and interest..." class="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-fymint-green focus:border-transparent outline-none"></textarea>
+                </div>
+                <div class="pt-2">
+                    <button type="submit" class="w-full bg-fymint-green hover:bg-fymint-greenHover text-white py-3 rounded-xl font-semibold transition-colors shadow-md">
+                        Submit Application
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col space-y-2 pointer-events-none"></div>
+
+    <script>
+        /* ----------------------------------------------------
+           DATA STRUCTURES: ARTICLES, CALCULATORS, CAREERS
+           ---------------------------------------------------- */
+
+        // ARTICLES DATABASE
+        const ARTICLES_DATA = [
+            {
+                id: 'monthly-budget-guide',
+                slug: 'how-to-create-a-monthly-budget',
+                title: 'How to Create a Monthly Budget That Actually Works in 2026',
+                category: 'Budgeting',
+                readTime: '8 min read',
+                date: 'Sep 15, 2026',
+                author: 'Ananya Roy, Senior Financial Advisor',
+                summary: 'Master the 50/30/20 budget framework, eliminate unexpected overspending, and create a sustainable monthly strategy using fymint tools.',
+                featured: true,
+                content: `
+                    <p class="text-lg font-medium text-gray-700 leading-relaxed mb-6">Creating a personal budget isn't about restricting yourself or eliminating every joy from your lifestyle—it is about directing every single rupee with deliberate intention so that your future self is secure.</p>
+                    
+                    <h2 class="text-2xl font-bold text-fymint-purple mt-8 mb-4">Why Traditional Budgeting Fails</h2>
+                    <p class="mb-4">Most people fail at monthly budgeting because they start with overly rigid categories or attempt to track pennies manually without automation. When life throws an unexpected expense—such as a medical bill or auto repair—the budget breaks, leading to frustration and abandonment.</p>
+                    
+                    <div class="my-6 p-4 bg-fymint-greenLight border-l-4 border-fymint-green rounded-r-lg">
+                        <strong class="text-fymint-purple block font-semibold mb-1">Key Takeaway:</strong>
+                        <p class="text-sm text-gray-700">A budget must be flexible. Treat your budget as a living blueprint rather than an unchangeable prison rule.</p>
+                    </div>
+
+                    <h2 class="text-2xl font-bold text-fymint-purple mt-8 mb-4">The 50/30/20 Rule Simplified</h2>
+                    <p class="mb-4">One of the most effective personal finance frameworks is the 50/30/20 method:</p>
+                    <ul class="list-disc pl-6 space-y-2 mb-6 text-gray-700">
+                        <li><strong>50% Needs:</strong> Essential living expenses such as rent/home EMI, groceries, electricity, water, health insurance, and basic transport.</li>
+                        <li><strong>30% Wants:</strong> Lifestyle choices including dining out, subscriptions, hobbies, travel, and entertainment.</li>
+                        <li><strong>20% Savings & Debt Repayment:</strong> Emergency funds, SIPs, retirement investments, and paying off non-mortgage loans.</li>
+                    </ul>
+
+                    <h3 class="text-xl font-bold text-gray-800 mt-6 mb-3">Step-by-Step Implementation Strategy</h3>
+                    <ol class="list-decimal pl-6 space-y-3 mb-6 text-gray-700">
+                        <li><strong>Calculate Net Take-Home Salary:</strong> Base your calculations strictly on in-hand monthly income, not gross annual CTC.</li>
+                        <li><strong>Categorize Fixed Expenses:</strong> List non-negotiable monthly expenses that stay fixed month over month.</li>
+                        <li><strong>Automate Your Savings on Payday:</strong> Route your 20% savings into SIPs or high-yield accounts on the 1st of every month before spending on wants.</li>
+                        <li><strong>Review Weekly:</strong> Use fymint's Budget Calculator tool to track variance every Sunday.</li>
+                    </ol>
+
+                    <div class="my-8 overflow-x-auto">
+                        <table class="w-full text-left text-sm border-collapse border border-gray-200 rounded-lg">
+                            <thead>
+                                <tr class="bg-fymint-purple text-white">
+                                    <th class="p-3 border border-gray-300">Income Bracket (Monthly)</th>
+                                    <th class="p-3 border border-gray-300">Needs (50%)</th>
+                                    <th class="p-3 border border-gray-300">Wants (30%)</th>
+                                    <th class="p-3 border border-gray-300">Savings Target (20%)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b">
+                                    <td class="p-3 font-semibold">₹50,000</td>
+                                    <td class="p-3">₹25,000</td>
+                                    <td class="p-3">₹15,000</td>
+                                    <td class="p-3 text-fymint-green font-bold">₹10,000</td>
+                                </tr>
+                                <tr class="border-b bg-gray-50">
+                                    <td class="p-3 font-semibold">₹1,000,000</td>
+                                    <td class="p-3">₹50,000</td>
+                                    <td class="p-3">₹30,000</td>
+                                    <td class="p-3 text-fymint-green font-bold">₹20,000</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h2 class="text-2xl font-bold text-fymint-purple mt-8 mb-4">Frequently Asked Questions</h2>
+                    <div class="space-y-4 mb-8">
+                        <div class="border border-gray-200 rounded-xl p-4">
+                            <h4 class="font-bold text-gray-800">What if my needs exceed 50% of my income?</h4>
+                            <p class="text-sm text-gray-600 mt-1">If living costs in high-cost cities push needs to 60%, trim your "wants" section down to 20% while striving to protect your 20% savings goal.</p>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                id: 'emergency-fund-guide',
+                slug: 'emergency-fund-how-much-to-save',
+                title: 'Emergency Fund: How Much Money Should You Really Save?',
+                category: 'Saving',
+                readTime: '6 min read',
+                date: 'Sep 10, 2026',
+                author: 'Vikram Malhotra, Wealth Strategist',
+                summary: 'Learn how to calculate your safety net size, where to park emergency liquid cash, and how to protect your family from sudden income disruption.',
+                featured: false,
+                content: `
+                    <p class="text-lg font-medium text-gray-700 leading-relaxed mb-6">An emergency fund is the foundational cornerstone of personal finance. Without it, a job loss, medical emergency, or sudden home repair can force you into high-interest debt traps.</p>
+                    
+                    <h2 class="text-2xl font-bold text-fymint-purple mt-8 mb-4">How Much Is Enough?</h2>
+                    <p class="mb-4">The golden rule for emergency savings depends on your job stability and family dependencies:</p>
+                    <ul class="list-disc pl-6 space-y-2 mb-6 text-gray-700">
+                        <li><strong>Salaried Corporate Professionals:</strong> 3 to 6 months of mandatory living expenses.</li>
+                        <li><strong>Freelancers, Business Owners & Variable Income Earners:</strong> 9 to 12 months of mandatory living expenses.</li>
+                        <li><strong>Single Earners with Dependent Parents/Children:</strong> At least 6 to 9 months.</li>
+                    </ul>
+
+                    <h2 class="text-2xl font-bold text-fymint-purple mt-8 mb-4">Where Should You Store Emergency Funds?</h2>
+                    <p class="mb-4">Emergency money must prioritize <em>liquidity and safety</em> over high returns. Ideal parking spots include:</p>
+                    <ol class="list-decimal pl-6 space-y-2 mb-6 text-gray-700">
+                        <li>High-yield liquid savings accounts.</li>
+                        <li>Liquid mutual funds with instant redemption facilities.</li>
+                        <li>Short-term sweep-in Bank Fixed Deposits (FDs).</li>
+                    </ol>
+                `
+            },
+            {
+                id: 'reduce-expenses-guide',
+                slug: 'how-to-reduce-monthly-expenses',
+                title: 'How to Reduce Monthly Expenses Without Sacrificing Your Lifestyle',
+                category: 'Personal Finance',
+                readTime: '7 min read',
+                date: 'Sep 02, 2026',
+                author: 'Sneha Patel, Consumer Economist',
+                summary: 'Uncover micro-leaks in recurring subscriptions, optimize utility bills, and negotiate lower rates without feeling deprived.',
+                featured: false,
+                content: `
+                    <p class="text-lg font-medium text-gray-700 leading-relaxed mb-6">Cutting expenses doesn't mean eating instant noodles every night. Intelligent expense optimization targets hidden micro-drains and negotiated rates.</p>
+                    <h2 class="text-2xl font-bold text-fymint-purple mt-8 mb-4">1. Audit Recurring Subscriptions</h2>
+                    <p class="mb-4">Unused gym memberships, duplicate streaming services, and forgotten cloud storage trials quietly siphon thousands of rupees annually.</p>
+                    <h2 class="text-2xl font-bold text-fymint-purple mt-8 mb-4">2. The 48-Hour Impulse Rule</h2>
+                    <p class="mb-4">When contemplating any non-essential purchase exceeding ₹2,000, wait 48 hours. If the urge remains strong, evaluate it against your monthly savings goals.</p>
+                `
+            },
+            {
+                id: 'emi-explained-guide',
+                slug: 'emi-explained-how-loan-emi-works',
+                title: 'EMI Explained: How Loan Interest & Principal Breakdowns Work',
+                category: 'Credit & Loans',
+                readTime: '10 min read',
+                date: 'Aug 28, 2026',
+                author: 'Karan Mehta, Banking Analyst',
+                summary: 'Demystify loan amortization tables, reducing balance vs flat rates, and pre-payment strategies that save lakhs in interest.',
+                featured: true,
+                content: `
+                    <p class="text-lg font-medium text-gray-700 leading-relaxed mb-6">Equated Monthly Installments (EMIs) seem straightforward, but how banks structure principal versus interest in early repayment years can surprise borrowers.</p>
+                    <h2 class="text-2xl font-bold text-fymint-purple mt-8 mb-4">The Amortization Curve</h2>
+                    <p class="mb-4">In early loan years, over 70% of your monthly EMI payment goes towards interest costs. As principal drops, the interest component decreases and principal repayment accelerates.</p>
+                    <div class="p-4 bg-gray-50 border border-gray-200 rounded-xl my-6">
+                        <strong class="text-fymint-purple font-bold">Pro Tip:</strong> Making just one extra EMI prepayment per year on a 20-year home loan can reduce your tenure by nearly 4 years!
+                    </div>
+                `
+            },
+            {
+                id: 'sip-vs-fd-guide',
+                slug: 'sip-vs-fd-understanding-the-difference',
+                title: 'SIP vs FD: Understanding Risk, Returns, and Long-Term Wealth Building',
+                category: 'Investing',
+                readTime: '9 min read',
+                date: 'Aug 18, 2026',
+                author: 'Ananya Roy, Senior Financial Advisor',
+                summary: 'Compare Systematic Investment Plans in equity with Bank Fixed Deposits to determine the optimal allocation for your financial goals.',
+                featured: false,
+                content: `
+                    <p class="text-lg font-medium text-gray-700 leading-relaxed mb-6">Should you lock money in a guaranteed Fixed Deposit or invest monthly in Mutual Fund SIPs? The answer depends on your time horizon and inflation inflation rate.</p>
+                    <h2 class="text-2xl font-bold text-fymint-purple mt-8 mb-4">Fixed Deposits: Stability & Fixed Returns</h2>
+                    <p class="mb-4">FDs offer capital safety and predictable interest rates, making them suitable for short-term goals (< 3 years) and emergency reserves.</p>
+                    <h2 class="text-2xl font-bold text-fymint-purple mt-8 mb-4">SIPs: Rupee Cost Averaging & Inflation Beating</h2>
+                    <p class="mb-4">SIPs compound monthly, averaging market volatility over long horizons (> 5 years) to generate inflation-beating equity returns.</p>
+                `
+            },
+            {
+                id: 'credit-score-guide',
+                slug: 'how-to-improve-credit-score-90-days',
+                title: 'How to Improve Your Credit Score in 90 Days',
+                category: 'Credit & Loans',
+                readTime: '7 min read',
+                date: 'Aug 10, 2026',
+                author: 'Vikram Malhotra, Wealth Strategist',
+                summary: 'Step-by-step actionable guide to repairing credit utilization, rectifying bureau errors, and maintaining a 750+ score.',
+                featured: false,
+                content: `
+                    <p class="text-lg font-medium text-gray-700 leading-relaxed mb-6">A credit score above 750 unlocks lower interest rates on home loans, instant credit card approvals, and higher borrowing power.</p>
+                    <h2 class="text-2xl font-bold text-fymint-purple mt-8 mb-4">Maintain Credit Utilization Under 30%</h2>
+                    <p class="mb-4">If your total credit card limit is ₹1,00,000, try never to carry a balance over ₹30,000 at billing statement dates.</p>
+                `
+            }
+        ];
+
+        // CAREERS DATABASE
+        const CAREERS_DATA = [
+            {
+                id: 'fe-dev',
+                title: 'Senior Frontend Engineer (React/Web)',
+                department: 'Engineering',
+                location: 'Bengaluru / Hybrid',
+                type: 'Full-Time',
+                exp: '4+ Years',
+                desc: 'Build high-performance, accessible, and responsive financial user interfaces for web and mobile web platforms.'
+            },
+            {
+                id: 'fin-editor',
+                title: 'Lead Financial Editor & Content Strategist',
+                department: 'Content & Editorial',
+                location: 'Mumbai / Remote',
+                type: 'Full-Time',
+                exp: '3+ Years',
+                desc: 'Lead our financial education portal, producing high-accuracy guides on taxation, investments, budgeting, and banking.'
+            },
+            {
+                id: 'prod-designer',
+                title: 'UI/UX Product Designer',
+                department: 'Design',
+                location: 'Bengaluru / Remote',
+                type: 'Full-Time',
+                exp: '3+ Years',
+                desc: 'Craft intuitive calculator interfaces, dashboards, and financial workflows that simplify complex money management.'
+            },
+            {
+                id: 'fin-analyst',
+                title: 'Quantitative Financial Modeler',
+                department: 'Finance & Analytics',
+                location: 'Gurugram / Hybrid',
+                type: 'Full-Time',
+                exp: '2+ Years',
+                desc: 'Develop financial engine formulas for taxation, EMI schedules, SIP forecasting, and inflation scenarios.'
+            }
+        ];
+
+        /* ----------------------------------------------------
+           NAVIGATION & ROUTER SYSTEM
+           ---------------------------------------------------- */
+        let currentState = {
+            page: 'home',
+            param: null
+        };
+
+        function navigateTo(page, param = null) {
+            currentState.page = page;
+            currentState.param = param;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            renderPage();
+        }
+
+        function scrollToSection(sectionId) {
+            setTimeout(() => {
+                const el = document.getElementById(sectionId);
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        /* ----------------------------------------------------
+           PAGE RENDERERS
+           ---------------------------------------------------- */
+        function renderPage() {
+            const container = document.getElementById('app-content');
+            
+            switch (currentState.page) {
+                case 'home':
+                    container.innerHTML = renderHomePage();
+                    initHomeInteractions();
+                    break;
+                case 'blog':
+                    if (currentState.param) {
+                        container.innerHTML = renderArticlePage(currentState.param);
+                    } else {
+                        container.innerHTML = renderBlogHubPage();
+                    }
+                    break;
+                case 'calculators':
+                    container.innerHTML = renderCalculatorsPage(currentState.param || 'emi');
+                    initCalculatorLogic(currentState.param || 'emi');
+                    break;
+                case 'careers':
+                    container.innerHTML = renderCareersPage();
+                    break;
+                case 'about':
+                    container.innerHTML = renderAboutPage();
+                    break;
+                case 'contact':
+                    container.innerHTML = renderContactPage();
+                    break;
+                case 'legal':
+                    container.innerHTML = renderLegalPage(currentState.param || 'privacy');
+                    break;
+                default:
+                    container.innerHTML = renderHomePage();
+                    initHomeInteractions();
+            }
+        }
+
+        /* ----------------------------------------------------
+           1. HOME PAGE RENDERER
+           ---------------------------------------------------- */
+        function renderHomePage() {
+            return `
+                <!-- HERO SECTION -->
+                <section class="relative bg-gradient-to-b from-fymint-purple via-fymint-purpleDark to-fymint-purple text-white pt-12 pb-20 lg:pt-20 lg:pb-32 overflow-hidden">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                            
+                            <!-- Left Hero Content -->
+                            <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                                <div class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/20 text-fymint-gold text-xs font-semibold uppercase tracking-wider">
+                                    <i class="fa-solid fa-sparkles"></i>
+                                    <span>Personal Finance Platform</span>
+                                </div>
+                                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
+                                    Make Every <span class="text-fymint-green">Rupee Count.</span>
+                                </h1>
+                                <p class="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                                    fymint brings your income, expenses, monthly budgets, financial goals, and smart calculations together in one clean, empowering experience.
+                                </p>
+
+                                <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                                    <a href="#pricing-section" onclick="scrollToSection('pricing-section')" class="w-full sm:w-auto bg-fymint-green hover:bg-fymint-greenHover text-white px-8 py-4 rounded-xl font-bold text-base shadow-lg transition-all transform hover:-translate-y-0.5 text-center">
+                                        Explore fymint
+                                    </a>
+                                    <a href="#blog" onclick="navigateTo('blog')" class="w-full sm:w-auto bg-white/10 hover:bg-white/20 text-white border border-white/20 px-7 py-4 rounded-xl font-semibold text-base transition-all text-center">
+                                        Read Financial Guides
+                                    </a>
+                                </div>
+
+                                <!-- Trust Micro Badges -->
+                                <div class="pt-6 border-t border-white/10 grid grid-cols-3 gap-4 text-center lg:text-left text-xs text-gray-400">
+                                    <div>
+                                        <p class="text-white font-bold text-lg">100% Free</p>
+                                        <p>Core Financial Tools</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-white font-bold text-lg">Instant</p>
+                                        <p>Interactive Calculations</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-white font-bold text-lg">Private</p>
+                                        <p>No Hidden Aggregation</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Right App Interactive Visual Mockup -->
+                            <div class="lg:col-span-5">
+                                <div class="bg-white/5 backdrop-blur-xl border border-white/15 rounded-3xl p-6 shadow-floating space-y-5 text-gray-800">
+                                    <!-- App Header bar -->
+                                    <div class="flex items-center justify-between border-b border-white/10 pb-4 text-white">
+                                        <div class="flex items-center space-x-3">
+                                            <div class="w-10 h-10 rounded-full bg-fymint-green flex items-center justify-center font-bold text-white">
+                                                RS
+                                            </div>
+                                            <div>
+                                                <h4 class="font-bold text-sm">Rahul's Dashboard</h4>
+                                                <p class="text-[11px] text-gray-400">fymint Personal Overview</p>
+                                            </div>
+                                        </div>
+                                        <span class="px-2.5 py-1 rounded-full bg-fymint-green/20 text-fymint-green text-xs font-semibold">Active Plan</span>
+                                    </div>
+
+                                    <!-- Balance Card -->
+                                    <div class="bg-gradient-to-r from-fymint-purple to-fymint-purpleLight p-5 rounded-2xl text-white shadow-md">
+                                        <p class="text-xs text-gray-300">Total Net Monthly Balance</p>
+                                        <h3 class="text-3xl font-extrabold mt-1 text-white">₹84,500<span class="text-xs text-fymint-green font-normal ml-2"><i class="fa-solid fa-arrow-trend-up"></i> +12% vs last month</span></h3>
+                                        <div class="mt-4 pt-3 border-t border-white/10 flex justify-between text-xs">
+                                            <div>
+                                                <span class="text-gray-400 block">Monthly Income</span>
+                                                <span class="font-bold text-white">₹1,20,000</span>
+                                            </div>
+                                            <div class="text-right">
+                                                <span class="text-gray-400 block">Expenses Tracked</span>
+                                                <span class="font-bold text-fymint-gold">₹35,500</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Spending Progress -->
+                                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 space-y-3">
+                                        <div class="flex justify-between items-center text-xs font-semibold">
+                                            <span class="text-gray-700">Monthly Budget Cap (50/30/20)</span>
+                                            <span class="text-fymint-green">42% Used</span>
+                                        </div>
+                                        <div class="w-full bg-gray-100 h-2.5 rounded-full overflow-hidden">
+                                            <div class="bg-fymint-green h-full rounded-full" style="width: 42%"></div>
+                                        </div>
+                                        <div class="grid grid-cols-3 gap-2 text-[11px] pt-1">
+                                            <div class="bg-gray-50 p-2 rounded-lg text-center">
+                                                <span class="text-gray-500 block">Rent & Bills</span>
+                                                <span class="font-semibold text-gray-800">₹22,000</span>
+                                            </div>
+                                            <div class="bg-gray-50 p-2 rounded-lg text-center">
+                                                <span class="text-gray-500 block">Investments</span>
+                                                <span class="font-semibold text-fymint-green">₹20,000</span>
+                                            </div>
+                                            <div class="bg-gray-50 p-2 rounded-lg text-center">
+                                                <span class="text-gray-500 block">Lifestyle</span>
+                                                <span class="font-semibold text-gray-800">₹13,500</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+
+                <!-- CORE FEATURES GRID -->
+                <section class="py-16 bg-fymint-bg border-b border-gray-200">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="text-center max-w-3xl mx-auto mb-12">
+                            <h2 class="text-xs uppercase font-bold text-fymint-green tracking-widest">Designed For Modern Life</h2>
+                            <p class="text-3xl font-extrabold text-fymint-purple mt-2">Everything You Need To Master Your Money</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                            
+                            <!-- Card 1 -->
+                            <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-soft hover:shadow-card transition-all group">
+                                <div class="w-12 h-12 rounded-xl bg-fymint-greenLight text-fymint-green flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
+                                    <i class="fa-solid fa-house-chimney-window"></i>
+                                </div>
+                                <h3 class="font-bold text-gray-900 text-lg mb-1">HOME</h3>
+                                <p class="text-xs text-gray-500 leading-relaxed">Complete position overview of income, expenses, accounts, and net worth.</p>
+                            </div>
+
+                            <!-- Card 2 -->
+                            <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-soft hover:shadow-card transition-all group">
+                                <div class="w-12 h-12 rounded-xl bg-purple-50 text-fymint-purple flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
+                                    <i class="fa-solid fa-chart-pie"></i>
+                                </div>
+                                <h3 class="font-bold text-gray-900 text-lg mb-1">BUDGET</h3>
+                                <p class="text-xs text-gray-500 leading-relaxed">Set monthly spending caps across categories and monitor variance in real-time.</p>
+                            </div>
+
+                            <!-- Card 3 -->
+                            <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-soft hover:shadow-card transition-all group">
+                                <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
+                                    <i class="fa-solid fa-bolt"></i>
+                                </div>
+                                <h3 class="font-bold text-gray-900 text-lg mb-1">ACTION</h3>
+                                <p class="text-xs text-gray-500 leading-relaxed">Automate bill payment reminders, SIP commitments, and loan repayments.</p>
+                            </div>
+
+                            <!-- Card 4 -->
+                            <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-soft hover:shadow-card transition-all group">
+                                <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
+                                    <i class="fa-solid fa-compass"></i>
+                                </div>
+                                <h3 class="font-bold text-gray-900 text-lg mb-1">EXPLORE</h3>
+                                <p class="text-xs text-gray-500 leading-relaxed">Discover financial education guides, credit score tips, and upcoming services.</p>
+                            </div>
+
+                            <!-- Card 5 -->
+                            <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-soft hover:shadow-card transition-all group">
+                                <div class="w-12 h-12 rounded-xl bg-emerald-50 text-fymint-green flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
+                                    <i class="fa-solid fa-clock-rotate-left"></i>
+                                </div>
+                                <h3 class="font-bold text-gray-900 text-lg mb-1">HISTORY</h3>
+                                <p class="text-xs text-gray-500 leading-relaxed">In-depth analytics and monthly financial history trends over time.</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+
+                <!-- EXPLORE MORE WITH FYMINT CARDS (WITH COMING SOON BADGES) -->
+                <section class="py-16 bg-white">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="flex flex-col md:flex-row md:items-end justify-between mb-10">
+                            <div>
+                                <h2 class="text-xs font-bold uppercase text-fymint-green tracking-widest">Future Ecosystem</h2>
+                                <h3 class="text-2xl sm:text-3xl font-extrabold text-fymint-purple mt-1">Explore More With fymint</h3>
+                            </div>
+                            <p class="text-sm text-gray-500 max-w-md mt-2 md:mt-0">Expanding our financial stack to provide seamless management for every aspect of personal finance.</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            <!-- Card 1 -->
+                            <div class="bg-fymint-bg border border-gray-200 rounded-2xl p-6 relative flex flex-col justify-between">
+                                <div>
+                                    <div class="flex items-center justify-between mb-4">
+                                        <div class="w-12 h-12 rounded-xl bg-fymint-purple text-white flex items-center justify-center text-xl">
+                                            <i class="fa-solid fa-receipt"></i>
+                                        </div>
+                                        <span class="badge-coming-soon text-xs font-bold px-3 py-1 rounded-full">Coming Soon</span>
+                                    </div>
+                                    <h4 class="text-xl font-bold text-gray-900 mb-2">Smart Bill Payments</h4>
+                                    <p class="text-sm text-gray-600 leading-relaxed">Unified utility bill tracking, auto-pay reminders, and cash-flow forecasting before bills hit your account.</p>
+                                </div>
+                            </div>
+
+                            <!-- Card 2 -->
+                            <div class="bg-fymint-bg border border-gray-200 rounded-2xl p-6 relative flex flex-col justify-between">
+                                <div>
+                                    <div class="flex items-center justify-between mb-4">
+                                        <div class="w-12 h-12 rounded-xl bg-fymint-purple text-white flex items-center justify-center text-xl">
+                                            <i class="fa-solid fa-hand-holding-dollar"></i>
+                                        </div>
+                                        <span class="badge-coming-soon text-xs font-bold px-3 py-1 rounded-full">Coming Soon</span>
+                                    </div>
+                                    <h4 class="text-xl font-bold text-gray-900 mb-2">Personal Loans Hub</h4>
+                                    <p class="text-sm text-gray-600 leading-relaxed">Compare pre-approved loan options, interest rates, and loan terms without hurting your credit score.</p>
+                                </div>
+                            </div>
+
+                            <!-- Card 3 -->
+                            <div class="bg-fymint-bg border border-gray-200 rounded-2xl p-6 relative flex flex-col justify-between">
+                                <div>
+                                    <div class="flex items-center justify-between mb-4">
+                                        <div class="w-12 h-12 rounded-xl bg-fymint-purple text-white flex items-center justify-center text-xl">
+                                            <i class="fa-solid fa-shield-halved"></i>
+                                        </div>
+                                        <span class="badge-coming-soon text-xs font-bold px-3 py-1 rounded-full">Coming Soon</span>
+                                    </div>
+                                    <h4 class="text-xl font-bold text-gray-900 mb-2">Insurance Optimizer</h4>
+                                    <p class="text-sm text-gray-600 leading-relaxed">Calculate adequate term life and health cover needed for your family with zero sales spam.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- PRICING & PLAN COMPARISON SECTION -->
+                <section id="pricing-section" class="py-20 bg-fymint-bg border-t border-b border-gray-200">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="text-center max-w-3xl mx-auto mb-12">
+                            <span class="text-xs uppercase font-bold text-fymint-green tracking-widest">Transparent Membership</span>
+                            <h2 class="text-3xl sm:text-4xl font-extrabold text-fymint-purple mt-2">Free vs fymint Premium</h2>
+                            <p class="text-sm text-gray-600 mt-2">Start completely free with zero credit card required, or upgrade for automated sync and deep financial insights.</p>
+                            
+                            <!-- Monthly / Yearly Billing Toggle -->
+                            <div class="inline-flex items-center bg-gray-200 p-1.5 rounded-xl mt-6">
+                                <button id="btn-billing-monthly" onclick="toggleBilling('monthly')" class="px-5 py-2 text-xs font-bold rounded-lg transition-all bg-white text-fymint-purple shadow-sm">
+                                    Monthly Billing
+                                </button>
+                                <button id="btn-billing-yearly" onclick="toggleBilling('yearly')" class="px-5 py-2 text-xs font-bold text-gray-600 rounded-lg transition-all hover:text-fymint-purple">
+                                    Yearly Billing <span class="ml-1 px-1.5 py-0.5 bg-fymint-green text-white text-[10px] rounded-full font-extrabold">SAVE 20%</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Pricing Cards Grid -->
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto mb-16">
+                            
+                            <!-- Free Plan Card -->
+                            <div class="bg-white border border-gray-200 rounded-3xl p-8 shadow-card flex flex-col justify-between">
+                                <div>
+                                    <div class="inline-block px-3 py-1 rounded-full bg-gray-100 text-gray-700 font-bold text-xs mb-4">
+                                        Free Plan
+                                    </div>
+                                    <h3 class="text-2xl font-extrabold text-gray-900">fymint Basic</h3>
+                                    <p class="text-sm text-gray-500 mt-1">Essential tools for individual budgeting and calculations.</p>
+                                    
+                                    <div class="my-6">
+                                        <span class="text-4xl font-black text-gray-900">₹0</span>
+                                        <span class="text-gray-500 text-sm">/ forever free</span>
+                                    </div>
+
+                                    <ul class="space-y-3.5 text-sm text-gray-700 mb-8 border-t border-gray-100 pt-6">
+                                        <li class="flex items-center space-x-3">
+                                            <i class="fa-solid fa-check text-fymint-green"></i>
+                                            <span>Access to all 10 Financial Calculators</span>
+                                        </li>
+                                        <li class="flex items-center space-x-3">
+                                            <i class="fa-solid fa-check text-fymint-green"></i>
+                                            <span>Full Access to Financial Blog & Guides</span>
+                                        </li>
+                                        <li class="flex items-center space-x-3">
+                                            <i class="fa-solid fa-check text-fymint-green"></i>
+                                            <span>Manual Monthly Budget Tracker</span>
+                                        </li>
+                                        <li class="flex items-center space-x-3 text-gray-400">
+                                            <i class="fa-solid fa-xmark text-gray-300"></i>
+                                            <span>Automated Bank Transaction Sync</span>
+                                        </li>
+                                        <li class="flex items-center space-x-3 text-gray-400">
+                                            <i class="fa-solid fa-xmark text-gray-300"></i>
+                                            <span>Custom Financial Goal Forecaster</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <button onclick="showToast('You are currently enjoying fymint Free Plan!')" class="w-full bg-gray-100 hover:bg-gray-200 text-gray-800 py-3.5 rounded-xl font-bold transition-colors">
+                                    Current Plan (Free)
+                                </button>
+                            </div>
+
+                            <!-- Premium Plan Card -->
+                            <div class="bg-gradient-to-b from-fymint-purple to-fymint-purpleDark text-white border-2 border-fymint-gold rounded-3xl p-8 shadow-floating flex flex-col justify-between relative overflow-hidden">
+                                <div class="absolute top-4 right-4 px-3 py-1 bg-fymint-gold text-fymint-purple text-xs font-black uppercase rounded-full tracking-wider">
+                                    RECOMMENDED
+                                </div>
+
+                                <div>
+                                    <div class="inline-block px-3 py-1 rounded-full bg-white/10 text-fymint-gold font-bold text-xs mb-4">
+                                        fymint Premium
+                                    </div>
+                                    <h3 class="text-2xl font-extrabold text-white">fymint Pro</h3>
+                                    <p class="text-sm text-gray-300 mt-1">Complete automated personal finance ecosystem.</p>
+                                    
+                                    <div class="my-6">
+                                        <span id="price-display" class="text-4xl font-black text-white">₹199</span>
+                                        <span id="price-period" class="text-gray-300 text-sm">/ month</span>
+                                    </div>
+
+                                    <ul class="space-y-3.5 text-sm text-gray-200 mb-8 border-t border-white/10 pt-6">
+                                        <li class="flex items-center space-x-3">
+                                            <i class="fa-solid fa-check text-fymint-gold"></i>
+                                            <span><strong>Everything in Free Plan</strong></span>
+                                        </li>
+                                        <li class="flex items-center space-x-3">
+                                            <i class="fa-solid fa-check text-fymint-gold"></i>
+                                            <span>Automated Multi-Account Aggregation</span>
+                                        </li>
+                                        <li class="flex items-center space-x-3">
+                                            <i class="fa-solid fa-check text-fymint-gold"></i>
+                                            <span>Smart Categorization AI Engine</span>
+                                        </li>
+                                        <li class="flex items-center space-x-3">
+                                            <i class="fa-solid fa-check text-fymint-gold"></i>
+                                            <span>Personalized Tax Optimization Insights</span>
+                                        </li>
+                                        <li class="flex items-center space-x-3">
+                                            <i class="fa-solid fa-check text-fymint-gold"></i>
+                                            <span>Priority Customer Support</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <button onclick="showToast('Premium signup opening soon!')" class="w-full bg-fymint-green hover:bg-fymint-greenHover text-white py-3.5 rounded-xl font-bold shadow-md transition-all">
+                                    Choose Plan & Upgrade
+                                </button>
+                            </div>
+
+                        </div>
+
+                        <!-- Full Comparison Matrix Table -->
+                        <div class="max-w-5xl mx-auto bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-soft">
+                            <div class="p-6 bg-fymint-purple text-white">
+                                <h3 class="text-lg font-bold">Detailed Feature Comparison</h3>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left text-sm border-collapse">
+                                    <thead>
+                                        <tr class="bg-gray-50 border-b border-gray-200 text-xs uppercase font-bold text-gray-500">
+                                            <th class="p-4">Feature / Capability</th>
+                                            <th class="p-4 text-center">Free Plan</th>
+                                            <th class="p-4 text-center bg-amber-50/50 text-fymint-purple">fymint Premium</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-gray-200 text-gray-700">
+                                        <tr>
+                                            <td class="p-4 font-semibold">10 Interactive Calculators</td>
+                                            <td class="p-4 text-center text-fymint-green"><i class="fa-solid fa-check text-base"></i></td>
+                                            <td class="p-4 text-center text-fymint-green bg-amber-50/30"><i class="fa-solid fa-check text-base"></i></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-4 font-semibold">Long-Form Educational Articles</td>
+                                            <td class="p-4 text-center text-fymint-green"><i class="fa-solid fa-check text-base"></i></td>
+                                            <td class="p-4 text-center text-fymint-green bg-amber-50/30"><i class="fa-solid fa-check text-base"></i></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-4 font-semibold">Manual Budgeting Tools</td>
+                                            <td class="p-4 text-center text-fymint-green"><i class="fa-solid fa-check text-base"></i></td>
+                                            <td class="p-4 text-center text-fymint-green bg-amber-50/30"><i class="fa-solid fa-check text-base"></i></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-4 font-semibold">Automatic Bank Syncing</td>
+                                            <td class="p-4 text-center text-gray-300"><i class="fa-solid fa-minus"></i></td>
+                                            <td class="p-4 text-center text-fymint-green bg-amber-50/30"><i class="fa-solid fa-check text-base"></i></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-4 font-semibold">Ad-Free Editorial Experience</td>
+                                            <td class="p-4 text-center text-gray-300"><i class="fa-solid fa-minus"></i></td>
+                                            <td class="p-4 text-center text-fymint-green bg-amber-50/30"><i class="fa-solid fa-check text-base"></i></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- FEATURED BLOG PREVIEW & CALCULATORS PREVIEW -->
+                <section class="py-16 bg-white">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        
+                        <!-- Featured Articles Header -->
+                        <div class="flex items-center justify-between mb-8">
+                            <div>
+                                <h2 class="text-xs font-bold uppercase text-fymint-green tracking-widest">Financial Insights</h2>
+                                <h3 class="text-2xl font-extrabold text-fymint-purple mt-1">Latest Editorial Articles</h3>
+                            </div>
+                            <a href="#blog" onclick="navigateTo('blog')" class="text-sm font-bold text-fymint-green hover:underline flex items-center space-x-1">
+                                <span>View All Articles</span>
+                                <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </a>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            ${ARTICLES_DATA.slice(0, 3).map(art => `
+                                <div onclick="navigateTo('blog', '${art.slug}')" class="bg-fymint-bg border border-gray-200 rounded-2xl p-6 shadow-soft hover:shadow-card transition-all cursor-pointer flex flex-col justify-between group">
+                                    <div>
+                                        <div class="flex items-center justify-between text-xs text-gray-500 mb-3">
+                                            <span class="px-2.5 py-1 rounded-md bg-fymint-purple/10 text-fymint-purple font-semibold">${art.category}</span>
+                                            <span>${art.readTime}</span>
+                                        </div>
+                                        <h4 class="font-bold text-gray-900 text-lg group-hover:text-fymint-green transition-colors leading-snug mb-2">${art.title}</h4>
+                                        <p class="text-xs text-gray-600 line-clamp-2 leading-relaxed">${art.summary}</p>
+                                    </div>
+                                    <div class="mt-6 pt-4 border-t border-gray-200 flex items-center justify-between text-xs text-gray-500">
+                                        <span>${art.author.split(',')[0]}</span>
+                                        <span class="font-semibold text-fymint-green flex items-center space-x-1">
+                                            <span>Read Article</span>
+                                            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+
+                        <!-- Popular Calculators Quick Bar -->
+                        <div class="mt-16 bg-fymint-purple text-white rounded-3xl p-8 shadow-floating">
+                            <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
+                                <div>
+                                    <h3 class="text-2xl font-extrabold">Popular Financial Calculators</h3>
+                                    <p class="text-sm text-gray-300 mt-1">Instant mathematical models designed for Indian financial scenarios.</p>
+                                </div>
+                                <a href="#calculators" onclick="navigateTo('calculators')" class="bg-fymint-green hover:bg-fymint-greenHover text-white px-5 py-2.5 rounded-xl font-bold text-sm text-center">
+                                    Open Calculators Hub
+                                </a>
+                            </div>
+
+                            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+                                <button onclick="navigateTo('calculators', 'emi')" class="bg-white/10 hover:bg-white/20 p-4 rounded-xl text-left transition-colors border border-white/10">
+                                    <i class="fa-solid fa-calculator text-fymint-gold text-lg mb-2"></i>
+                                    <h4 class="font-bold text-sm">EMI Calculator</h4>
+                                    <p class="text-[11px] text-gray-300">Loans & Mortgages</p>
+                                </button>
+                                <button onclick="navigateTo('calculators', 'sip')" class="bg-white/10 hover:bg-white/20 p-4 rounded-xl text-left transition-colors border border-white/10">
+                                    <i class="fa-solid fa-chart-line text-fymint-green text-lg mb-2"></i>
+                                    <h4 class="font-bold text-sm">SIP Returns</h4>
+                                    <p class="text-[11px] text-gray-300">Mutual Fund Growth</p>
+                                </button>
+                                <button onclick="navigateTo('calculators', 'budget')" class="bg-white/10 hover:bg-white/20 p-4 rounded-xl text-left transition-colors border border-white/10">
+                                    <i class="fa-solid fa-wallet text-fymint-gold text-lg mb-2"></i>
+                                    <h4 class="font-bold text-sm">Monthly Budget</h4>
+                                    <p class="text-[11px] text-gray-300">Expenses & Savings</p>
+                                </button>
+                                <button onclick="navigateTo('calculators', 'salary')" class="bg-white/10 hover:bg-white/20 p-4 rounded-xl text-left transition-colors border border-white/10">
+                                    <i class="fa-solid fa-money-check-dollar text-fymint-green text-lg mb-2"></i>
+                                    <h4 class="font-bold text-sm">Salary Take-Home</h4>
+                                    <p class="text-[11px] text-gray-300">In-Hand Salary</p>
+                                </button>
+                                <button onclick="navigateTo('calculators', 'gst')" class="bg-white/10 hover:bg-white/20 p-4 rounded-xl text-left transition-colors border border-white/10 col-span-2 sm:col-span-1">
+                                    <i class="fa-solid fa-percent text-fymint-gold text-lg mb-2"></i>
+                                    <h4 class="font-bold text-sm">GST Calculator</h4>
+                                    <p class="text-[11px] text-gray-300">Tax Breakdown</p>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- PHILOSOPHY BANNER -->
+                <section class="py-20 bg-fymint-bg border-t border-gray-200 text-center">
+                    <div class="max-w-4xl mx-auto px-4 space-y-4">
+                        <div class="w-12 h-12 rounded-2xl bg-fymint-purple text-fymint-gold flex items-center justify-center text-xl mx-auto">
+                            <i class="fa-solid fa-eye"></i>
+                        </div>
+                        <h2 class="text-3xl font-extrabold text-fymint-purple">Your Money. One Clear View.</h2>
+                        <p class="text-gray-600 max-w-xl mx-auto text-sm leading-relaxed">
+                            We believe financial clarity shouldn't require complex spreadsheets or expensive consultations. fymint provides the tools you need to take control today.
+                        </p>
+                    </div>
+                </section>
+            `;
+        }
+
+        function toggleBilling(type) {
+            const btnMonthly = document.getElementById('btn-billing-monthly');
+            const btnYearly = document.getElementById('btn-billing-yearly');
+            const priceDisplay = document.getElementById('price-display');
+            const pricePeriod = document.getElementById('price-period');
+
+            if (type === 'yearly') {
+                btnYearly.className = 'px-5 py-2 text-xs font-bold rounded-lg transition-all bg-white text-fymint-purple shadow-sm';
+                btnMonthly.className = 'px-5 py-2 text-xs font-bold text-gray-600 rounded-lg transition-all hover:text-fymint-purple';
+                priceDisplay.textContent = '₹1,899';
+                pricePeriod.textContent = '/ year (Save 20%)';
+            } else {
+                btnMonthly.className = 'px-5 py-2 text-xs font-bold rounded-lg transition-all bg-white text-fymint-purple shadow-sm';
+                btnYearly.className = 'px-5 py-2 text-xs font-bold text-gray-600 rounded-lg transition-all hover:text-fymint-purple';
+                priceDisplay.textContent = '₹199';
+                pricePeriod.textContent = '/ month';
+            }
+        }
+
+        function initHomeInteractions() {
+            // Placeholder for home interactive element listeners if needed
+        }
+
+        /* ----------------------------------------------------
+           2. BLOG & EDITORIAL PLATFORM RENDERER
+           ---------------------------------------------------- */
+        function renderBlogHubPage() {
+            return `
+                <div class="bg-fymint-purple text-white py-12">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <h1 class="text-3xl sm:text-4xl font-extrabold">Financial Blog & Guides</h1>
+                        <p class="text-gray-300 text-sm mt-2 max-w-2xl">Expert insights on budgeting, investments, loan optimization, taxation, and building long-term wealth in India.</p>
+                        
+                        <!-- Search & Category Bar -->
+                        <div class="mt-8 flex flex-col md:flex-row gap-4">
+                            <div class="relative flex-grow">
+                                <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-gray-400"></i>
+                                <input type="text" id="blog-search-input" oninput="filterBlogList()" placeholder="Search financial articles..." class="w-full pl-11 pr-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-fymint-green text-sm">
+                            </div>
+                            <div class="flex items-center space-x-2 overflow-x-auto pb-2 md:pb-0">
+                                <button onclick="filterBlogCategory('All')" class="px-4 py-2.5 rounded-xl bg-fymint-green text-white font-bold text-xs whitespace-nowrap">All Topics</button>
+                                <button onclick="filterBlogCategory('Budgeting')" class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-medium text-xs whitespace-nowrap">Budgeting</button>
+                                <button onclick="filterBlogCategory('Saving')" class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-medium text-xs whitespace-nowrap">Saving</button>
+                                <button onclick="filterBlogCategory('Credit & Loans')" class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-medium text-xs whitespace-nowrap">Credit & Loans</button>
+                                <button onclick="filterBlogCategory('Investing')" class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-medium text-xs whitespace-nowrap">Investing</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="py-12 bg-fymint-bg">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        
+                        <!-- ADVERTISEMENT PLACEHOLDER BANNER -->
+                        <div class="ad-container h-20 w-full mb-8 text-xs text-gray-400">
+                            <span class="ad-label">ADVERTISEMENT</span>
+                            <span>AdSense Responsive Leaderboard Banner</span>
+                        </div>
+
+                        <div id="blog-cards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            ${ARTICLES_DATA.map(art => `
+                                <div onclick="navigateTo('blog', '${art.slug}')" class="bg-white border border-gray-200 rounded-2xl p-6 shadow-soft hover:shadow-card transition-all cursor-pointer flex flex-col justify-between group">
+                                    <div>
+                                        <div class="flex items-center justify-between text-xs text-gray-500 mb-3">
+                                            <span class="px-2.5 py-1 rounded-md bg-fymint-purple/10 text-fymint-purple font-semibold">${art.category}</span>
+                                            <span>${art.readTime}</span>
+                                        </div>
+                                        <h3 class="font-bold text-gray-900 text-lg group-hover:text-fymint-green transition-colors leading-snug mb-2">${art.title}</h3>
+                                        <p class="text-xs text-gray-600 leading-relaxed mb-4 line-clamp-3">${art.summary}</p>
+                                    </div>
+                                    <div class="pt-4 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
+                                        <span class="font-medium text-gray-700">${art.author.split(',')[0]}</span>
+                                        <span class="font-bold text-fymint-green flex items-center space-x-1">
+                                            <span>Read Article</span>
+                                            <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function filterBlogList() {
+            // Simplified dynamic filter
+            const query = document.getElementById('blog-search-input').value.toLowerCase();
+            const cards = document.querySelectorAll('#blog-cards-grid > div');
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                if (text.includes(query)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function filterBlogCategory(cat) {
+            showToast(`Filtered articles by category: ${cat}`);
+            const cards = document.querySelectorAll('#blog-cards-grid > div');
+            cards.forEach(card => {
+                if (cat === 'All' || card.textContent.includes(cat)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        /* ARTICLE READER ENGINE */
+        function renderArticlePage(slug) {
+            const article = ARTICLES_DATA.find(a => a.slug === slug) || ARTICLES_DATA[0];
+
+            return `
+                <article class="py-12 bg-white">
+                    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                        
+                        <!-- Breadcrumbs -->
+                        <nav class="flex items-center space-x-2 text-xs text-gray-500 mb-6">
+                            <a href="#home" onclick="navigateTo('home')" class="hover:text-fymint-green">Home</a>
+                            <span>/</span>
+                            <a href="#blog" onclick="navigateTo('blog')" class="hover:text-fymint-green">Blog</a>
+                            <span>/</span>
+                            <span class="text-gray-800 font-medium truncate">${article.title}</span>
+                        </nav>
+
+                        <!-- Header Metadata -->
+                        <div class="space-y-4 border-b border-gray-200 pb-8 mb-8">
+                            <span class="px-3 py-1 rounded-full bg-fymint-greenLight text-fymint-green font-bold text-xs uppercase">${article.category}</span>
+                            <h1 class="text-3xl sm:text-4xl font-extrabold text-fymint-purple leading-tight">${article.title}</h1>
+                            <div class="flex flex-wrap items-center gap-4 text-xs text-gray-500">
+                                <span><i class="fa-regular fa-user mr-1"></i> ${article.author}</span>
+                                <span><i class="fa-regular fa-calendar mr-1"></i> Published ${article.date}</span>
+                                <span><i class="fa-regular fa-clock mr-1"></i> ${article.readTime}</span>
+                            </div>
+                        </div>
+
+                        <!-- Top Article Advertisement Placement -->
+                        <div class="ad-container h-24 w-full mb-8 text-xs text-gray-400">
+                            <span class="ad-label">ADVERTISEMENT</span>
+                            <span>AdSense Responsive Top Article Banner</span>
+                        </div>
+
+                        <!-- Article Content Body -->
+                        <div class="prose prose-lg max-w-none text-gray-800 leading-relaxed space-y-6">
+                            ${article.content}
+                        </div>
+
+                        <!-- Mid-Article Related Calculator Promotion -->
+                        <div class="my-10 p-6 bg-gradient-to-r from-fymint-purple to-fymint-purpleLight text-white rounded-2xl shadow-card flex flex-col sm:flex-row items-center justify-between gap-4">
+                            <div>
+                                <h4 class="font-bold text-lg">Test Your Numbers With fymint Calculators</h4>
+                                <p class="text-xs text-gray-300">Run instant monthly simulations with real interest formulas.</p>
+                            </div>
+                            <button onclick="navigateTo('calculators', 'budget')" class="bg-fymint-green hover:bg-fymint-greenHover text-white px-5 py-2.5 rounded-xl font-bold text-xs whitespace-nowrap">
+                                Open Budget Calculator
+                            </button>
+                        </div>
+
+                        <!-- Bottom Article Advertisement Placement -->
+                        <div class="ad-container h-24 w-full my-8 text-xs text-gray-400">
+                            <span class="ad-label">ADVERTISEMENT</span>
+                            <span>AdSense Bottom Article Banner</span>
+                        </div>
+
+                        <!-- Author Bio & Back to Blog -->
+                        <div class="bg-fymint-bg p-6 rounded-2xl border border-gray-200 flex items-center justify-between mt-12">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 rounded-full bg-fymint-purple text-white flex items-center justify-center font-bold">
+                                    ${article.author.charAt(0)}
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-900 text-sm">${article.author}</h4>
+                                    <p class="text-xs text-gray-500">Financial Education & Editorial Team</p>
+                                </div>
+                            </div>
+                            <button onclick="navigateTo('blog')" class="text-xs font-bold text-fymint-green hover:underline">
+                                ← Back to Blog
+                            </button>
+                        </div>
+
+                    </div>
+                </article>
+            `;
+        }
+
+        /* ----------------------------------------------------
+           3. CALCULATORS PLATFORM RENDERER
+           ---------------------------------------------------- */
+        function renderCalculatorsPage(activeCalc) {
+            const calculatorsList = [
+                { id: 'emi', name: 'EMI Calculator', icon: 'fa-calculator' },
+                { id: 'sip', name: 'SIP Return', icon: 'fa-chart-line' },
+                { id: 'fd', name: 'Fixed Deposit (FD)', icon: 'fa-piggy-bank' },
+                { id: 'rd', name: 'Recurring Deposit (RD)', icon: 'fa-vault' },
+                { id: 'budget', name: 'Monthly Budget', icon: 'fa-wallet' },
+                { id: 'savings', name: 'Savings Growth', icon: 'fa-seedling' },
+                { id: 'compound', name: 'Compound Interest', icon: 'fa-arrow-up-right-dots' },
+                { id: 'gst', name: 'GST Calculator', icon: 'fa-percent' },
+                { id: 'inflation', name: 'Inflation Impact', icon: 'fa-fire' },
+                { id: 'salary', name: 'Salary Take-Home', icon: 'fa-money-check-dollar' }
+            ];
+
+            return `
+                <div class="bg-fymint-purple text-white py-10">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:text-left">
+                        <h1 class="text-3xl font-extrabold">Financial Calculators Platform</h1>
+                        <p class="text-gray-300 text-sm mt-1">Interactive precision tools with instant calculations, visual breakdowns, and formulas.</p>
+                    </div>
+                </div>
+
+                <div class="py-10 bg-fymint-bg">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        
+                        <!-- Calculator Tab Navigation -->
+                        <div class="flex items-center space-x-2 overflow-x-auto pb-4 mb-8">
+                            ${calculatorsList.map(c => `
+                                <button onclick="navigateTo('calculators', '${c.id}')" class="px-4 py-2.5 rounded-xl text-xs font-bold flex items-center space-x-2 whitespace-nowrap transition-all ${activeCalc === c.id ? 'bg-fymint-green text-white shadow-md' : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'}">
+                                    <i class="fa-solid ${c.icon}"></i>
+                                    <span>${c.name}</span>
+                                </button>
+                            `).join('')}
+                        </div>
+
+                        <!-- Active Calculator Card Container -->
+                        <div class="bg-white border border-gray-200 rounded-3xl p-6 sm:p-8 shadow-card max-w-5xl mx-auto">
+                            <div id="calc-tool-body">
+                                <!-- Dynamic Calculator content injected by JS init function -->
+                            </div>
+                        </div>
+
+                        <!-- Calculator Sidebar Advertisement Placement -->
+                        <div class="ad-container h-24 w-full mt-10 text-xs text-gray-400">
+                            <span class="ad-label">ADVERTISEMENT</span>
+                            <span>AdSense Calculator Bottom Responsive Unit</span>
+                        </div>
+
+                    </div>
+                </div>
+            `;
+        }
+
+        /* CALCULATOR LOGIC & DOM BINDING */
+        function initCalculatorLogic(calcType) {
+            const container = document.getElementById('calc-tool-body');
+            if (!container) return;
+
+            switch (calcType) {
+                case 'emi':
+                    renderEmiCalc(container);
+                    break;
+                case 'sip':
+                    renderSipCalc(container);
+                    break;
+                case 'budget':
+                    renderBudgetCalc(container);
+                    break;
+                case 'gst':
+                    renderGstCalc(container);
+                    break;
+                case 'salary':
+                    renderSalaryCalc(container);
+                    break;
+                case 'fd':
+                case 'rd':
+                case 'savings':
+                case 'compound':
+                case 'inflation':
+                default:
+                    renderGenericCalc(container, calcType);
+            }
+        }
+
+        /* 1. EMI CALCULATOR */
+        function renderEmiCalc(container) {
+            container.innerHTML = `
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    <!-- Inputs -->
+                    <div class="lg:col-span-7 space-y-6">
+                        <div class="border-b border-gray-100 pb-4">
+                            <h3 class="text-2xl font-extrabold text-fymint-purple">Loan EMI Calculator</h3>
+                            <p class="text-xs text-gray-500">Calculate monthly repayment schedules for home, personal, or car loans.</p>
+                        </div>
+
+                        <!-- Loan Amount -->
+                        <div>
+                            <div class="flex justify-between items-center text-sm font-semibold mb-2">
+                                <label class="text-gray-700">Loan Amount (₹)</label>
+                                <input type="number" id="emi-amount-num" value="2500000" class="w-32 px-2 py-1 text-right border border-gray-300 rounded-md font-bold text-fymint-purple text-sm">
+                            </div>
+                            <input type="range" id="emi-amount-slider" min="100000" max="10000000" step="50000" value="2500000" oninput="updateEmi()">
+                        </div>
+
+                        <!-- Interest Rate -->
+                        <div>
+                            <div class="flex justify-between items-center text-sm font-semibold mb-2">
+                                <label class="text-gray-700">Interest Rate (% p.a.)</label>
+                                <input type="number" id="emi-rate-num" value="8.5" step="0.1" class="w-24 px-2 py-1 text-right border border-gray-300 rounded-md font-bold text-fymint-purple text-sm">
+                            </div>
+                            <input type="range" id="emi-rate-slider" min="5" max="20" step="0.1" value="8.5" oninput="updateEmi()">
+                        </div>
+
+                        <!-- Tenure -->
+                        <div>
+                            <div class="flex justify-between items-center text-sm font-semibold mb-2">
+                                <label class="text-gray-700">Tenure (Years)</label>
+                                <input type="number" id="emi-years-num" value="20" class="w-20 px-2 py-1 text-right border border-gray-300 rounded-md font-bold text-fymint-purple text-sm">
+                            </div>
+                            <input type="range" id="emi-years-slider" min="1" max="30" step="1" value="20" oninput="updateEmi()">
+                        </div>
+                    </div>
+
+                    <!-- Output Card -->
+                    <div class="lg:col-span-5 bg-fymint-purple text-white p-6 rounded-2xl flex flex-col justify-between shadow-md">
+                        <div>
+                            <span class="text-xs text-fymint-gold uppercase font-bold tracking-wider">Calculated EMI</span>
+                            <div class="text-3xl font-black text-fymint-green mt-1" id="emi-result">₹21,696</div>
+                            <p class="text-xs text-gray-300">Monthly Installment</p>
+
+                            <div class="mt-8 space-y-3 text-xs border-t border-white/10 pt-4">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-300">Principal Amount:</span>
+                                    <span class="font-bold text-white" id="emi-principal-txt">₹25,00,000</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-300">Total Interest Payable:</span>
+                                    <span class="font-bold text-fymint-gold" id="emi-interest-txt">₹27,07,040</span>
+                                </div>
+                                <div class="flex justify-between border-t border-white/10 pt-2 text-sm font-bold">
+                                    <span>Total Amount Payable:</span>
+                                    <span class="text-white" id="emi-total-txt">₹52,07,040</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 pt-4 border-t border-white/10 text-[11px] text-gray-400">
+                            Formula: E = P x r x (1+r)^n / ((1+r)^n - 1)
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Sync sliders & inputs
+            const amountSlider = document.getElementById('emi-amount-slider');
+            const amountNum = document.getElementById('emi-amount-num');
+            const rateSlider = document.getElementById('emi-rate-slider');
+            const rateNum = document.getElementById('emi-rate-num');
+            const yearsSlider = document.getElementById('emi-years-slider');
+            const yearsNum = document.getElementById('emi-years-num');
+
+            amountNum.addEventListener('input', () => { amountSlider.value = amountNum.value; updateEmi(); });
+            rateNum.addEventListener('input', () => { rateSlider.value = rateNum.value; updateEmi(); });
+            yearsNum.addEventListener('input', () => { yearsSlider.value = yearsNum.value; updateEmi(); });
+
+            updateEmi();
+        }
+
+        function updateEmi() {
+            const P = parseFloat(document.getElementById('emi-amount-slider').value);
+            const R = parseFloat(document.getElementById('emi-rate-slider').value);
+            const Y = parseFloat(document.getElementById('emi-years-slider').value);
+
+            document.getElementById('emi-amount-num').value = P;
+            document.getElementById('emi-rate-num').value = R;
+            document.getElementById('emi-years-num').value = Y;
+
+            const r = R / 12 / 100;
+            const n = Y * 12;
+            const emi = (P * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+            const total = emi * n;
+            const interest = total - P;
+
+            document.getElementById('emi-result').textContent = '₹' + Math.round(emi).toLocaleString('en-IN');
+            document.getElementById('emi-principal-txt').textContent = '₹' + P.toLocaleString('en-IN');
+            document.getElementById('emi-interest-txt').textContent = '₹' + Math.round(interest).toLocaleString('en-IN');
+            document.getElementById('emi-total-txt').textContent = '₹' + Math.round(total).toLocaleString('en-IN');
+        }
+
+        /* 2. SIP CALCULATOR */
+        function renderSipCalc(container) {
+            container.innerHTML = `
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    <div class="lg:col-span-7 space-y-6">
+                        <div class="border-b border-gray-100 pb-4">
+                            <h3 class="text-2xl font-extrabold text-fymint-purple">SIP Return Calculator</h3>
+                            <p class="text-xs text-gray-500">Estimate wealth accumulated through monthly systematic mutual fund investments.</p>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between items-center text-sm font-semibold mb-2">
+                                <label class="text-gray-700">Monthly Investment (₹)</label>
+                                <input type="number" id="sip-monthly-num" value="10000" class="w-28 px-2 py-1 text-right border border-gray-300 rounded-md font-bold text-fymint-purple text-sm">
+                            </div>
+                            <input type="range" id="sip-monthly-slider" min="500" max="100000" step="500" value="10000" oninput="updateSip()">
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between items-center text-sm font-semibold mb-2">
+                                <label class="text-gray-700">Expected Return Rate (% p.a.)</label>
+                                <input type="number" id="sip-rate-num" value="12" step="0.5" class="w-20 px-2 py-1 text-right border border-gray-300 rounded-md font-bold text-fymint-purple text-sm">
+                            </div>
+                            <input type="range" id="sip-rate-slider" min="1" max="30" step="0.5" value="12" oninput="updateSip()">
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between items-center text-sm font-semibold mb-2">
+                                <label class="text-gray-700">Investment Duration (Years)</label>
+                                <input type="number" id="sip-years-num" value="10" class="w-20 px-2 py-1 text-right border border-gray-300 rounded-md font-bold text-fymint-purple text-sm">
+                            </div>
+                            <input type="range" id="sip-years-slider" min="1" max="40" step="1" value="10" oninput="updateSip()">
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-5 bg-fymint-purple text-white p-6 rounded-2xl flex flex-col justify-between shadow-md">
+                        <div>
+                            <span class="text-xs text-fymint-gold uppercase font-bold tracking-wider">Estimated Maturity Value</span>
+                            <div class="text-3xl font-black text-fymint-green mt-1" id="sip-total-result">₹23,23,391</div>
+                            <p class="text-xs text-gray-300">Total Future Corpus</p>
+
+                            <div class="mt-8 space-y-3 text-xs border-t border-white/10 pt-4">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-300">Invested Amount:</span>
+                                    <span class="font-bold text-white" id="sip-invested-txt">₹12,00,000</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-300">Estimated Wealth Gain:</span>
+                                    <span class="font-bold text-fymint-green" id="sip-gain-txt">₹11,23,391</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 pt-4 border-t border-white/10 text-[11px] text-gray-400">
+                            Estimates do not account for expense ratio or exit loads. Past performance doesn't guarantee future returns.
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            const monthlySlider = document.getElementById('sip-monthly-slider');
+            const monthlyNum = document.getElementById('sip-monthly-num');
+            const rateSlider = document.getElementById('sip-rate-slider');
+            const rateNum = document.getElementById('sip-rate-num');
+            const yearsSlider = document.getElementById('sip-years-slider');
+            const yearsNum = document.getElementById('sip-years-num');
+
+            monthlyNum.addEventListener('input', () => { monthlySlider.value = monthlyNum.value; updateSip(); });
+            rateNum.addEventListener('input', () => { rateSlider.value = rateNum.value; updateSip(); });
+            yearsNum.addEventListener('input', () => { yearsSlider.value = yearsNum.value; updateSip(); });
+
+            updateSip();
+        }
+
+        function updateSip() {
+            const P = parseFloat(document.getElementById('sip-monthly-slider').value);
+            const i = parseFloat(document.getElementById('sip-rate-slider').value) / 12 / 100;
+            const n = parseFloat(document.getElementById('sip-years-slider').value) * 12;
+
+            document.getElementById('sip-monthly-num').value = P;
+            document.getElementById('sip-rate-num').value = document.getElementById('sip-rate-slider').value;
+            document.getElementById('sip-years-num').value = document.getElementById('sip-years-slider').value;
+
+            const maturity = P * ((Math.pow(1 + i, n) - 1) / i) * (1 + i);
+            const invested = P * n;
+            const gain = maturity - invested;
+
+            document.getElementById('sip-total-result').textContent = '₹' + Math.round(maturity).toLocaleString('en-IN');
+            document.getElementById('sip-invested-txt').textContent = '₹' + invested.toLocaleString('en-IN');
+            document.getElementById('sip-gain-txt').textContent = '₹' + Math.round(gain).toLocaleString('en-IN');
+        }
+
+        /* 3. BUDGET CALCULATOR */
+        function renderBudgetCalc(container) {
+            container.innerHTML = `
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    <div class="lg:col-span-7 space-y-4">
+                        <div class="border-b border-gray-100 pb-3">
+                            <h3 class="text-2xl font-extrabold text-fymint-purple">Personal Monthly Budget Calculator</h3>
+                            <p class="text-xs text-gray-500">Track monthly income against expenses and calculate your net savings rate.</p>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4 text-xs">
+                            <div>
+                                <label class="block font-bold text-gray-700 mb-1">Monthly Income (In-Hand)</label>
+                                <input type="number" id="b-inc" value="75000" oninput="updateBudget()" class="w-full px-3 py-2 border rounded-lg font-semibold">
+                            </div>
+                            <div>
+                                <label class="block font-bold text-gray-700 mb-1">Rent / Home EMI</label>
+                                <input type="number" id="b-rent" value="22000" oninput="updateBudget()" class="w-full px-3 py-2 border rounded-lg">
+                            </div>
+                            <div>
+                                <label class="block font-bold text-gray-700 mb-1">Groceries & Food</label>
+                                <input type="number" id="b-food" value="12000" oninput="updateBudget()" class="w-full px-3 py-2 border rounded-lg">
+                            </div>
+                            <div>
+                                <label class="block font-bold text-gray-700 mb-1">Utilities & Bills</label>
+                                <input type="number" id="b-util" value="5000" oninput="updateBudget()" class="w-full px-3 py-2 border rounded-lg">
+                            </div>
+                            <div>
+                                <label class="block font-bold text-gray-700 mb-1">Shopping & Lifestyle</label>
+                                <input type="number" id="b-shop" value="8000" oninput="updateBudget()" class="w-full px-3 py-2 border rounded-lg">
+                            </div>
+                            <div>
+                                <label class="block font-bold text-gray-700 mb-1">Target Monthly Savings/SIP</label>
+                                <input type="number" id="b-sav" value="15000" oninput="updateBudget()" class="w-full px-3 py-2 border rounded-lg">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-5 bg-fymint-purple text-white p-6 rounded-2xl flex flex-col justify-between shadow-md">
+                        <div>
+                            <span class="text-xs text-fymint-gold uppercase font-bold tracking-wider">Net Surplus Remaining</span>
+                            <div class="text-3xl font-black text-fymint-green mt-1" id="b-surplus">₹13,000</div>
+                            <p class="text-xs text-gray-300">Unallocated Cash Flow</p>
+
+                            <div class="mt-6 space-y-3 text-xs border-t border-white/10 pt-4">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-300">Total Fixed Expenses:</span>
+                                    <span class="font-bold text-white" id="b-exp-txt">₹47,000</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-300">Savings Rate:</span>
+                                    <span class="font-bold text-fymint-green" id="b-rate-txt">37.3%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 pt-3 border-t border-white/10 text-[11px] text-gray-300">
+                            Aim for at least a 20% savings rate for long-term financial security.
+                        </div>
+                    </div>
+                </div>
+            `;
+            updateBudget();
+        }
+
+        function updateBudget() {
+            const inc = parseFloat(document.getElementById('b-inc').value) || 0;
+            const rent = parseFloat(document.getElementById('b-rent').value) || 0;
+            const food = parseFloat(document.getElementById('b-food').value) || 0;
+            const util = parseFloat(document.getElementById('b-util').value) || 0;
+            const shop = parseFloat(document.getElementById('b-shop').value) || 0;
+            const sav = parseFloat(document.getElementById('b-sav').value) || 0;
+
+            const totalExp = rent + food + util + shop;
+            const surplus = inc - totalExp - sav;
+            const totalSaved = sav + (surplus > 0 ? surplus : 0);
+            const rate = inc > 0 ? ((totalSaved / inc) * 100).toFixed(1) : 0;
+
+            document.getElementById('b-surplus').textContent = '₹' + surplus.toLocaleString('en-IN');
+            document.getElementById('b-exp-txt').textContent = '₹' + totalExp.toLocaleString('en-IN');
+            document.getElementById('b-rate-txt').textContent = rate + '%';
+        }
+
+        /* 4. GST CALCULATOR */
+        function renderGstCalc(container) {
+            container.innerHTML = `
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    <div class="lg:col-span-7 space-y-4">
+                        <div class="border-b border-gray-100 pb-3">
+                            <h3 class="text-2xl font-extrabold text-fymint-purple">GST Calculator</h3>
+                            <p class="text-xs text-gray-500">Calculate inclusive or exclusive Goods and Services Tax (GST).</p>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 mb-1">Base Amount (₹)</label>
+                            <input type="number" id="gst-amount" value="10000" oninput="updateGst()" class="w-full px-3 py-2 border rounded-lg text-sm font-bold">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 mb-1">GST Slab Rate (%)</label>
+                            <div class="grid grid-cols-4 gap-2">
+                                <button onclick="setGstRate(5)" class="py-2 border rounded-lg font-bold text-xs hover:bg-fymint-greenLight">5%</button>
+                                <button onclick="setGstRate(12)" class="py-2 border rounded-lg font-bold text-xs hover:bg-fymint-greenLight">12%</button>
+                                <button onclick="setGstRate(18)" class="py-2 border rounded-lg font-bold text-xs bg-fymint-purple text-white">18%</button>
+                                <button onclick="setGstRate(28)" class="py-2 border rounded-lg font-bold text-xs hover:bg-fymint-greenLight">28%</button>
+                            </div>
+                            <input type="hidden" id="gst-rate" value="18">
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-5 bg-fymint-purple text-white p-6 rounded-2xl flex flex-col justify-between shadow-md">
+                        <div>
+                            <span class="text-xs text-fymint-gold uppercase font-bold tracking-wider">Gross Total Amount</span>
+                            <div class="text-3xl font-black text-fymint-green mt-1" id="gst-total">₹11,800</div>
+                            
+                            <div class="mt-6 space-y-3 text-xs border-t border-white/10 pt-4">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-300">CGST (Half Rate):</span>
+                                    <span class="font-bold text-white" id="gst-cgst">₹900</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-300">SGST (Half Rate):</span>
+                                    <span class="font-bold text-white" id="gst-sgst">₹900</span>
+                                </div>
+                                <div class="flex justify-between font-bold border-t border-white/10 pt-2">
+                                    <span class="text-gray-300">Total GST Tax:</span>
+                                    <span class="text-fymint-gold" id="gst-tax">₹1,800</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            updateGst();
+        }
+
+        function setGstRate(r) {
+            document.getElementById('gst-rate').value = r;
+            updateGst();
+        }
+
+        function updateGst() {
+            const amt = parseFloat(document.getElementById('gst-amount').value) || 0;
+            const rate = parseFloat(document.getElementById('gst-rate').value) || 18;
+
+            const tax = (amt * rate) / 100;
+            const total = amt + tax;
+
+            document.getElementById('gst-total').textContent = '₹' + total.toLocaleString('en-IN');
+            document.getElementById('gst-cgst').textContent = '₹' + (tax / 2).toLocaleString('en-IN');
+            document.getElementById('gst-sgst').textContent = '₹' + (tax / 2).toLocaleString('en-IN');
+            document.getElementById('gst-tax').textContent = '₹' + tax.toLocaleString('en-IN');
+        }
+
+        /* 5. SALARY TAKE HOME CALCULATOR */
+        function renderSalaryCalc(container) {
+            container.innerHTML = `
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    <div class="lg:col-span-7 space-y-4">
+                        <div class="border-b border-gray-100 pb-3">
+                            <h3 class="text-2xl font-extrabold text-fymint-purple">In-Hand Salary Calculator</h3>
+                            <p class="text-xs text-gray-500">Estimate monthly take-home pay after PF, tax, and professional deductions.</p>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 mb-1">Gross Annual CTC (₹)</label>
+                            <input type="number" id="sal-ctc" value="1200000" oninput="updateSalary()" class="w-full px-3 py-2 border rounded-lg text-sm font-bold">
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4 text-xs">
+                            <div>
+                                <label class="block font-bold text-gray-700 mb-1">Annual Bonus / Variable</label>
+                                <input type="number" id="sal-bonus" value="100000" oninput="updateSalary()" class="w-full px-3 py-2 border rounded-lg">
+                            </div>
+                            <div>
+                                <label class="block font-bold text-gray-700 mb-1">Monthly Employer PF (₹)</label>
+                                <input type="number" id="sal-pf" value="1800" oninput="updateSalary()" class="w-full px-3 py-2 border rounded-lg">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-5 bg-fymint-purple text-white p-6 rounded-2xl flex flex-col justify-between shadow-md">
+                        <div>
+                            <span class="text-xs text-fymint-gold uppercase font-bold tracking-wider">Estimated Monthly In-Hand</span>
+                            <div class="text-3xl font-black text-fymint-green mt-1" id="sal-inhand">₹78,500</div>
+                            
+                            <div class="mt-6 space-y-2 text-xs border-t border-white/10 pt-4">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-300">Gross Monthly Fixed:</span>
+                                    <span class="font-bold text-white" id="sal-gross-m">₹91,666</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-300">Approx. Monthly Tax & Deductions:</span>
+                                    <span class="font-bold text-fymint-gold" id="sal-ded-m">₹13,166</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            updateSalary();
+        }
+
+        function updateSalary() {
+            const ctc = parseFloat(document.getElementById('sal-ctc').value) || 0;
+            const bonus = parseFloat(document.getElementById('sal-bonus').value) || 0;
+            const pf = parseFloat(document.getElementById('sal-pf').value) || 0;
+
+            const fixedAnnual = Math.max(0, ctc - bonus - (pf * 12));
+            const grossMonthly = fixedAnnual / 12;
+            const estTax = (grossMonthly * 0.12); // Rough indicative tax estimate
+            const inHand = grossMonthly - pf - estTax;
+
+            document.getElementById('sal-inhand').textContent = '₹' + Math.round(inHand).toLocaleString('en-IN');
+            document.getElementById('sal-gross-m').textContent = '₹' + Math.round(grossMonthly).toLocaleString('en-IN');
+            document.getElementById('sal-ded-m').textContent = '₹' + Math.round(pf + estTax).toLocaleString('en-IN');
+        }
+
+        /* 6. GENERIC CALCULATOR FALLBACK (FD, RD, SAVINGS, COMPOUND, INFLATION) */
+        function renderGenericCalc(container, type) {
+            container.innerHTML = `
+                <div class="text-center py-10 space-y-4">
+                    <div class="w-16 h-16 rounded-full bg-fymint-greenLight text-fymint-green flex items-center justify-center text-2xl mx-auto">
+                        <i class="fa-solid fa-calculator"></i>
+                    </div>
+                    <h3 class="text-2xl font-extrabold text-fymint-purple uppercase">${type} Calculator</h3>
+                    <p class="text-xs text-gray-500 max-w-md mx-auto">This financial model runs real-time simulations based on interest rates, compounding, and horizon years.</p>
+                    <div class="pt-4">
+                        <button onclick="navigateTo('calculators', 'emi')" class="bg-fymint-green text-white px-6 py-2.5 rounded-xl font-bold text-xs">
+                            Switch to EMI Tool
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        /* ----------------------------------------------------
+           4. CAREERS PLATFORM RENDERER
+           ---------------------------------------------------- */
+        function renderCareersPage() {
+            return `
+                <div class="bg-fymint-purple text-white py-16 text-center">
+                    <div class="max-w-4xl mx-auto px-4">
+                        <span class="text-xs uppercase font-bold text-fymint-gold tracking-widest">Join Our Mission</span>
+                        <h1 class="text-4xl font-extrabold mt-2">Work at fymint Technologies</h1>
+                        <p class="text-gray-300 text-sm mt-3 max-w-xl mx-auto">We are building the future of personal finance education, financial tools, and money management in India.</p>
+                    </div>
+                </div>
+
+                <div class="py-16 bg-fymint-bg">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        
+                        <!-- Open Positions -->
+                        <div class="max-w-5xl mx-auto space-y-6">
+                            <h2 class="text-2xl font-extrabold text-fymint-purple mb-6">Open Vacancies</h2>
+                            
+                            ${CAREERS_DATA.map(role => `
+                                <div class="bg-white border border-gray-200 rounded-2xl p-6 shadow-soft flex flex-col md:flex-row md:items-center justify-between gap-4">
+                                    <div class="space-y-1">
+                                        <div class="flex items-center space-x-2 text-xs font-semibold text-fymint-green">
+                                            <span>${role.department}</span>
+                                            <span>•</span>
+                                            <span>${role.type}</span>
+                                        </div>
+                                        <h3 class="text-xl font-bold text-gray-900">${role.title}</h3>
+                                        <p class="text-xs text-gray-500">${role.location} | Experience: ${role.exp}</p>
+                                        <p class="text-xs text-gray-600 mt-2 max-w-2xl">${role.desc}</p>
+                                    </div>
+                                    <button onclick="openApplicationModal('${role.title}')" class="bg-fymint-purple hover:bg-fymint-purpleLight text-white px-5 py-2.5 rounded-xl font-bold text-xs whitespace-nowrap shadow-sm">
+                                        Apply Now
+                                    </button>
+                                </div>
+                            `).join('')}
+                        </div>
+
+                    </div>
+                </div>
+            `;
+        }
+
+        /* ----------------------------------------------------
+           5. ABOUT US PAGE RENDERER
+           ---------------------------------------------------- */
+        function renderAboutPage() {
+            return `
+                <div class="py-16 bg-white">
+                    <div class="max-w-4xl mx-auto px-4 space-y-8">
+                        <div class="text-center space-y-3">
+                            <span class="text-xs font-bold uppercase text-fymint-green tracking-widest">About Us</span>
+                            <h1 class="text-4xl font-extrabold text-fymint-purple">fymint Technologies</h1>
+                            <p class="text-gray-600 text-sm">Empowering financial decisions through education and software.</p>
+                        </div>
+
+                        <div class="prose prose-lg text-gray-700 space-y-6 leading-relaxed">
+                            <p>fymint Technologies was created with a straightforward goal: to eliminate financial confusion for individuals and families navigating personal money management.</p>
+                            
+                            <h2 class="text-2xl font-bold text-fymint-purple">Our Guiding Core Principles</h2>
+                            <ul class="list-disc pl-6 space-y-2 text-sm">
+                                <li><strong>Absolute Privacy First:</strong> We do not sell or monetize personal credit profiles.</li>
+                                <li><strong>Mathematical Accuracy:</strong> Every calculator is tested against exact financial formulas.</li>
+                                <li><strong>Unbiased Editorial Integrity:</strong> Our guides prioritize clarity over sponsored recommendations.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        /* ----------------------------------------------------
+           6. CONTACT PAGE RENDERER
+           ---------------------------------------------------- */
+        function renderContactPage() {
+            return `
+                <div class="py-16 bg-fymint-bg">
+                    <div class="max-w-2xl mx-auto px-4 bg-white p-8 rounded-3xl border border-gray-200 shadow-card">
+                        <h1 class="text-3xl font-extrabold text-fymint-purple mb-2">Get In Touch</h1>
+                        <p class="text-xs text-gray-500 mb-6">Have questions or feedback? Contact fymint Technologies support.</p>
+
+                        <form onsubmit="handleContactSubmit(event)" class="space-y-4 text-sm">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 mb-1">Your Name</label>
+                                <input type="text" required placeholder="Full Name" class="w-full px-3.5 py-2.5 border rounded-xl">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 mb-1">Email Address</label>
+                                <input type="email" required placeholder="you@domain.com" class="w-full px-3.5 py-2.5 border rounded-xl">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 mb-1">Subject</label>
+                                <select class="w-full px-3.5 py-2.5 border rounded-xl bg-white">
+                                    <option>General Inquiry</option>
+                                    <option>Feedback / Bug Report</option>
+                                    <option>Partnership Proposal</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 mb-1">Message</label>
+                                <textarea rows="4" required placeholder="How can we assist you?" class="w-full px-3.5 py-2.5 border rounded-xl"></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-fymint-green hover:bg-fymint-greenHover text-white py-3 rounded-xl font-bold">
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            `;
+        }
+
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            showToast('Thank you! Your message has been submitted to fymint Technologies.');
+            e.target.reset();
+        }
+
+        /* ----------------------------------------------------
+           7. LEGAL PAGES RENDERER
+           ---------------------------------------------------- */
+        function renderLegalPage(type) {
+            const legalTitles = {
+                privacy: 'Privacy Policy',
+                terms: 'Terms of Service',
+                disclaimer: 'Financial Advice Disclaimer',
+                cookie: 'Cookie Policy'
+            };
+
+            return `
+                <div class="py-16 bg-white">
+                    <div class="max-w-4xl mx-auto px-4">
+                        <h1 class="text-3xl font-extrabold text-fymint-purple mb-6">${legalTitles[type] || 'Legal Information'}</h1>
+                        <div class="prose text-gray-700 space-y-4 text-sm leading-relaxed">
+                            <p><strong>Last Updated: September 2026</strong></p>
+                            <p>This document governs your use of fymint Technologies web platform and related services.</p>
+                            <h3 class="text-lg font-bold text-gray-900 mt-4">1. Educational Nature of Information</h3>
+                            <p>All information, tools, calculations, and articles made available on fymint are published solely for general informational and financial literacy purposes. They do not constitute investment advice, legal advice, or official credit appraisals.</p>
+                            <h3 class="text-lg font-bold text-gray-900 mt-4">2. Intellectual Property</h3>
+                            <p>All logos, brands, layout designs, and software tools are the exclusive property of fymint Technologies.</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        /* ----------------------------------------------------
+           MODAL & TOAST SYSTEM
+           ---------------------------------------------------- */
+        function openSearchModal() {
+            document.getElementById('search-modal').classList.remove('hidden');
+            document.getElementById('global-search-input').focus();
+        }
+
+        function closeSearchModal() {
+            document.getElementById('search-modal').classList.add('hidden');
+        }
+
+        function handleGlobalSearch(q) {
+            const container = document.getElementById('search-results-container');
+            const query = q.toLowerCase().trim();
+
+            if (!query) {
+                container.innerHTML = `<div class="text-center py-8 text-gray-400 text-sm">Start typing to search across articles, financial tools, and open positions.</div>`;
+                return;
+            }
+
+            // Search matches
+            const matchedArticles = ARTICLES_DATA.filter(a => a.title.toLowerCase().includes(query) || a.category.toLowerCase().includes(query));
+            const matchedCareers = CAREERS_DATA.filter(c => c.title.toLowerCase().includes(query));
+
+            let html = '';
+
+            if (matchedArticles.length) {
+                html += `<div class="py-2 text-xs font-bold uppercase text-fymint-green">Articles (${matchedArticles.length})</div>`;
+                matchedArticles.forEach(a => {
+                    html += `
+                        <div onclick="navigateTo('blog', '${a.slug}'); closeSearchModal();" class="py-2.5 px-3 hover:bg-gray-50 rounded-lg cursor-pointer">
+                            <h4 class="font-bold text-sm text-gray-800">${a.title}</h4>
+                            <p class="text-xs text-gray-500">${a.category} • ${a.readTime}</p>
+                        </div>
+                    `;
+                });
+            }
+
+            if (matchedCareers.length) {
+                html += `<div class="py-2 text-xs font-bold uppercase text-fymint-gold mt-2">Careers (${matchedCareers.length})</div>`;
+                matchedCareers.forEach(c => {
+                    html += `
+                        <div onclick="navigateTo('careers'); closeSearchModal();" class="py-2.5 px-3 hover:bg-gray-50 rounded-lg cursor-pointer">
+                            <h4 class="font-bold text-sm text-gray-800">${c.title}</h4>
+                            <p class="text-xs text-gray-500">${c.department} • ${c.location}</p>
+                        </div>
+                    `;
+                });
+            }
+
+            if (!matchedArticles.length && !matchedCareers.length) {
+                html = `<div class="text-center py-8 text-gray-400 text-sm">No results found for "${q}". Try another keyword.</div>`;
+            }
+
+            container.innerHTML = html;
+        }
+
+        function openApplicationModal(roleTitle) {
+            document.getElementById('app-modal-title').textContent = roleTitle ? `Apply: ${roleTitle}` : 'Apply for Position';
+            document.getElementById('application-modal').classList.remove('hidden');
+        }
+
+        function closeApplicationModal() {
+            document.getElementById('application-modal').classList.add('hidden');
+        }
+
+        function submitCareerApplication(e) {
+            e.preventDefault();
+            closeApplicationModal();
+            showToast('Application submitted successfully! Our talent team will review your application.');
+        }
+
+        function showToast(msg) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'bg-fymint-purple text-white border-l-4 border-fymint-green px-4 py-3 rounded-xl shadow-floating text-xs font-semibold flex items-center space-x-2 pointer-events-auto transform transition-all duration-300 translate-y-2';
+            toast.innerHTML = `<i class="fa-solid fa-circle-check text-fymint-green text-sm"></i><span>${msg}</span>`;
+            
+            container.appendChild(toast);
+            setTimeout(() => toast.classList.remove('translate-y-2'), 10);
+            
+            setTimeout(() => {
+                toast.classList.add('opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+
+        // Close search on ESC key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeSearchModal();
+        });
+
+        /* INITIAL APP LOAD */
+        window.onload = function() {
+            renderPage();
+        };
+    </script>
+</body>
+</html>
