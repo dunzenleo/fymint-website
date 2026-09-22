@@ -1,0 +1,2174 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fymint | Personal Finance, Calculators, Mobile App & Money Management</title>
+    <meta name="description" content="fymint helps you understand, manage, and accelerate your personal finances with free calculators, expert guides, interactive app prototype, and modern wealth tools. Make Every Rupee Count.">
+    <meta name="keywords" content="fymint, personal finance, mobile app, EMI calculator, SIP calculator, FD calculator, budget tool, money management, tax planning, financial education">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="fymint - Make Every Rupee Count">
+    <meta property="og:description" content="All-in-one personal finance platform: Interactive Mobile App, Calculators, Financial Education, Budgeting, and Wealth Tools.">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // DOWNLOAD LINK CONFIGURATION FOR MOBILE APP
+        const DOWNLOAD_URL = "PASTE_YOUR_DOWNLOAD_LINK_HERE";
+
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            purple: '#180828',
+                            purpleDark: '#0F051A',
+                            purpleLight: '#230F38',
+                            green: '#20B86B',
+                            greenHover: '#1AA35E',
+                            greenLight: '#E8F8F0',
+                            gold: '#FFB800',
+                            goldLight: '#FFF8E6',
+                            bgLight: '#F8F9FA',
+                            cardBg: '#FFFFFF',
+                            border: '#E2E8F0'
+                        },
+                        fymint: {
+                            bg: '#f3f5f9',
+                            card: '#ffffff',
+                            primary: '#4f46e5',
+                            darkCard: '#181b34',
+                            emerald: '#10b981',
+                            amber: '#f59e0b',
+                            rose: '#ef4444',
+                            cyan: '#06b6d4'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Plus Jakarta Sans', 'system-ui', '-apple-system', 'sans-serif']
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 30px -5px rgba(0, 0, 0, 0.05)',
+                        'glow': '0 0 25px rgba(79, 70, 229, 0.3)',
+                        'card': '0 8px 24px -4px rgba(24, 27, 52, 0.08)'
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts Inter & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google AdSense Script Injection -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-385053067660354" crossorigin="anonymous"></script>
+
+    <!-- Custom Micro-Styles for Layout & Prototype Integration -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FFFFFF;
+            color: #1E293B;
+            overflow-x: hidden;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .fymint-logo-text {
+            font-weight: 800;
+            letter-spacing: -0.04em;
+        }
+        
+        .fymint-ad-block {
+            background-color: #F8F9FA;
+            border: 1px dashed #CBD5E1;
+            min-height: 70px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.5rem;
+            margin: 1rem 0;
+            padding: 0.5rem;
+            position: relative;
+        }
+        
+        .fymint-ad-label {
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: #94A3B8;
+            margin-bottom: 0.15rem;
+            text-transform: uppercase;
+        }
+        
+        /* Custom compact scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F1F5F9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #CBD5E1;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94A3B8;
+        }
+
+        /* Hide scrollbars for app prototype screen */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Glassmorphism card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        
+        /* Range slider styling */
+        input[type=range] {
+            accent-color: #20B86B;
+        }
+
+        /* Phone frame shadow & layout */
+        .phone-frame {
+            box-shadow: 0 20px 50px rgba(15, 5, 26, 0.35), 0 0 0 10px #1e293b;
+        }
+
+        /* App Prototype Screens */
+        .app-screen {
+            display: none;
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 0.25s ease-out, transform 0.25s ease-out;
+        }
+
+        .app-screen.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .touch-active {
+            transition: transform 0.1s ease, opacity 0.1s ease;
+        }
+        .touch-active:active {
+            transform: scale(0.96);
+            opacity: 0.85;
+        }
+
+        /* Donut Chart CSS Conic Gradient */
+        .donut-chart {
+            background: conic-gradient(
+                #6366f1 0% 59%, 
+                #10b981 59% 84%, 
+                #f59e0b 84% 97%, 
+                #06b6d4 97% 100%
+            );
+            border-radius: 50%;
+        }
+
+        /* Ripple & Scan Line animation */
+        @keyframes scanLine {
+            0% { top: 10%; }
+            50% { top: 85%; }
+            100% { top: 10%; }
+        }
+        .animate-scan {
+            animation: scanLine 2s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-white text-slate-800 antialiased flex flex-col min-h-screen">
+
+    <!-- GLOBAL COMPACT HEADER -->
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-100 transition-all duration-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            
+            <!-- Logo -->
+            <a href="#home" class="flex items-center text-brand-purple hover:opacity-90 transition-opacity" aria-label="fymint home">
+                <svg class="h-8 sm:h-8 w-auto" viewBox="0 0 225 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <text x="0" y="52" font-family="'Inter', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif" font-weight="900" font-size="60" letter-spacing="-3px" fill="currentColor">fymınt</text>
+                    <circle cx="195" cy="46" r="8" fill="#20B86B" />
+                </svg>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center space-x-6 font-medium text-slate-700">
+                <a href="#home" class="nav-link hover:text-brand-green transition-colors py-1 text-sm">Home</a>
+                <a href="#app-showcase" class="nav-link hover:text-brand-green transition-colors py-1 text-sm font-semibold text-brand-purple">fymint App</a>
+                <a href="#about" class="nav-link hover:text-brand-green transition-colors py-1 text-sm">About</a>
+                <a href="#blog" class="nav-link hover:text-brand-green transition-colors py-1 text-sm">Blog</a>
+                <a href="#calculators" class="nav-link hover:text-brand-green transition-colors py-1 text-sm">Calculators</a>
+                <a href="#careers" class="nav-link hover:text-brand-green transition-colors py-1 text-sm">Careers</a>
+                <a href="#contact" class="nav-link hover:text-brand-green transition-colors py-1 text-sm">Contact</a>
+            </nav>
+
+            <!-- Header Action Buttons -->
+            <div class="hidden md:flex items-center space-x-3">
+                <button onclick="openGlobalSearch()" class="p-2 text-slate-600 hover:text-brand-purple hover:bg-slate-100 rounded-full transition-colors" title="Search platform">
+                    <i class="fa-solid fa-magnifying-glass text-base"></i>
+                </button>
+                <button onclick="handleDownloadApp()" class="bg-brand-purple hover:bg-brand-purpleDark text-white px-4 py-2 rounded-full font-semibold text-xs transition-all shadow-sm flex items-center gap-1.5">
+                    <i class="fa-solid fa-download text-[11px] text-brand-green"></i>
+                    <span>Get Mobile App</span>
+                </button>
+            </div>
+
+            <!-- Mobile Hamburger Button -->
+            <div class="flex items-center space-x-2 md:hidden">
+                <button onclick="openGlobalSearch()" class="p-1.5 text-slate-600 hover:text-brand-purple rounded-lg">
+                    <i class="fa-solid fa-magnifying-glass text-base"></i>
+                </button>
+                <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="p-1.5 text-slate-700 hover:text-brand-purple focus:outline-none" aria-label="Toggle Navigation">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer Navigation -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-4 space-y-2 shadow-xl">
+            <a href="#home" onclick="closeMobileMenu()" class="block py-2 px-3 text-sm font-semibold text-slate-800 hover:bg-slate-50 rounded-lg">Home</a>
+            <a href="#app-showcase" onclick="closeMobileMenu()" class="block py-2 px-3 text-sm font-semibold text-slate-800 hover:bg-slate-50 rounded-lg text-brand-green">fymint Mobile App</a>
+            <a href="#about" onclick="closeMobileMenu()" class="block py-2 px-3 text-sm font-semibold text-slate-800 hover:bg-slate-50 rounded-lg">About</a>
+            <a href="#blog" onclick="closeMobileMenu()" class="block py-2 px-3 text-sm font-semibold text-slate-800 hover:bg-slate-50 rounded-lg">Blog & Guides</a>
+            <a href="#calculators" onclick="closeMobileMenu()" class="block py-2 px-3 text-sm font-semibold text-slate-800 hover:bg-slate-50 rounded-lg">Financial Calculators</a>
+            <a href="#careers" onclick="closeMobileMenu()" class="block py-2 px-3 text-sm font-semibold text-slate-800 hover:bg-slate-50 rounded-lg">Careers</a>
+            <a href="#contact" onclick="closeMobileMenu()" class="block py-2 px-3 text-sm font-semibold text-slate-800 hover:bg-slate-50 rounded-lg">Contact Us</a>
+            <div class="pt-2 border-t border-slate-100 flex flex-col gap-2">
+                <button onclick="handleDownloadApp()" class="w-full text-center bg-brand-purple text-white px-4 py-2.5 rounded-lg font-bold text-sm transition-all flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-download text-brand-green"></i>
+                    <span>Download Mobile App</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN DYNAMIC CONTENT HOLDER -->
+    <main id="app-content" class="flex-grow">
+        <!-- SPA Pages are dynamically rendered here based on Hash Router -->
+    </main>
+
+    <!-- COMPACT FOOTER SECTION -->
+    <footer class="bg-brand-purple text-white pt-10 pb-8 border-t border-slate-800 mt-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Top Footer Branding -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 pb-8 border-b border-slate-800">
+                <div class="lg:col-span-5 space-y-3">
+                    <p class="text-slate-300 text-xs max-w-md leading-relaxed">
+                        fymint is an all-in-one personal finance platform designed to make every rupee count through financial calculators, money management tools, actionable guides, mobile apps, and smart education.
+                    </p>
+                    <div class="pt-1 text-[11px] text-slate-400 space-y-1">
+                        <p><i class="fa-solid fa-envelope text-brand-green mr-2"></i>Enquiry: <span class="text-slate-300 font-mono">support@fymint.com</span></p>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-4 text-xs">
+                    <div>
+                        <h3 class="font-bold text-white mb-2 text-sm">Company</h3>
+                        <ul class="space-y-1.5 text-slate-300">
+                            <li><a href="#about" class="hover:text-brand-green transition-colors">About Us</a></li>
+                            <li><a href="#careers" class="hover:text-brand-green transition-colors">Careers</a></li>
+                            <li><a href="#contact" class="hover:text-brand-green transition-colors">Contact</a></li>
+                            <li><a href="#blog" class="hover:text-brand-green transition-colors">Blog & Guides</a></li>
+                            <li><a href="#app-showcase" class="hover:text-brand-green transition-colors">fymint App Prototype</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-white mb-2 text-sm">Key Tools</h3>
+                        <ul class="space-y-1.5 text-slate-300">
+                            <li><a href="#calculators/emi" class="hover:text-brand-green transition-colors">EMI Calculator</a></li>
+                            <li><a href="#calculators/sip" class="hover:text-brand-green transition-colors">SIP Calculator</a></li>
+                            <li><a href="#calculators/fd" class="hover:text-brand-green transition-colors">FD Calculator</a></li>
+                            <li><a href="#calculators/budget" class="hover:text-brand-green transition-colors">Budget Calculator</a></li>
+                            <li><a href="#calculators/gst" class="hover:text-brand-green transition-colors">GST Calculator</a></li>
+                            <li><a href="#calculators/ssy" class="hover:text-brand-green transition-colors">SSY Calculator</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-white mb-2 text-sm">Legal & Privacy</h3>
+                        <ul class="space-y-1.5 text-slate-300">
+                            <li><a href="#legal/privacy" class="hover:text-brand-green transition-colors">Privacy Policy</a></li>
+                            <li><a href="#legal/terms" class="hover:text-brand-green transition-colors">Terms & Conditions</a></li>
+                            <li><a href="#legal/disclaimer" class="hover:text-brand-green transition-colors">Disclaimer</a></li>
+                            <li><a href="#legal/cookies" class="hover:text-brand-green transition-colors">Cookie Policy</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CATEGORIZED SEO DIRECTORY FOOTER LINK GROUPS -->
+            <div id="footer-directory-container" class="py-6 space-y-4 border-b border-slate-800/80 text-[11px] text-slate-400">
+                <!-- Javascript dynamically injects SEO Directory here -->
+            </div>
+
+            <!-- Footer Bottom Copy -->
+            <div class="pt-6 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-400 gap-3">
+                <p>&copy; 2026 fymint Technologies. All rights reserved.</p>
+                <div class="flex items-center space-x-4">
+                    <a href="#legal/disclaimer" class="hover:text-slate-200">Financial Disclaimer</a>
+                    <a href="#legal/privacy" class="hover:text-slate-200">Privacy Policy</a>
+                    <a href="#contact" class="hover:text-slate-200">Support</a>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- GLOBAL SEARCH MODAL -->
+    <div id="search-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-start justify-center pt-12 px-4">
+        <div class="bg-white rounded-2xl max-w-xl w-full shadow-2xl border border-slate-200 overflow-hidden transform transition-all">
+            <div class="p-3.5 border-b border-slate-100 flex items-center justify-between">
+                <div class="flex items-center gap-2.5 flex-grow">
+                    <i class="fa-solid fa-magnifying-glass text-slate-400 text-base"></i>
+                    <input type="text" id="global-search-input" onkeyup="handleGlobalSearch()" placeholder="Search articles, calculators, loans, taxes, app features..." class="w-full text-sm focus:outline-none text-slate-800 placeholder-slate-400">
+                </div>
+                <button onclick="closeGlobalSearch()" class="p-1.5 text-slate-400 hover:text-slate-600 rounded-lg">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <div id="search-results-container" class="max-h-80 overflow-y-auto p-3 space-y-1.5">
+                <p class="text-xs text-slate-500 text-center py-4">Type to search across calculators, blog posts, and app tools...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toast-container" class="fixed bottom-4 right-4 z-50 flex flex-col space-y-2"></div>
+
+    <script>
+        // --- PROTOTYPE STATE MANAGEMENT ---
+        let currentBalance = 22348;
+        let actualSpent = 31419;
+        let incomeTotal = 53767;
+        let plannedTotal = 10159;
+        let pendingCount = 3;
+        let activeTxType = 'expense';
+        let balanceVisible = true;
+
+        // Download Handler
+        function handleDownloadApp() {
+            if (DOWNLOAD_URL && DOWNLOAD_URL !== "PASTE_YOUR_DOWNLOAD_LINK_HERE") {
+                window.open(DOWNLOAD_URL, '_blank');
+            } else {
+                triggerToast("fymint Mobile App download link ready! (Set DOWNLOAD_URL in code)");
+            }
+        }
+
+        // Live clock updater
+        function updateTime() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const mins = String(now.getMinutes()).padStart(2, '0');
+            const timeEl = document.getElementById('liveTime');
+            if (timeEl) timeEl.textContent = `${hours}:${mins}`;
+        }
+        setInterval(updateTime, 1000);
+
+        // Screen Navigation
+        function switchTab(tabKey) {
+            const screens = document.querySelectorAll('.app-screen');
+            screens.forEach(screen => screen.classList.remove('active'));
+
+            const targetScreen = document.getElementById(`screen-${tabKey}`);
+            if (targetScreen) targetScreen.classList.add('active');
+
+            const tabKeys = ['home', 'flow', 'liability', 'action', 'budget'];
+            tabKeys.forEach(key => {
+                const btn = document.getElementById(`tab-btn-${key}`);
+                if (btn) {
+                    if (key === tabKey) {
+                        btn.className = "touch-active flex flex-col items-center py-1 px-3 rounded-2xl text-indigo-600 bg-indigo-50 font-bold transition";
+                    } else {
+                        btn.className = "touch-active flex flex-col items-center py-1 px-3 rounded-2xl text-slate-400 hover:text-indigo-600 font-semibold transition";
+                    }
+                }
+            });
+
+            const mainArea = document.getElementById('mainContentArea');
+            if (mainArea) mainArea.scrollTop = 0;
+        }
+
+        function toggleBalanceVisibility() {
+            balanceVisible = !balanceVisible;
+            const heroText = document.getElementById('heroBalanceText');
+            const eyeIcon = document.getElementById('eyeIcon');
+
+            if (heroText && eyeIcon) {
+                if (balanceVisible) {
+                    heroText.textContent = `₹${currentBalance.toLocaleString('en-IN')}`;
+                    eyeIcon.className = "fa-regular fa-eye";
+                } else {
+                    heroText.textContent = "₹ ••••••";
+                    eyeIcon.className = "fa-regular fa-eye-slash";
+                }
+            }
+        }
+
+        function openModal(modalId) {
+            const m = document.getElementById(modalId);
+            if (m) m.classList.remove('hidden');
+        }
+
+        function closeModal(modalId) {
+            const m = document.getElementById(modalId);
+            if (m) m.classList.add('hidden');
+        }
+
+        function openScanPayModal() { openModal('modalScanPay'); }
+        function openAddActionModal() { openModal('modalAddAction'); }
+        function openAddTransactionModal() { openModal('modalAddTransaction'); }
+        function openMonthModal() { openModal('modalMonthSelect'); }
+
+        function selectMonth(monthStr) {
+            const display = document.getElementById('selectedMonthDisplay');
+            if (display) display.textContent = monthStr;
+            closeModal('modalMonthSelect');
+            triggerToast(`Switched view to ${monthStr}`);
+        }
+
+        function triggerToast(msg) {
+            const toastContainer = document.getElementById('toast-container');
+            if (toastContainer) {
+                const toast = document.createElement('div');
+                toast.className = "bg-slate-900 text-white text-xs font-bold px-4 py-2.5 rounded-2xl shadow-2xl flex items-center gap-2 transition duration-300 animate-bounce";
+                toast.innerHTML = `<i class="fa-solid fa-circle-check text-brand-green"></i> <span>${msg}</span>`;
+                toastContainer.appendChild(toast);
+                setTimeout(() => {
+                    toast.remove();
+                }, 3000);
+            }
+        }
+
+        function simulateQuickPayment() {
+            closeModal('modalScanPay');
+            actualSpent += 350;
+            currentBalance -= 350;
+            updateUI();
+            triggerToast("Paid ₹350 via Fymint UPI");
+        }
+
+        function saveNewActionPlan() {
+            const titleInput = document.getElementById('actionTitleInput');
+            const amtInput = document.getElementById('actionAmountInput');
+            const catInput = document.getElementById('actionCategoryInput');
+
+            const title = (titleInput && titleInput.value) ? titleInput.value : "Planned Shopping";
+            const amt = (amtInput && amtInput.value) ? parseFloat(amtInput.value) : 1200;
+            const cat = catInput ? catInput.value : "Other";
+
+            plannedTotal += amt;
+            pendingCount += 1;
+
+            const container = document.getElementById('plannedExpensesContainer');
+            if (container) {
+                const newItem = document.createElement('div');
+                newItem.className = "p-3 rounded-2xl border border-slate-100 bg-slate-50/60 flex items-center justify-between";
+                newItem.innerHTML = `
+                    <div>
+                        <h4 class="font-extrabold text-xs text-slate-900">${title}</h4>
+                        <p class="text-[10px] text-slate-400 mt-0.5">${cat} · Due 2026-09-28 · Pending</p>
+                    </div>
+                    <span class="font-black text-sm text-amber-600">₹${amt.toLocaleString('en-IN')}</span>
+                `;
+                container.prepend(newItem);
+            }
+
+            closeModal('modalAddAction');
+            updateUI();
+            triggerToast(`Added plan: ${title}`);
+
+            if (titleInput) titleInput.value = '';
+            if (amtInput) amtInput.value = '';
+        }
+
+        function setTxType(type) {
+            activeTxType = type;
+            const expBtn = document.getElementById('typeExpenseBtn');
+            const incBtn = document.getElementById('typeIncomeBtn');
+
+            if (expBtn && incBtn) {
+                if (type === 'expense') {
+                    expBtn.className = "flex-1 py-1.5 rounded-lg bg-white text-indigo-600 shadow-sm text-center font-bold";
+                    incBtn.className = "flex-1 py-1.5 rounded-lg text-slate-500 text-center font-bold";
+                } else {
+                    incBtn.className = "flex-1 py-1.5 rounded-lg bg-white text-emerald-600 shadow-sm text-center font-bold";
+                    expBtn.className = "flex-1 py-1.5 rounded-lg text-slate-500 text-center font-bold";
+                }
+            }
+        }
+
+        function saveTransactionEntry() {
+            const titleInput = document.getElementById('txTitleInput');
+            const amtInput = document.getElementById('txAmountInput');
+
+            const title = (titleInput && titleInput.value) ? titleInput.value : "Manual Transaction";
+            const amt = (amtInput && amtInput.value) ? parseFloat(amtInput.value) : 500;
+
+            if (activeTxType === 'expense') {
+                actualSpent += amt;
+                currentBalance -= amt;
+            } else {
+                incomeTotal += amt;
+                currentBalance += amt;
+            }
+
+            const flowList = document.getElementById('flowList');
+            if (flowList) {
+                const item = document.createElement('div');
+                item.className = "flow-item flex items-center justify-between p-2.5 rounded-2xl bg-slate-50";
+                item.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-xl ${activeTxType === 'income' ? 'bg-emerald-100 text-emerald-600' : 'bg-rose-100 text-rose-600'} flex items-center justify-center text-xs font-bold">
+                            <i class="fa-solid ${activeTxType === 'income' ? 'fa-arrow-down-left' : 'fa-receipt'}"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-xs text-slate-900">${title}</h4>
+                            <p class="text-[10px] text-slate-400">Just now · ${activeTxType}</p>
+                        </div>
+                    </div>
+                    <span class="font-black text-sm ${activeTxType === 'income' ? 'text-emerald-600' : 'text-rose-600'}">
+                        ${activeTxType === 'income' ? '+' : '-'}₹${amt.toLocaleString('en-IN')}
+                    </span>
+                `;
+                flowList.insertBefore(item, flowList.children[1] || null);
+            }
+
+            closeModal('modalAddTransaction');
+            updateUI();
+            triggerToast(`Recorded ${activeTxType}: ₹${amt}`);
+
+            if (titleInput) titleInput.value = '';
+            if (amtInput) amtInput.value = '';
+        }
+
+        function filterFlowTransactions() {
+            const input = document.getElementById('flowSearchInput');
+            if (!input) return;
+            const query = input.value.toLowerCase();
+            const items = document.querySelectorAll('.flow-item');
+            items.forEach(item => {
+                const text = item.textContent.toLowerCase();
+                item.style.display = text.includes(query) ? 'flex' : 'none';
+            });
+        }
+
+        function updateUI() {
+            const heroBalanceText = document.getElementById('heroBalanceText');
+            if (heroBalanceText && balanceVisible) {
+                heroBalanceText.textContent = `₹${currentBalance.toLocaleString('en-IN')}`;
+            }
+
+            const heroIncome = document.getElementById('heroIncome');
+            if (heroIncome) heroIncome.textContent = `₹${incomeTotal.toLocaleString('en-IN')}`;
+
+            const heroSpent = document.getElementById('heroSpent');
+            if (heroSpent) heroSpent.textContent = `₹${actualSpent.toLocaleString('en-IN')}`;
+
+            const heroPlanned = document.getElementById('heroPlanned');
+            if (heroPlanned) heroPlanned.textContent = `₹${plannedTotal.toLocaleString('en-IN')}`;
+
+            const heroAfterGoals = document.getElementById('heroAfterGoals');
+            if (heroAfterGoals) heroAfterGoals.textContent = `₹${(currentBalance - plannedTotal).toLocaleString('en-IN')}`;
+
+            const actionPendingCount = document.getElementById('actionPendingCount');
+            if (actionPendingCount) actionPendingCount.textContent = pendingCount;
+
+            const actionPlannedTotal = document.getElementById('actionPlannedTotal');
+            if (actionPlannedTotal) actionPlannedTotal.textContent = `₹${plannedTotal.toLocaleString('en-IN')}`;
+
+            const actionProjected = document.getElementById('actionProjected');
+            if (actionProjected) actionProjected.textContent = `₹${(currentBalance - plannedTotal).toLocaleString('en-IN')}`;
+
+            const budgetActualSpentText = document.getElementById('budgetActualSpentText');
+            if (budgetActualSpentText) budgetActualSpentText.textContent = `₹${actualSpent.toLocaleString('en-IN')}`;
+
+            const budgetLeftText = document.getElementById('budgetLeftText');
+            if (budgetLeftText) {
+                const left = Math.max(0, 40432 - actualSpent);
+                budgetLeftText.textContent = `₹${left.toLocaleString('en-IN')}`;
+            }
+        }
+
+        function openCategoryModal(name, amt) {
+            triggerToast(`${name}: ₹${amt.toLocaleString('en-IN')} allocated`);
+        }
+
+        function sortCategories(direction) {
+            triggerToast(`Sorted categories ${direction === 'asc' ? 'Low → High' : 'High → Low'}`);
+        }
+
+        // Attach prototype functions to window
+        window.handleDownloadApp = handleDownloadApp;
+        window.switchTab = switchTab;
+        window.toggleBalanceVisibility = toggleBalanceVisibility;
+        window.openModal = openModal;
+        window.closeModal = closeModal;
+        window.openScanPayModal = openScanPayModal;
+        window.openAddActionModal = openAddActionModal;
+        window.openAddTransactionModal = openAddTransactionModal;
+        window.openMonthModal = openMonthModal;
+        window.selectMonth = selectMonth;
+        window.triggerToast = triggerToast;
+        window.simulateQuickPayment = simulateQuickPayment;
+        window.saveNewActionPlan = saveNewActionPlan;
+        window.setTxType = setTxType;
+        window.saveTransactionEntry = saveTransactionEntry;
+        window.filterFlowTransactions = filterFlowTransactions;
+        window.openCategoryModal = openCategoryModal;
+        window.sortCategories = sortCategories;
+
+        // --- DATA STORE ---
+        const BLOG_POSTS = [
+            {
+                slug: "how-to-create-a-monthly-budget-that-actually-works",
+                title: "How to Create a Monthly Budget That Actually Works in 2026",
+                category: "Budgeting",
+                readTime: "7 min read",
+                date: "Oct 12, 2026",
+                author: "Rohan Sharma, CFP",
+                authorRole: "Lead Financial Planner at fymint",
+                summary: "Master the 50/30/20 rule, track hidden leaks in monthly expenses, and build a stress-free financial framework that fits modern lifestyle needs.",
+                keywords: ["budgeting", "50 30 20 rule", "personal finance", "savings"],
+                calculatorLink: "budget",
+                content: `
+                    <p class="text-base text-slate-700 leading-relaxed mb-4 font-medium">Budgeting isn't about restricting your life; it's about giving every rupee a clear mission. Whether you earn ₹30,000 or ₹3,00,000 per month, without a reliable budget framework, money has a subtle habit of disappearing into hidden leaks.</p>
+                    
+                    <h2 class="text-xl font-bold text-brand-purple mt-6 mb-3">Why Traditional Budgets Fail</h2>
+                    <p class="mb-3 text-slate-600 text-sm leading-relaxed">Most people attempt to track every single cup of tea or small expense manually. Within two weeks, decision fatigue sets in, and the budget is abandoned. At <strong>fymint</strong>, we advocate for proportional automated budgeting.</p>
+                    
+                    <div class="bg-brand-bgLight p-4 rounded-xl border border-slate-200 my-4 text-sm">
+                        <h3 class="font-bold text-brand-purple text-base mb-1.5"><i class="fa-solid fa-chart-pie text-brand-green mr-1.5"></i> The 50/30/20 Golden Rule</h3>
+                        <ul class="space-y-2 text-slate-700">
+                            <li><strong>50% Needs:</strong> Rent, groceries, utility bills, loan EMIs, insurance premiums, basic medical needs.</li>
+                            <li><strong>30% Wants:</strong> Dining out, weekend trips, OTT subscriptions, shopping, hobbies.</li>
+                            <li><strong>20% Savings & Investments:</strong> Emergency fund contributions, SIPs, ELSS tax savings, retirement planning.</li>
+                        </ul>
+                    </div>
+
+                    <h2 class="text-xl font-bold text-brand-purple mt-6 mb-3">Step-by-Step Implementation</h2>
+                    <ol class="list-decimal pl-5 space-y-2 text-slate-600 text-sm mb-4">
+                        <li><strong>Calculate Net Monthly Take-Home Income:</strong> Include salary minus tax deductions, interest, or passive income.</li>
+                        <li><strong>Audit the Last 90 Days:</strong> Group past bank statements into Needs, Wants, and Investments.</li>
+                        <li><strong>Automate Investments on Payday:</strong> Direct bank auto-debits for Mutual Fund SIPs right after salary credit.</li>
+                    </ol>
+
+                    <p class="mb-4 text-slate-600 text-sm">Want to test your exact monthly allocation right now? Use the fymint <strong>Budget Calculator</strong> or test our live <strong>fymint Mobile App</strong> to generate instant 50/30/20 breakdowns tailored to your income.</p>
+                `
+            },
+            {
+                slug: "sip-vs-fd-where-should-you-invest",
+                title: "SIP vs Fixed Deposit (FD): Where Should You Invest Your Savings?",
+                category: "Investing",
+                readTime: "9 min read",
+                date: "Sep 28, 2026",
+                author: "Nilam Chapagai",
+                authorRole: "Finance Analyst",
+                summary: "A realistic comparison of Mutual Fund Systematic Investment Plans (SIP) versus Bank Fixed Deposits regarding returns, inflation protection, liquidity, and taxation.",
+                keywords: ["SIP", "Fixed Deposit", "Mutual Funds", "Investing", "Compound Interest"],
+                calculatorLink: "sip",
+                content: `
+                    <p class="text-base text-slate-700 leading-relaxed mb-4 font-medium">One of the most persistent financial debates in India is choosing between traditional Bank Fixed Deposits (FD) and Equity Mutual Fund Systematic Investment Plans (SIP).</p>
+                    
+                    <h2 class="text-xl font-bold text-brand-purple mt-6 mb-3">Understanding the Core Differences</h2>
+                    <p class="mb-3 text-slate-600 text-sm leading-relaxed">While Fixed Deposits offer guaranteed nominal returns and capital protection, SIPs offer wealth creation that consistently beats inflation over medium-to-long term horizons (5+ years).</p>
+                    
+                    <div class="overflow-x-auto my-4">
+                        <table class="w-full text-left border-collapse border border-slate-200 rounded-xl overflow-hidden">
+                            <thead class="bg-brand-purple text-white text-xs">
+                                <tr>
+                                    <th class="p-2.5">Feature</th>
+                                    <th class="p-2.5">Fixed Deposit (FD)</th>
+                                    <th class="p-2.5">SIP (Equity Mutual Fund)</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-xs text-slate-600 divide-y divide-slate-200 bg-white">
+                                <tr>
+                                    <td class="p-2.5 font-semibold">Expected Return</td>
+                                    <td class="p-2.5">6.5% - 7.5% per annum</td>
+                                    <td class="p-2.5 text-brand-green font-bold">12% - 15% (Historical Avg)</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2.5 font-semibold">Inflation Defense</td>
+                                    <td class="p-2.5 text-red-500">Low (Often negative post-tax)</td>
+                                    <td class="p-2.5 text-brand-green font-bold">High</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2.5 font-semibold">Risk Level</td>
+                                    <td class="p-2.5">Very Low</td>
+                                    <td class="p-2.5">Moderate to Market Linked</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h2 class="text-xl font-bold text-brand-purple mt-6 mb-3">The Power of Rupee Cost Averaging in SIPs</h2>
+                    <p class="mb-4 text-slate-600 text-sm">When markets dip, your fixed SIP amount buys more units of a fund. When markets rise, your accumulated units gain higher valuation. This eliminates the need to time the market.</p>
+                `
+            },
+            {
+                slug: "loan-emi-explained-interest-rates-impact",
+                title: "Understanding Loan EMIs: How Interest Rates and Tenure Impact Wealth",
+                category: "Loans",
+                readTime: "8 min read",
+                date: "Aug 19, 2026",
+                author: "Kiran Kumar Das",
+                authorRole: "Founder & Lead Architect",
+                summary: "Deep dive into how Equated Monthly Installments are calculated, how reducing interest by 1% can save lakhs in home loans, and prepayment strategies.",
+                keywords: ["EMI", "Home Loan", "Personal Loan", "Interest Rate"],
+                calculatorLink: "emi",
+                content: `
+                    <p class="text-base text-slate-700 leading-relaxed mb-4 font-medium">Taking a loan is often necessary for major milestones like purchasing a home or funding higher education. However, many borrowers look only at the monthly EMI amount and ignore the cumulative interest burden.</p>
+                    
+                    <h2 class="text-xl font-bold text-brand-purple mt-6 mb-3">How EMI Amortization Works</h2>
+                    <p class="mb-3 text-slate-600 text-sm leading-relaxed">In the early years of a long-term loan (like a 20-year Home Loan), nearly 70% to 80% of your monthly EMI payment goes purely towards paying interest, while only a small fraction reduces the principal amount.</p>
+                    
+                    <div class="bg-brand-greenLight p-4 rounded-xl border border-brand-green/30 my-4 text-xs">
+                        <h3 class="font-bold text-brand-purple text-sm mb-1"><i class="fa-solid fa-lightbulb text-brand-green mr-1.5"></i> The 1 Extra EMI Prepayment Trick</h3>
+                        <p class="text-slate-700 leading-relaxed">Paying just one additional EMI every year towards your principal can reduce a 20-year home loan duration by up to 4.5 years, saving lakhs of rupees in interest!</p>
+                    </div>
+                `
+            }
+        ];
+
+        const CALCULATORS_LIST = [
+            { id: "emi", title: "EMI Calculator", icon: "fa-calculator", desc: "Calculate loan repayment, interest & total payable.", category: "Loan" },
+            { id: "sip", title: "SIP Calculator", icon: "fa-chart-line", desc: "Estimate wealth growth on mutual fund investments.", category: "Investment" },
+            { id: "fd", title: "FD Calculator", icon: "fa-vault", desc: "Compute maturity proceeds on bank fixed deposits.", category: "Savings" },
+            { id: "rd", title: "RD Calculator", icon: "fa-piggy-bank", desc: "Calculate returns on recurring monthly deposits.", category: "Savings" },
+            { id: "budget", title: "Budget Calculator", icon: "fa-pie-chart", desc: "Apply 50/30/20 rule to manage salary & savings.", category: "Personal Finance" },
+            { id: "savings", title: "Savings Goal", icon: "fa-bullseye", desc: "Set monthly target savings to achieve your goals.", category: "Personal Finance" },
+            { id: "compound-interest", title: "Compound Interest", icon: "fa-arrow-trend-up", desc: "Visualize compounding wealth power over time.", category: "Investment" },
+            { id: "gst", title: "GST Calculator", icon: "fa-file-invoice-dollar", desc: "Calculate gross and net price with GST rates.", category: "Tax" },
+            { id: "ssy", title: "SSY Calculator", icon: "fa-child-reaching", desc: "Sukanya Samriddhi Yojana maturity corpus.", category: "Government" },
+            { id: "epf", title: "EPF Calculator", icon: "fa-briefcase", desc: "Estimate Employee Provident Fund accumulated balance.", category: "Retirement" },
+            { id: "ppf", title: "PPF Calculator", icon: "fa-building-shield", desc: "Public Provident Fund guaranteed tax-free wealth.", category: "Tax" },
+            { id: "cagr", title: "CAGR Calculator", icon: "fa-chart-area", desc: "Calculate compound annual growth rate.", category: "Investment" }
+        ];
+
+        const CAREERS_LIST = [
+            {
+                id: "frontend-engineer",
+                title: "Frontend Engineer (UI/UX & Fintech)",
+                department: "Engineering",
+                location: "Berhampur, Odisha / Remote",
+                type: "Full-Time",
+                experience: "3+ Years",
+                summary: "Lead the frontend architecture of fymint web and mobile interface platforms using modern JS, Tailwind CSS, high-performance financial tools, and micro-animations."
+            },
+            {
+                id: "product-manager",
+                title: "Fintech Product Manager",
+                department: "Product",
+                location: "Berhampur, Odisha / Hybrid",
+                type: "Full-Time",
+                experience: "2+ Years",
+                summary: "Drive product strategy for fymint calculators, money management algorithms, and subscription models with deep emphasis on user empathy and growth."
+            }
+        ];
+
+        const SEO_FOOTER_GROUPS = [
+            {
+                title: "Calculators",
+                items: ["Personal Loan EMI Calculator", "Post Office MIS Calculator", "Home Loan EMI Calculator", "SIP Calculator", "SSY Calculator", "EPF Calculator", "NPS Calculator", "SWP Calculator", "Mutual Fund Calculator", "Pension Calculator", "PPF Calculator", "FD Calculator", "RD Calculator", "LumpSum Calculator", "GST Calculator", "Car Loan EMI Calculator", "Bike Loan EMI Calculator", "Simple Interest Calculator", "Compound Interest Calculator", "Gratuity Calculator", "HRA Calculator", "NSC Calculator", "CAGR Calculator", "TDS Calculator"]
+            }
+        ];
+
+        // --- ROUTER ENGINE ---
+        function handleRoute() {
+            const hash = window.location.hash || '#home';
+            const app = document.getElementById('app-content');
+            window.scrollTo(0, 0);
+
+            if (hash === '#home' || hash === '') {
+                renderHome(app);
+            } else if (hash === '#app-showcase') {
+                renderHome(app);
+                setTimeout(() => {
+                    const el = document.getElementById('mobile-app-prototype-section');
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+            } else if (hash === '#about') {
+                renderAbout(app);
+            } else if (hash.startsWith('#blog/')) {
+                const slug = hash.replace('#blog/', '');
+                renderBlogArticle(app, slug);
+            } else if (hash === '#blog') {
+                renderBlogHub(app);
+            } else if (hash.startsWith('#calculators/')) {
+                const calcType = hash.replace('#calculators/', '');
+                renderCalculatorTool(app, calcType);
+            } else if (hash === '#calculators') {
+                renderCalculatorsHub(app);
+            } else if (hash.startsWith('#careers/')) {
+                const jobId = hash.replace('#careers/', '');
+                renderJobDetail(app, jobId);
+            } else if (hash === '#careers') {
+                renderCareersHub(app);
+            } else if (hash === '#contact') {
+                renderContact(app);
+            } else if (hash.startsWith('#legal/')) {
+                const docType = hash.replace('#legal/', '');
+                renderLegalPage(app, docType);
+            } else {
+                renderHome(app);
+            }
+        }
+
+        window.addEventListener('hashchange', handleRoute);
+        window.addEventListener('DOMContentLoaded', () => {
+            renderSEOFooter();
+            handleRoute();
+            updateTime();
+        });
+
+        // --- RENDERERS ---
+
+        function renderHome(container) {
+            container.innerHTML = `
+                <!-- HERO SECTION -->
+                <section class="relative bg-white py-8 sm:py-12 border-b border-slate-100">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                            
+                            <!-- Hero Text -->
+                            <div class="lg:col-span-7 space-y-4">
+                                <div class="inline-flex items-center gap-1.5 bg-brand-greenLight border border-brand-green/30 text-brand-purple text-xs font-semibold px-3 py-1 rounded-full">
+                                    <span class="w-2 h-2 rounded-full bg-brand-green animate-pulse"></span>
+                                    <span>All-In-One Personal Finance Platform</span>
+                                </div>
+                                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-brand-purple tracking-tight leading-tight">
+                                    Make Every <span class="text-brand-green">Rupee Count.</span>
+                                </h1>
+                                <p class="text-slate-600 text-sm sm:text-base max-w-xl leading-relaxed">
+                                    Understand, manage, and accelerate your financial growth with fymint's modern tools, interactive calculators, smart budget frameworks, and mobile app prototype.
+                                </p>
+                                
+                                <div class="flex flex-wrap items-center gap-3 pt-2">
+                                    <a href="#app-showcase" class="bg-brand-green hover:bg-brand-greenHover text-white px-5 py-2.5 rounded-xl font-bold text-sm transition-all shadow-md shadow-brand-green/20 flex items-center gap-2">
+                                        <i class="fa-solid fa-mobile-screen-button"></i>
+                                        <span>Try Mobile App Prototype</span>
+                                    </a>
+                                    <a href="#calculators" class="border border-brand-purple text-brand-purple hover:bg-brand-purple hover:text-white px-5 py-2.5 rounded-xl font-bold text-sm transition-all">
+                                        Explore 29+ Calculators
+                                    </a>
+                                </div>
+
+                                <!-- Trust Indicators -->
+                                <div class="pt-4 grid grid-cols-3 gap-3 border-t border-slate-100 text-center sm:text-left">
+                                    <div>
+                                        <p class="text-xl font-extrabold text-brand-purple">29+</p>
+                                        <p class="text-[11px] text-slate-500 font-medium">Free Calculators</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xl font-extrabold text-brand-purple">100%</p>
+                                        <p class="text-[11px] text-slate-500 font-medium">Private & Unbiased</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xl font-extrabold text-brand-purple">₹0</p>
+                                        <p class="text-[11px] text-slate-500 font-medium">Starter Fee</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Hero Dashboard Card -->
+                            <div class="lg:col-span-5">
+                                <div class="bg-brand-purple text-white p-5 rounded-2xl shadow-xl relative overflow-hidden border border-brand-purpleLight">
+                                    <div class="flex items-center justify-between mb-4">
+                                        <div>
+                                            <p class="text-[11px] text-slate-400 uppercase font-semibold">fymint Live Balance</p>
+                                            <p class="text-2xl font-extrabold text-white">₹ 2,48,500 <span class="text-[10px] text-brand-green font-normal bg-brand-green/20 px-1.5 py-0.5 rounded-full ml-1">+12.4%</span></p>
+                                        </div>
+                                        <div class="w-9 h-9 rounded-full bg-brand-purpleLight flex items-center justify-center text-brand-green">
+                                            <i class="fa-solid fa-wallet text-base"></i>
+                                        </div>
+                                    </div>
+
+                                    <div class="space-y-3 bg-brand-purpleDark/80 p-4 rounded-xl border border-white/5 mb-4">
+                                        <div class="flex justify-between text-xs font-semibold">
+                                            <span>Monthly Budget Health</span>
+                                            <span class="text-brand-green">62% Under Limit</span>
+                                        </div>
+                                        <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden flex">
+                                            <div class="bg-brand-green h-full" style="width: 50%"></div>
+                                            <div class="bg-brand-gold h-full" style="width: 25%"></div>
+                                            <div class="bg-blue-500 h-full" style="width: 15%"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="grid grid-cols-2 gap-2 text-xs">
+                                        <a href="#calculators/sip" class="p-2.5 rounded-lg bg-white/10 hover:bg-white/20 transition-all flex items-center gap-2">
+                                            <i class="fa-solid fa-chart-line text-brand-green"></i>
+                                            <span>SIP Calculator</span>
+                                        </a>
+                                        <a href="#calculators/emi" class="p-2.5 rounded-lg bg-white/10 hover:bg-white/20 transition-all flex items-center gap-2">
+                                            <i class="fa-solid fa-calculator text-brand-gold"></i>
+                                            <span>EMI Calculator</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+
+                <!-- CORE APP FEATURES GRID -->
+                <section class="py-8 sm:py-10 bg-brand-bgLight border-b border-slate-200">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="text-center max-w-xl mx-auto mb-6">
+                            <h2 class="text-2xl font-extrabold text-brand-purple tracking-tight">The fymint Ecosystem</h2>
+                            <p class="text-slate-600 text-xs mt-1">Everything you need to master your money in six core pillars.</p>
+                        </div>
+
+                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+                            <div class="bg-white p-4 rounded-xl border border-slate-200 hover:shadow-md transition-all">
+                                <div class="w-9 h-9 bg-brand-greenLight rounded-lg flex items-center justify-center text-brand-green text-base font-bold mb-2">
+                                    <i class="fa-solid fa-house"></i>
+                                </div>
+                                <h3 class="text-sm font-bold text-brand-purple mb-1">HOME</h3>
+                                <p class="text-slate-600 text-xs leading-snug">Central cockpit for balance & spending summary.</p>
+                            </div>
+                            <div class="bg-white p-4 rounded-xl border border-slate-200 hover:shadow-md transition-all">
+                                <div class="w-9 h-9 bg-indigo-100 rounded-lg flex items-center justify-center text-indigo-600 text-base font-bold mb-2">
+                                    <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                                </div>
+                                <h3 class="text-sm font-bold text-brand-purple mb-1">FLOW</h3>
+                                <p class="text-slate-600 text-xs leading-snug">Track daily cash flows, income & transactions.</p>
+                            </div>
+                            <div class="bg-white p-4 rounded-xl border border-slate-200 hover:shadow-md transition-all">
+                                <div class="w-9 h-9 bg-purple-100 rounded-lg flex items-center justify-center text-purple-600 text-base font-bold mb-2">
+                                    <i class="fa-solid fa-credit-card"></i>
+                                </div>
+                                <h3 class="text-sm font-bold text-brand-purple mb-1">LIABILITY</h3>
+                                <p class="text-slate-600 text-xs leading-snug">Manage EMIs, credit card bills & debt balances.</p>
+                            </div>
+                            <div class="bg-white p-4 rounded-xl border border-slate-200 hover:shadow-md transition-all">
+                                <div class="w-9 h-9 bg-amber-100 rounded-lg flex items-center justify-center text-amber-600 text-base font-bold mb-2">
+                                    <i class="fa-solid fa-check"></i>
+                                </div>
+                                <h3 class="text-sm font-bold text-brand-purple mb-1">ACTION</h3>
+                                <p class="text-slate-600 text-xs leading-snug">Plan future events, trips, & pending expenses.</p>
+                            </div>
+                            <div class="bg-white p-4 rounded-xl border border-slate-200 hover:shadow-md transition-all">
+                                <div class="w-9 h-9 bg-cyan-100 rounded-lg flex items-center justify-center text-cyan-600 text-base font-bold mb-2">
+                                    <i class="fa-solid fa-briefcase"></i>
+                                </div>
+                                <h3 class="text-sm font-bold text-brand-purple mb-1">BUDGET</h3>
+                                <p class="text-slate-600 text-xs leading-snug">Track category budgets and spend limits.</p>
+                            </div>
+                            <div class="bg-white p-4 rounded-xl border border-slate-200 hover:shadow-md transition-all">
+                                <div class="w-9 h-9 bg-emerald-100 rounded-lg flex items-center justify-center text-emerald-600 text-base font-bold mb-2">
+                                    <i class="fa-solid fa-calculator"></i>
+                                </div>
+                                <h3 class="text-sm font-bold text-brand-purple mb-1">CALCULATORS</h3>
+                                <p class="text-slate-600 text-xs leading-snug">29+ financial growth & loan calculators.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ================= FYMINT MOBILE APP SHOWCASE & INTERACTIVE PROTOTYPE SECTION ================= -->
+                <section id="mobile-app-prototype-section" class="py-12 bg-slate-950 text-white relative overflow-hidden border-b border-slate-800">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        
+                        <div class="text-center max-w-3xl mx-auto mb-10 space-y-3">
+                            <span class="bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 text-xs font-bold px-3 py-1 rounded-full inline-flex items-center gap-1">
+                                <i class="fa-solid fa-circle-dot text-[9px] text-emerald-400 animate-pulse"></i> Fully Interactive Mobile App Prototype
+                            </span>
+                            <h2 class="text-3xl sm:text-4xl font-black text-white tracking-tight">
+                                Experience <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-emerald-400">fymint Mobile</span> Live
+                            </h2>
+                            <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">
+                                Interact with our live mobile prototype right inside your browser! Switch tabs, view monthly cash flow, manage active liabilities, log cash transactions, simulate UPI Scan & Pay, and test our Action Center.
+                            </p>
+                        </div>
+
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                            
+                            <!-- Left: Feature Highlights -->
+                            <div class="lg:col-span-5 space-y-6 text-slate-300 text-xs sm:text-sm">
+                                <div class="bg-slate-900/80 p-5 rounded-2xl border border-slate-800 space-y-2">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-xl bg-indigo-600/20 text-indigo-400 flex items-center justify-center font-bold text-base shrink-0">
+                                            <i class="fa-solid fa-chart-pie"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-extrabold text-white text-sm">Smart Closing Balance & Core Mix</h4>
+                                            <p class="text-slate-400 text-xs">Visualize core spending mix (Needs, Wants, Debt) with conic donut charts.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="bg-slate-900/80 p-5 rounded-2xl border border-slate-800 space-y-2">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-xl bg-purple-600/20 text-purple-400 flex items-center justify-center font-bold text-base shrink-0">
+                                            <i class="fa-solid fa-credit-card"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-extrabold text-white text-sm">Liability & Debt Management</h4>
+                                            <p class="text-slate-400 text-xs">Track active credit cards, personal loans, credit limits, and upcoming EMIs.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="bg-slate-900/80 p-5 rounded-2xl border border-slate-800 space-y-2">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-xl bg-amber-600/20 text-amber-400 flex items-center justify-center font-bold text-base shrink-0">
+                                            <i class="fa-solid fa-calendar-check"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-extrabold text-white text-sm">Action Center & Event Planning</h4>
+                                            <p class="text-slate-400 text-xs">Plan upcoming travel, festivals, and track projected balance post-goals.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="bg-slate-900/80 p-5 rounded-2xl border border-slate-800 space-y-2">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-xl bg-emerald-600/20 text-emerald-400 flex items-center justify-center font-bold text-base shrink-0">
+                                            <i class="fa-solid fa-qrcode"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-extrabold text-white text-sm">UPI Scan & Pay Simulator</h4>
+                                            <p class="text-slate-400 text-xs">Test real-time QR payment logging with interactive balance updates.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="pt-2 text-center lg:text-left">
+                                    <button onclick="handleDownloadApp()" class="touch-active bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-600 text-white px-6 py-3 rounded-2xl font-extrabold text-xs inline-flex items-center gap-2 shadow-lg shadow-indigo-600/30">
+                                        <i class="fa-solid fa-download"></i>
+                                        <span>Download Full Android / iOS App</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Right: Embedded Phone Shell Container -->
+                            <div class="lg:col-span-7 flex justify-center">
+                                <div class="w-full max-w-md">
+                                    
+                                    <!-- Mobile Phone Shell Frame -->
+                                    <div class="relative w-full max-w-md bg-[#f3f5f9] min-h-[844px] h-[844px] rounded-3xl overflow-hidden flex flex-col shadow-2xl phone-frame border-2 border-slate-700 text-slate-800">
+                                        
+                                        <!-- Mobile Phone Status Bar -->
+                                        <div class="bg-[#f3f5f9] px-6 pt-3 pb-2 flex items-center justify-between text-slate-800 text-xs font-bold z-30 shrink-0">
+                                            <span id="liveTime">09:29</span>
+                                            <div class="flex items-center gap-1.5 text-[11px]">
+                                                <i class="fa-solid fa-signal"></i>
+                                                <span class="text-[9px] font-black bg-slate-200 px-1 rounded">5G</span>
+                                                <i class="fa-solid fa-wifi"></i>
+                                                <i class="fa-solid fa-battery-three-quarters text-sm"></i>
+                                                <span>80%</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Sticky App Header -->
+                                        <div class="bg-[#f3f5f9] px-5 py-2.5 flex items-center justify-between z-20 shrink-0 border-b border-slate-200/50">
+                                            <div class="flex items-center gap-2">
+                                                <span class="text-2xl font-black tracking-tight text-slate-900">fymint</span>
+                                            </div>
+
+                                            <div class="flex items-center gap-2">
+                                                <button onclick="openMonthModal()" class="touch-active bg-white border border-slate-200 text-slate-800 text-xs font-extrabold px-3 py-1.5 rounded-xl flex items-center gap-1.5 shadow-sm">
+                                                    <span id="selectedMonthDisplay">Sep 2026</span>
+                                                    <i class="fa-solid fa-chevron-down text-[10px] text-slate-400"></i>
+                                                </button>
+
+                                                <button onclick="handleDownloadApp()" title="Download Fymint App" class="touch-active w-8 h-8 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-sm font-bold border border-indigo-100 shadow-sm">
+                                                    <i class="fa-solid fa-download"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <!-- Scrollable Mobile Screen Content -->
+                                        <div class="flex-1 overflow-y-auto no-scrollbar px-4 pt-3 pb-24 relative" id="mainContentArea">
+
+                                            <!-- SCREEN 1: HOME -->
+                                            <div id="screen-home" class="app-screen active space-y-4">
+                                                <!-- Hero Closing Balance Card -->
+                                                <div class="relative bg-gradient-to-br from-[#1a1c4b] via-[#222160] to-[#0e4b6c] text-white rounded-3xl p-5 shadow-xl shadow-indigo-950/20 overflow-hidden border border-indigo-500/20">
+                                                    <div class="absolute -right-8 -bottom-8 w-36 h-36 bg-cyan-500/10 rounded-full blur-2xl pointer-events-none"></div>
+                                                    
+                                                    <div class="flex justify-between items-center text-[10px] font-extrabold tracking-wider text-indigo-200/80 uppercase mb-1">
+                                                        <span>CLOSING BALANCE · CARRIED FORWARD</span>
+                                                        <button onclick="toggleBalanceVisibility()" class="text-indigo-300 hover:text-white">
+                                                            <i class="fa-regular fa-eye" id="eyeIcon"></i>
+                                                        </button>
+                                                    </div>
+
+                                                    <div class="text-3xl font-black tracking-tight mb-3 text-emerald-300" id="heroBalanceText">
+                                                        ₹22,348
+                                                    </div>
+
+                                                    <div class="grid grid-cols-3 gap-2 text-[11px] bg-white/10 backdrop-blur-md rounded-2xl p-2.5 mb-3 border border-white/10">
+                                                        <div>
+                                                            <span class="text-indigo-200 block text-[9px]">Opening</span>
+                                                            <span class="font-bold">₹0</span>
+                                                        </div>
+                                                        <div>
+                                                            <span class="text-indigo-200 block text-[9px]">Income</span>
+                                                            <span class="font-bold text-emerald-300" id="heroIncome">₹53,767</span>
+                                                        </div>
+                                                        <div>
+                                                            <span class="text-indigo-200 block text-[9px]">Spent</span>
+                                                            <span class="font-bold text-rose-300" id="heroSpent">₹31,419</span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="space-y-1.5">
+                                                        <div class="flex justify-between text-[10px] font-bold">
+                                                            <span class="text-indigo-200">Planned <span class="text-white" id="heroPlanned">₹10,159</span></span>
+                                                            <span class="text-cyan-300">After planned goals <span class="font-extrabold text-white" id="heroAfterGoals">₹12,189</span></span>
+                                                        </div>
+                                                        <div class="w-full bg-slate-800/80 rounded-full h-2 overflow-hidden border border-white/10">
+                                                            <div class="bg-gradient-to-r from-cyan-400 to-emerald-400 h-2 rounded-full w-[45%]"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Core Mix Donut Chart -->
+                                                <div class="bg-white rounded-3xl p-4 shadow-card border border-slate-100">
+                                                    <div class="flex items-center justify-between mb-4">
+                                                        <span class="text-xs font-extrabold text-slate-400 uppercase tracking-wider">CORE MIX</span>
+                                                        <span class="text-xs font-black text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-xl">₹31,419 expense</span>
+                                                    </div>
+
+                                                    <div class="flex items-center justify-between gap-4">
+                                                        <div class="relative w-28 h-28 shrink-0 flex items-center justify-center">
+                                                            <div class="donut-chart w-full h-full shadow-inner"></div>
+                                                            <div class="absolute w-20 h-20 bg-white rounded-full flex flex-col items-center justify-center shadow-sm">
+                                                                <span class="text-xs font-black text-slate-900 leading-tight">₹31,419</span>
+                                                                <span class="text-[8px] font-bold text-slate-400 uppercase tracking-widest">TOTAL</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="flex-1 space-y-2 text-xs font-semibold">
+                                                            <div class="flex items-center justify-between">
+                                                                <span class="flex items-center gap-2">
+                                                                    <span class="w-2.5 h-2.5 rounded-full bg-indigo-600"></span>
+                                                                    <span class="text-slate-600">Need</span>
+                                                                </span>
+                                                                <span class="font-extrabold text-slate-900">59%</span>
+                                                            </div>
+                                                            <div class="flex items-center justify-between">
+                                                                <span class="flex items-center gap-2">
+                                                                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                                                                    <span class="text-slate-600">Debt</span>
+                                                                </span>
+                                                                <span class="font-extrabold text-slate-900">25%</span>
+                                                            </div>
+                                                            <div class="flex items-center justify-between">
+                                                                <span class="flex items-center gap-2">
+                                                                    <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+                                                                    <span class="text-slate-600">Want</span>
+                                                                </span>
+                                                                <span class="font-extrabold text-slate-900">13%</span>
+                                                            </div>
+                                                            <div class="flex items-center justify-between">
+                                                                <span class="flex items-center gap-2">
+                                                                    <span class="w-2.5 h-2.5 rounded-full bg-cyan-500"></span>
+                                                                    <span class="text-slate-600">Wants</span>
+                                                                </span>
+                                                                <span class="font-extrabold text-slate-900">3%</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Categories List -->
+                                                <div class="bg-white rounded-3xl p-4 shadow-card border border-slate-100 space-y-3">
+                                                    <div class="flex items-center justify-between pb-1 border-b border-slate-100">
+                                                        <span class="text-xs font-extrabold text-slate-400 uppercase tracking-wider">CATEGORIES</span>
+                                                        <span class="text-xs font-black text-slate-700 bg-slate-100 px-2.5 py-1 rounded-xl">₹31,419 total</span>
+                                                    </div>
+
+                                                    <div class="space-y-2.5">
+                                                        <div onclick="openCategoryModal('BLR Rent', 9000)" class="touch-active flex items-center justify-between p-2.5 rounded-2xl bg-slate-50 hover:bg-slate-100/80 transition">
+                                                            <div class="flex items-center gap-3">
+                                                                <div class="w-9 h-9 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center text-sm font-bold">🏠</div>
+                                                                <div>
+                                                                    <h4 class="font-bold text-xs text-slate-900">BLR Rent</h4>
+                                                                    <p class="text-[10px] text-slate-400">Housing & Fixed Needs</p>
+                                                                </div>
+                                                            </div>
+                                                            <span class="font-black text-sm text-slate-900">₹9,000</span>
+                                                        </div>
+
+                                                        <div onclick="openCategoryModal('EMI / Loan', 7959)" class="touch-active flex items-center justify-between p-2.5 rounded-2xl bg-slate-50 hover:bg-slate-100/80 transition">
+                                                            <div class="flex items-center gap-3">
+                                                                <div class="w-9 h-9 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center text-sm font-bold">🪙</div>
+                                                                <div>
+                                                                    <h4 class="font-bold text-xs text-slate-900">EMI/Loan</h4>
+                                                                    <p class="text-[10px] text-slate-400">Debt & Credit Repayment</p>
+                                                                </div>
+                                                            </div>
+                                                            <span class="font-black text-sm text-slate-900">₹7,959</span>
+                                                        </div>
+
+                                                        <div onclick="openCategoryModal('Travel & Outings', 7422)" class="touch-active flex items-center justify-between p-2.5 rounded-2xl bg-slate-50 hover:bg-slate-100/80 transition">
+                                                            <div class="flex items-center gap-3">
+                                                                <div class="w-9 h-9 rounded-xl bg-cyan-100 text-cyan-600 flex items-center justify-center text-sm font-bold">✈️</div>
+                                                                <div>
+                                                                    <h4 class="font-bold text-xs text-slate-900">Travel</h4>
+                                                                    <p class="text-[10px] text-slate-400">Transport & Tickets</p>
+                                                                </div>
+                                                            </div>
+                                                            <span class="font-black text-sm text-slate-900">₹7,422</span>
+                                                        </div>
+
+                                                        <div onclick="openCategoryModal('Food & Groceries', 4500)" class="touch-active flex items-center justify-between p-2.5 rounded-2xl bg-slate-50 hover:bg-slate-100/80 transition">
+                                                            <div class="flex items-center gap-3">
+                                                                <div class="w-9 h-9 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center text-sm font-bold">🍕</div>
+                                                                <div>
+                                                                    <h4 class="font-bold text-xs text-slate-900">Food & Dining</h4>
+                                                                    <p class="text-[10px] text-slate-400">Groceries & Eats</p>
+                                                                </div>
+                                                            </div>
+                                                            <span class="font-black text-sm text-slate-900">₹4,500</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Action Banner -->
+                                                <div class="bg-gradient-to-r from-indigo-600 to-indigo-500 rounded-3xl p-4 text-white shadow-lg flex items-center justify-between">
+                                                    <div>
+                                                        <p class="text-[10px] font-extrabold uppercase text-indigo-200">fymint Smart Sync</p>
+                                                        <h4 class="font-extrabold text-sm">Need to log a quick expense?</h4>
+                                                    </div>
+                                                    <button onclick="openAddTransactionModal()" class="touch-active bg-white text-indigo-600 font-extrabold text-xs px-3.5 py-2 rounded-2xl shadow">
+                                                        + Add Cash
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <!-- SCREEN 2: FLOW -->
+                                            <div id="screen-flow" class="app-screen space-y-4">
+                                                <div class="flex items-center justify-between">
+                                                    <div>
+                                                        <h2 class="text-xl font-black text-slate-900">Cash Flow</h2>
+                                                        <p class="text-xs text-slate-400">Recent income & expense entries</p>
+                                                    </div>
+                                                    <button onclick="openAddTransactionModal()" class="touch-active bg-indigo-600 text-white font-extrabold text-xs px-3.5 py-2 rounded-xl flex items-center gap-1 shadow-md shadow-indigo-500/20">
+                                                        <i class="fa-solid fa-plus"></i> New Entry
+                                                    </button>
+                                                </div>
+
+                                                <div class="flex gap-2">
+                                                    <div class="relative flex-1">
+                                                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-400 text-xs"></i>
+                                                        <input type="text" id="flowSearchInput" onkeyup="filterFlowTransactions()" placeholder="Search transactions..." class="w-full bg-white border border-slate-200 rounded-2xl pl-9 pr-3 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:border-indigo-500 shadow-sm">
+                                                    </div>
+                                                    <button class="touch-active bg-white border border-slate-200 rounded-2xl px-3 text-slate-600 text-xs font-bold flex items-center gap-1 shadow-sm">
+                                                        <i class="fa-solid fa-filter text-slate-400"></i>
+                                                        Filter
+                                                    </button>
+                                                </div>
+
+                                                <div class="bg-white rounded-3xl p-4 shadow-card border border-slate-100 space-y-3" id="flowList">
+                                                    <div class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 pb-1 border-b border-slate-100">SEPTEMBER 2026</div>
+
+                                                    <div class="flow-item flex items-center justify-between p-2.5 rounded-2xl bg-slate-50">
+                                                        <div class="flex items-center gap-3">
+                                                            <div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-xs font-bold">
+                                                                <i class="fa-solid fa-arrow-down-left"></i>
+                                                            </div>
+                                                            <div>
+                                                                <h4 class="font-bold text-xs text-slate-900">Monthly Salary</h4>
+                                                                <p class="text-[10px] text-slate-400">01 Sep 2026 · Income</p>
+                                                            </div>
+                                                        </div>
+                                                        <span class="font-black text-sm text-emerald-600">+₹53,767</span>
+                                                    </div>
+
+                                                    <div class="flow-item flex items-center justify-between p-2.5 rounded-2xl bg-slate-50">
+                                                        <div class="flex items-center gap-3">
+                                                            <div class="w-9 h-9 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center text-xs font-bold">
+                                                                <i class="fa-solid fa-house"></i>
+                                                            </div>
+                                                            <div>
+                                                                <h4 class="font-bold text-xs text-slate-900">Bangalore House Rent</h4>
+                                                                <p class="text-[10px] text-slate-400">03 Sep 2026 · Need</p>
+                                                            </div>
+                                                        </div>
+                                                        <span class="font-black text-sm text-rose-600">-₹9,000</span>
+                                                    </div>
+
+                                                    <div class="flow-item flex items-center justify-between p-2.5 rounded-2xl bg-slate-50">
+                                                        <div class="flex items-center gap-3">
+                                                            <div class="w-9 h-9 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center text-xs font-bold">
+                                                                <i class="fa-solid fa-credit-card"></i>
+                                                            </div>
+                                                            <div>
+                                                                <h4 class="font-bold text-xs text-slate-900">HDFC Personal Loan EMI</h4>
+                                                                <p class="text-[10px] text-slate-400">05 Sep 2026 · Debt</p>
+                                                            </div>
+                                                        </div>
+                                                        <span class="font-black text-sm text-rose-600">-₹7,959</span>
+                                                    </div>
+
+                                                    <div class="flow-item flex items-center justify-between p-2.5 rounded-2xl bg-slate-50">
+                                                        <div class="flex items-center gap-3">
+                                                            <div class="w-9 h-9 rounded-xl bg-cyan-100 text-cyan-600 flex items-center justify-center text-xs font-bold">
+                                                                <i class="fa-solid fa-plane"></i>
+                                                            </div>
+                                                            <div>
+                                                                <h4 class="font-bold text-xs text-slate-900">Indigo Flight Tickets</h4>
+                                                                <p class="text-[10px] text-slate-400">10 Sep 2026 · Travel</p>
+                                                            </div>
+                                                        </div>
+                                                        <span class="font-black text-sm text-rose-600">-₹7,422</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- SCREEN 3: LIABILITY -->
+                                            <div id="screen-liability" class="app-screen space-y-4">
+                                                <div class="flex items-center justify-between">
+                                                    <div>
+                                                        <h2 class="text-xl font-black text-slate-900">Liabilities & Debt</h2>
+                                                        <p class="text-xs text-slate-400">Track loans, credit cards, and EMIs</p>
+                                                    </div>
+                                                    <button onclick="triggerToast('Add Liability clicked')" class="touch-active bg-purple-600 text-white font-extrabold text-xs px-3.5 py-2 rounded-xl shadow-md">
+                                                        + Add Debt
+                                                    </button>
+                                                </div>
+
+                                                <div class="bg-gradient-to-br from-purple-900 via-indigo-900 to-slate-900 text-white rounded-3xl p-5 shadow-xl">
+                                                    <p class="text-[10px] font-extrabold text-purple-300 uppercase">ACTIVE OUTSTANDING DEBT</p>
+                                                    <h3 class="text-3xl font-black text-amber-300 mt-1">₹1,45,000</h3>
+                                                    <p class="text-[10px] text-purple-200 mt-1">Monthly total EMI commitment: ₹12,459</p>
+                                                </div>
+
+                                                <div class="space-y-3">
+                                                    <div class="bg-white rounded-3xl p-4 shadow-card border border-slate-100 space-y-3">
+                                                        <div class="flex justify-between items-start">
+                                                            <div class="flex items-center gap-2.5">
+                                                                <div class="w-10 h-10 rounded-2xl bg-purple-100 text-purple-600 flex items-center justify-center text-base font-bold">💳</div>
+                                                                <div>
+                                                                    <h4 class="font-extrabold text-xs text-slate-900">HDFC Credit Card</h4>
+                                                                    <p class="text-[10px] text-slate-400">Due on 20th Sep</p>
+                                                                </div>
+                                                            </div>
+                                                            <span class="text-xs font-black bg-rose-50 text-rose-600 px-2.5 py-1 rounded-xl">₹24,500</span>
+                                                        </div>
+                                                        <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+                                                            <div class="bg-purple-600 h-1.5 rounded-full w-[40%]"></div>
+                                                        </div>
+                                                        <div class="flex justify-between items-center text-[11px]">
+                                                            <span class="text-slate-400 font-semibold">Limit Used: 40%</span>
+                                                            <button onclick="triggerToast('Pay EMI initiated')" class="touch-active bg-indigo-50 text-indigo-600 px-3 py-1 rounded-xl font-bold text-[10px]">Pay Bill</button>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="bg-white rounded-3xl p-4 shadow-card border border-slate-100 space-y-3">
+                                                        <div class="flex justify-between items-start">
+                                                            <div class="flex items-center gap-2.5">
+                                                                <div class="w-10 h-10 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-base font-bold">🏦</div>
+                                                                <div>
+                                                                    <h4 class="font-extrabold text-xs text-slate-900">Personal Loan</h4>
+                                                                    <p class="text-[10px] text-slate-400">12 EMIs Remaining</p>
+                                                                </div>
+                                                            </div>
+                                                            <span class="text-xs font-black bg-slate-900 text-white px-2.5 py-1 rounded-xl">₹1,20,500</span>
+                                                        </div>
+                                                        <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+                                                            <div class="bg-amber-500 h-1.5 rounded-full w-[65%]"></div>
+                                                        </div>
+                                                        <div class="flex justify-between items-center text-[11px]">
+                                                            <span class="text-slate-400 font-semibold">Monthly EMI: ₹7,959</span>
+                                                            <button onclick="triggerToast('Auto-debit active')" class="touch-active bg-emerald-50 text-emerald-600 px-3 py-1 rounded-xl font-bold text-[10px]">Autopay On</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- SCREEN 4: ACTION CENTER -->
+                                            <div id="screen-action" class="app-screen space-y-4">
+                                                <div class="flex items-center justify-between">
+                                                    <h2 class="text-xl font-black text-slate-900 tracking-tight">Action Center</h2>
+                                                    
+                                                    <div class="flex items-center gap-2">
+                                                        <button onclick="triggerToast('Calendar view opened')" class="touch-active w-8 h-8 rounded-xl bg-white border border-slate-200 text-slate-700 flex items-center justify-center text-sm shadow-sm">
+                                                            <i class="fa-regular fa-calendar"></i>
+                                                        </button>
+                                                        <button onclick="openAddActionModal()" class="touch-active bg-gradient-to-r from-indigo-600 to-indigo-500 text-white font-extrabold text-xs px-3.5 py-2 rounded-xl shadow-md shadow-indigo-500/20 flex items-center gap-1">
+                                                            + Add Action
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                                <div class="grid grid-cols-2 gap-2.5">
+                                                    <div class="bg-white p-3.5 rounded-3xl border-2 border-indigo-400/80 shadow-card">
+                                                        <span class="text-[9px] font-extrabold text-slate-400 uppercase tracking-wider block">PENDING</span>
+                                                        <span class="text-2xl font-black text-indigo-600 mt-1 block" id="actionPendingCount">3</span>
+                                                    </div>
+
+                                                    <div class="bg-white p-3.5 rounded-3xl border-2 border-emerald-400/80 shadow-card">
+                                                        <span class="text-[9px] font-extrabold text-slate-400 uppercase tracking-wider block">EXPECTED INCOME</span>
+                                                        <span class="text-2xl font-black text-emerald-600 mt-1 block">₹0</span>
+                                                    </div>
+
+                                                    <div class="bg-white p-3.5 rounded-3xl border-2 border-purple-400/80 shadow-card">
+                                                        <span class="text-[9px] font-extrabold text-slate-400 uppercase tracking-wider block">PLANNED EXPENSES</span>
+                                                        <span class="text-2xl font-black text-amber-600 mt-1 block" id="actionPlannedTotal">₹10,159</span>
+                                                    </div>
+
+                                                    <div class="bg-white p-3.5 rounded-3xl border-2 border-teal-400/80 shadow-card">
+                                                        <span class="text-[9px] font-extrabold text-slate-400 uppercase tracking-wider block">PROJECTED AFTER PLANS</span>
+                                                        <span class="text-2xl font-black text-teal-600 mt-1 block" id="actionProjected">₹13,364</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="bg-white rounded-3xl p-4 shadow-card border border-slate-100">
+                                                    <h3 class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider flex items-center gap-1.5 mb-2.5">
+                                                        <span>💰</span> EXPECTED INCOME THIS MONTH
+                                                    </h3>
+                                                    <div class="text-center py-4 bg-slate-50/80 rounded-2xl border border-dashed border-slate-200 text-xs font-semibold text-slate-400">
+                                                        No expected income planned for this month.
+                                                    </div>
+                                                </div>
+
+                                                <div class="bg-white rounded-3xl p-4 shadow-card border border-slate-100">
+                                                    <h3 class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider flex items-center gap-1.5 mb-3">
+                                                        <span>📅</span> REMAINING PLANNED EXPENSES
+                                                    </h3>
+
+                                                    <div class="space-y-2.5" id="plannedExpensesContainer">
+                                                        <div class="p-3 rounded-2xl border border-slate-100 bg-slate-50/60 flex items-center justify-between">
+                                                            <div>
+                                                                <h4 class="font-extrabold text-xs text-slate-900">Teej Festival</h4>
+                                                                <p class="text-[10px] text-slate-400 mt-0.5">Other · Due 2026-09-14 · Paid ₹1,237</p>
+                                                            </div>
+                                                            <span class="font-black text-sm text-amber-600">₹1,463</span>
+                                                        </div>
+
+                                                        <div class="p-3 rounded-2xl border border-slate-100 bg-slate-50/60 flex items-center justify-between">
+                                                            <div>
+                                                                <h4 class="font-extrabold text-xs text-slate-900">Chandigarh Visit</h4>
+                                                                <p class="text-[10px] text-slate-400 mt-0.5">Travel · Due 2026-09-23 · Paid ₹3,804</p>
+                                                            </div>
+                                                            <span class="font-black text-sm text-amber-600">₹8,696</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- SCREEN 5: MONTHLY BUDGET -->
+                                            <div id="screen-budget" class="app-screen space-y-4">
+                                                <h2 class="text-xl font-black text-slate-900 tracking-tight">Monthly Budget</h2>
+
+                                                <div class="grid grid-cols-2 gap-2.5">
+                                                    <div class="bg-white p-3.5 rounded-3xl border-2 border-indigo-400/80 shadow-card">
+                                                        <span class="text-[9px] font-extrabold text-slate-400 uppercase tracking-wider block">TOTAL BUDGET</span>
+                                                        <span class="text-2xl font-black text-indigo-700 mt-1 block">₹40,432</span>
+                                                        <span class="text-[9px] text-slate-400 mt-0.5 block">Planned by category</span>
+                                                    </div>
+
+                                                    <div class="bg-white p-3.5 rounded-3xl border-2 border-emerald-400/80 shadow-card">
+                                                        <span class="text-[9px] font-extrabold text-slate-400 uppercase tracking-wider block">ACTUAL SPENT</span>
+                                                        <span class="text-2xl font-black text-slate-900 mt-1 block" id="budgetActualSpentText">₹31,419</span>
+                                                        <span class="text-[9px] text-slate-400 mt-0.5 block">Tracked spending</span>
+                                                    </div>
+
+                                                    <div class="bg-white p-3.5 rounded-3xl border-2 border-indigo-400/80 shadow-card">
+                                                        <span class="text-[9px] font-extrabold text-slate-400 uppercase tracking-wider block">BUDGET LEFT</span>
+                                                        <span class="text-2xl font-black text-emerald-600 mt-1 block" id="budgetLeftText">₹9,013</span>
+                                                        <span class="text-[9px] text-slate-400 mt-0.5 block">Across all categories</span>
+                                                    </div>
+
+                                                    <div class="bg-white p-3.5 rounded-3xl border-2 border-cyan-400/80 shadow-card">
+                                                        <span class="text-[9px] font-extrabold text-slate-400 uppercase tracking-wider block">OVER BUDGET</span>
+                                                        <span class="text-2xl font-black text-rose-500 mt-1 block">13</span>
+                                                        <span class="text-[9px] text-slate-400 mt-0.5 block">Categories over limit</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="bg-white rounded-3xl p-4 shadow-card border border-slate-100">
+                                                    <div class="flex items-center justify-between mb-2">
+                                                        <span class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">CATEGORY BUDGET TRACKER</span>
+                                                        
+                                                        <div class="flex items-center gap-1">
+                                                            <button onclick="openMonthModal()" class="text-[10px] font-extrabold bg-slate-50 border border-slate-200 px-2 py-1 rounded-xl text-slate-700 flex items-center gap-1">
+                                                                <span>Sep 2026</span>
+                                                                <i class="fa-solid fa-chevron-down text-[8px]"></i>
+                                                            </button>
+                                                            <button onclick="sortCategories('asc')" class="w-6 h-6 rounded-lg bg-indigo-50 text-indigo-600 font-extrabold text-xs flex items-center justify-center">↑</button>
+                                                            <button onclick="sortCategories('desc')" class="w-6 h-6 rounded-lg bg-indigo-100 text-indigo-700 font-extrabold text-xs flex items-center justify-center">↓</button>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="space-y-4" id="budgetCategoryTrackerList">
+                                                        <div class="border-b border-slate-100 pb-3">
+                                                            <div class="flex items-center justify-between mb-1.5">
+                                                                <span class="font-extrabold text-xs text-slate-900 flex items-center gap-1">BLR Rent 🏠</span>
+                                                                <span class="text-[10px] font-extrabold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-lg">0%</span>
+                                                            </div>
+                                                            <div class="grid grid-cols-3 gap-1.5 bg-slate-50 p-2.5 rounded-2xl text-center">
+                                                                <div>
+                                                                    <p class="text-[8px] font-bold text-slate-400 uppercase">Planned</p>
+                                                                    <p class="text-xs font-black text-slate-800">₹9,000</p>
+                                                                </div>
+                                                                <div>
+                                                                    <p class="text-[8px] font-bold text-slate-400 uppercase">Actual</p>
+                                                                    <p class="text-xs font-black text-slate-800">₹0</p>
+                                                                </div>
+                                                                <div>
+                                                                    <p class="text-[8px] font-bold text-slate-400 uppercase">Left Over</p>
+                                                                    <p class="text-xs font-black text-slate-800">₹9,000</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="border-b border-slate-100 pb-3">
+                                                            <div class="flex items-center justify-between mb-1.5">
+                                                                <span class="font-extrabold text-xs text-slate-900 flex items-center gap-1">EMI/Loan 🪙</span>
+                                                                <span class="text-[10px] font-extrabold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-lg">0%</span>
+                                                            </div>
+                                                            <div class="grid grid-cols-3 gap-1.5 bg-slate-50 p-2.5 rounded-2xl text-center">
+                                                                <div>
+                                                                    <p class="text-[8px] font-bold text-slate-400 uppercase">Planned</p>
+                                                                    <p class="text-xs font-black text-slate-800">₹7,959</p>
+                                                                </div>
+                                                                <div>
+                                                                    <p class="text-[8px] font-bold text-slate-400 uppercase">Actual</p>
+                                                                    <p class="text-xs font-black text-slate-800">₹0</p>
+                                                                </div>
+                                                                <div>
+                                                                    <p class="text-[8px] font-bold text-slate-400 uppercase">Left Over</p>
+                                                                    <p class="text-xs font-black text-slate-800">₹7,959</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <!-- Scan & Pay Trigger Overlay -->
+                                        <div class="absolute bottom-[68px] right-5 z-30">
+                                            <button onclick="openScanPayModal()" class="touch-active bg-gradient-to-tr from-indigo-600 to-indigo-500 text-white w-12 h-12 rounded-full shadow-lg shadow-indigo-600/40 flex items-center justify-center border-2 border-white text-base">
+                                                <i class="fa-solid fa-qrcode"></i>
+                                            </button>
+                                        </div>
+
+                                        <!-- Mobile Bottom Tab Bar -->
+                                        <div class="absolute bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-slate-200/80 px-2 py-2 flex items-center justify-around z-40">
+                                            <button onclick="switchTab('home')" id="tab-btn-home" class="touch-active flex flex-col items-center py-1 px-3 rounded-2xl text-indigo-600 bg-indigo-50 font-bold transition">
+                                                <i class="fa-solid fa-house text-sm"></i>
+                                                <span class="text-[10px] mt-0.5">Home</span>
+                                            </button>
+
+                                            <button onclick="switchTab('flow')" id="tab-btn-flow" class="touch-active flex flex-col items-center py-1 px-3 rounded-2xl text-slate-400 hover:text-indigo-600 font-semibold transition">
+                                                <i class="fa-solid fa-arrow-right-arrow-left text-sm"></i>
+                                                <span class="text-[10px] mt-0.5">Flow</span>
+                                            </button>
+
+                                            <button onclick="switchTab('liability')" id="tab-btn-liability" class="touch-active flex flex-col items-center py-1 px-3 rounded-2xl text-slate-400 hover:text-indigo-600 font-semibold transition">
+                                                <i class="fa-solid fa-credit-card text-sm"></i>
+                                                <span class="text-[10px] mt-0.5">Liability</span>
+                                            </button>
+
+                                            <button onclick="switchTab('action')" id="tab-btn-action" class="touch-active flex flex-col items-center py-1 px-3 rounded-2xl text-slate-400 hover:text-indigo-600 font-semibold transition">
+                                                <i class="fa-solid fa-check text-sm"></i>
+                                                <span class="text-[10px] mt-0.5">Action</span>
+                                            </button>
+
+                                            <button onclick="switchTab('budget')" id="tab-btn-budget" class="touch-active flex flex-col items-center py-1 px-3 rounded-2xl text-slate-400 hover:text-indigo-600 font-semibold transition">
+                                                <i class="fa-solid fa-briefcase text-sm"></i>
+                                                <span class="text-[10px] mt-0.5">Budget</span>
+                                            </button>
+                                        </div>
+
+                                        <!-- MODAL 1: Scan & Pay -->
+                                        <div id="modalScanPay" class="hidden absolute inset-0 bg-slate-950/90 backdrop-blur-md z-50 flex flex-col justify-between p-6 text-white">
+                                            <div class="flex justify-between items-center">
+                                                <h3 class="font-extrabold text-base flex items-center gap-2">
+                                                    <i class="fa-solid fa-qrcode text-indigo-400"></i> fymint Scan & Pay
+                                                </h3>
+                                                <button onclick="closeModal('modalScanPay')" class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-300">
+                                                    <i class="fa-solid fa-xmark"></i>
+                                                </button>
+                                            </div>
+
+                                            <div class="relative w-60 h-60 mx-auto rounded-3xl border-2 border-indigo-400/50 flex items-center justify-center overflow-hidden bg-slate-900/50">
+                                                <div class="absolute inset-x-0 h-1 bg-gradient-to-r from-indigo-500 to-cyan-400 shadow-glow animate-scan"></div>
+                                                <div class="text-center p-4">
+                                                    <i class="fa-solid fa-camera text-3xl text-indigo-400/60 mb-2"></i>
+                                                    <p class="text-xs text-slate-400">Align UPI QR Code within frame</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="space-y-3 text-center">
+                                                <button onclick="simulateQuickPayment()" class="touch-active w-full py-3 rounded-2xl bg-gradient-to-r from-indigo-600 to-indigo-500 font-bold text-xs shadow-lg">
+                                                    Simulate Payment (₹350 Merchant)
+                                                </button>
+                                                <p class="text-[10px] text-slate-400">Works with standard Google Pay, PhonePe & Paytm QRs</p>
+                                            </div>
+                                        </div>
+
+                                        <!-- MODAL 2: Add Action Item -->
+                                        <div id="modalAddAction" class="hidden absolute inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-end">
+                                            <div class="w-full bg-white rounded-t-3xl p-5 text-slate-800 space-y-4 shadow-2xl">
+                                                <div class="flex justify-between items-center">
+                                                    <h3 class="font-black text-base text-slate-900">Add New Action Plan</h3>
+                                                    <button onclick="closeModal('modalAddAction')" class="text-slate-400 hover:text-slate-600">
+                                                        <i class="fa-solid fa-xmark text-lg"></i>
+                                                    </button>
+                                                </div>
+
+                                                <div class="space-y-3 text-xs">
+                                                    <div>
+                                                        <label class="block font-bold text-slate-600 mb-1">Title / Event Name</label>
+                                                        <input type="text" id="actionTitleInput" placeholder="e.g. Diwali Shopping Deposit" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-bold focus:outline-indigo-500">
+                                                    </div>
+
+                                                    <div class="grid grid-cols-2 gap-2">
+                                                        <div>
+                                                            <label class="block font-bold text-slate-600 mb-1">Amount (₹)</label>
+                                                            <input type="number" id="actionAmountInput" placeholder="2500" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-bold focus:outline-indigo-500">
+                                                        </div>
+                                                        <div>
+                                                            <label class="block font-bold text-slate-600 mb-1">Category</label>
+                                                            <select id="actionCategoryInput" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-bold focus:outline-indigo-500">
+                                                                <option>Travel</option>
+                                                                <option>Festival</option>
+                                                                <option>Other</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <button onclick="saveNewActionPlan()" class="touch-active w-full py-3 rounded-2xl bg-indigo-600 text-white font-extrabold text-xs shadow-lg shadow-indigo-600/30">
+                                                    Save Action Plan
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <!-- MODAL 3: Add Transaction / Cash Entry -->
+                                        <div id="modalAddTransaction" class="hidden absolute inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-end">
+                                            <div class="w-full bg-white rounded-t-3xl p-5 text-slate-800 space-y-4 shadow-2xl">
+                                                <div class="flex justify-between items-center">
+                                                    <h3 class="font-black text-base text-slate-900">Log Cash Transaction</h3>
+                                                    <button onclick="closeModal('modalAddTransaction')" class="text-slate-400 hover:text-slate-600">
+                                                        <i class="fa-solid fa-xmark text-lg"></i>
+                                                    </button>
+                                                </div>
+
+                                                <div class="space-y-3 text-xs">
+                                                    <div class="flex bg-slate-100 p-1 rounded-xl font-bold">
+                                                        <button id="typeExpenseBtn" onclick="setTxType('expense')" class="flex-1 py-1.5 rounded-lg bg-white text-indigo-600 shadow-sm text-center">Expense</button>
+                                                        <button id="typeIncomeBtn" onclick="setTxType('income')" class="flex-1 py-1.5 rounded-lg text-slate-500 text-center">Income</button>
+                                                    </div>
+
+                                                    <div>
+                                                        <label class="block font-bold text-slate-600 mb-1">Description</label>
+                                                        <input type="text" id="txTitleInput" placeholder="e.g. Swiggy Order / Salary" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-bold focus:outline-indigo-500">
+                                                    </div>
+
+                                                    <div>
+                                                        <label class="block font-bold text-slate-600 mb-1">Amount (₹)</label>
+                                                        <input type="number" id="txAmountInput" placeholder="450" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-bold focus:outline-indigo-500">
+                                                    </div>
+                                                </div>
+
+                                                <button onclick="saveTransactionEntry()" class="touch-active w-full py-3 rounded-2xl bg-indigo-600 text-white font-extrabold text-xs shadow-lg shadow-indigo-600/30">
+                                                    Record Transaction
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <!-- MODAL 4: Month Selector -->
+                                        <div id="modalMonthSelect" class="hidden absolute inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-6">
+                                            <div class="w-full max-w-xs bg-white rounded-3xl p-5 space-y-3 shadow-2xl">
+                                                <h3 class="font-black text-sm text-slate-900 border-b pb-2">Select Month</h3>
+                                                <div class="space-y-1 text-xs font-bold text-slate-700">
+                                                    <button onclick="selectMonth('Sep 2026')" class="w-full text-left p-2.5 rounded-xl hover:bg-indigo-50 hover:text-indigo-600 flex justify-between">
+                                                        <span>Sep 2026</span>
+                                                        <i class="fa-solid fa-check text-indigo-600"></i>
+                                                    </button>
+                                                    <button onclick="selectMonth('Aug 2026')" class="w-full text-left p-2.5 rounded-xl hover:bg-indigo-50 hover:text-indigo-600">Aug 2026</button>
+                                                    <button onclick="selectMonth('Jul 2026')" class="w-full text-left p-2.5 rounded-xl hover:bg-indigo-50 hover:text-indigo-600">Jul 2026</button>
+                                                </div>
+                                                <button onclick="closeModal('modalMonthSelect')" class="w-full py-2 bg-slate-100 rounded-xl font-bold text-xs text-slate-600">Cancel</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- FEATURED CALCULATORS SECTION -->
+                <section class="py-10 bg-white border-b border-slate-100">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="flex items-center justify-between mb-6">
+                            <div>
+                                <h2 class="text-2xl font-extrabold text-brand-purple tracking-tight">Popular Calculators</h2>
+                                <p class="text-slate-600 text-xs mt-0.5">Accurate, instant financial estimates for everyday financial planning.</p>
+                            </div>
+                            <a href="#calculators" class="text-xs font-bold text-brand-green hover:underline flex items-center gap-1">
+                                <span>View All 29+</span>
+                                <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </a>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                            ${CALCULATORS_LIST.slice(0, 4).map(c => `
+                                <a href="#calculators/${c.id}" class="bg-brand-bgLight p-4 rounded-xl border border-slate-200 hover:border-brand-green hover:shadow-md transition-all group">
+                                    <div class="flex items-center gap-3 mb-2">
+                                        <div class="w-9 h-9 rounded-lg bg-brand-greenLight text-brand-purple group-hover:bg-brand-green group-hover:text-white transition-colors flex items-center justify-center font-bold">
+                                            <i class="fa-solid ${c.icon}"></i>
+                                        </div>
+                                        <h3 class="font-bold text-sm text-brand-purple">${c.title}</h3>
+                                    </div>
+                                    <p class="text-xs text-slate-600">${c.desc}</p>
+                                </a>
+                            `).join('')}
+                        </div>
+                    </div>
+                </section>
+
+                <!-- FEATURED GUIDES SECTION -->
+                <section class="py-10 bg-brand-bgLight border-b border-slate-200">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="flex items-center justify-between mb-6">
+                            <div>
+                                <h2 class="text-2xl font-extrabold text-brand-purple tracking-tight">Latest Financial Guides</h2>
+                                <p class="text-slate-600 text-xs mt-0.5">Actionable advice written by certified planners and analysts.</p>
+                            </div>
+                            <a href="#blog" class="text-xs font-bold text-brand-green hover:underline flex items-center gap-1">
+                                <span>Read Blog Hub</span>
+                                <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </a>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                            ${BLOG_POSTS.slice(0, 3).map(post => `
+                                <a href="#blog/${post.slug}" class="bg-white p-5 rounded-2xl border border-slate-200 hover:shadow-lg transition-all flex flex-col justify-between group">
+                                    <div class="space-y-2">
+                                        <div class="flex items-center justify-between text-[11px] text-slate-500">
+                                            <span class="bg-brand-greenLight text-brand-purple font-bold px-2 py-0.5 rounded-full">${post.category}</span>
+                                            <span>${post.readTime}</span>
+                                        </div>
+                                        <h3 class="text-base font-extrabold text-brand-purple group-hover:text-brand-green transition-colors leading-snug">
+                                            ${post.title}
+                                        </h3>
+                                        <p class="text-xs text-slate-600 line-clamp-2">
+                                            ${post.summary}
+                                        </p>
+                                    </div>
+                                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+                                        <span class="font-medium">${post.author}</span>
+                                        <span class="text-brand-green font-bold flex items-center gap-1">Read <i class="fa-solid fa-arrow-right text-[10px]"></i></span>
+                                    </div>
+                                </a>
+                            `).join('')}
+                        </div>
+                    </div>
+                </section>
+            `;
+        }
+
+        function renderAbout(container) {
+            container.innerHTML = `
+                <section class="py-12 bg-white">
+                    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+                        <div class="text-center space-y-2">
+                            <h1 class="text-3xl font-black text-brand-purple">About fymint</h1>
+                            <p class="text-slate-600 text-sm">Empowering financial decisions for millions through modern tools and objective education.</p>
+                        </div>
+
+                        <div class="bg-brand-bgLight p-6 rounded-2xl border border-slate-200 space-y-4 text-sm text-slate-700 leading-relaxed">
+                            <h2 class="text-xl font-bold text-brand-purple">Our Mission</h2>
+                            <p>fymint was created to bridge the gap between financial literacy and execution. Managing personal money should be clear, transparent, and empowering—not bogged down by confusing financial jargon or hidden bank agendas.</p>
+                            
+                            <h2 class="text-xl font-bold text-brand-purple pt-2">Why We Built fymint</h2>
+                            <p>Whether you're allocating monthly salary, evaluating home loan EMIs, planning a SIP investment, or testing our interactive mobile app, fymint gives you clear numerical visibility to make every rupee count.</p>
+                        </div>
+                    </div>
+                </section>
+            `;
+        }
+
+        function renderBlogHub(container) {
+            container.innerHTML = `
+                <section class="py-10 bg-brand-bgLight">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+                        <div class="text-center max-w-xl mx-auto space-y-2">
+                            <h1 class="text-3xl font-black text-brand-purple">Financial Guides & Blog</h1>
+                            <p class="text-slate-600 text-xs">Expert insights on budgeting, mutual funds, taxation, and debt management.</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                            ${BLOG_POSTS.map(post => `
+                                <a href="#blog/${post.slug}" class="bg-white p-5 rounded-2xl border border-slate-200 hover:shadow-lg transition-all flex flex-col justify-between group">
+                                    <div class="space-y-2">
+                                        <div class="flex items-center justify-between text-[11px] text-slate-500">
+                                            <span class="bg-brand-greenLight text-brand-purple font-bold px-2 py-0.5 rounded-full">${post.category}</span>
+                                            <span>${post.readTime}</span>
+                                        </div>
+                                        <h2 class="text-base font-extrabold text-brand-purple group-hover:text-brand-green transition-colors leading-snug">
+                                            ${post.title}
+                                        </h2>
+                                        <p class="text-xs text-slate-600 line-clamp-3">
+                                            ${post.summary}
+                                        </p>
+                                    </div>
+                                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+                                        <span class="font-medium">${post.author}</span>
+                                        <span class="text-brand-green font-bold flex items-center gap-1">Read Guide <i class="fa-solid fa-arrow-right text-[10px]"></i></span>
+                                    </div>
+                                </a>
+                            `).join('')}
+                        </div>
+                    </div>
+                </section>
+            `;
+        }
+
+        function renderBlogArticle(container, slug) {
+            const post = BLOG_POSTS.find(p => p.slug === slug) || BLOG_POSTS[0];
+            container.innerHTML = `
+                <article class="py-10 bg-white">
+                    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+                        <a href="#blog" class="inline-flex items-center gap-1.5 text-xs font-bold text-brand-purple hover:text-brand-green">
+                            <i class="fa-solid fa-arrow-left text-[10px]"></i> Back to Guides
+                        </a>
+
+                        <div class="space-y-3">
+                            <span class="bg-brand-greenLight text-brand-purple text-xs font-bold px-3 py-1 rounded-full">${post.category}</span>
+                            <h1 class="text-2xl sm:text-3xl font-black text-brand-purple leading-tight">${post.title}</h1>
+                            <div class="flex items-center gap-3 text-xs text-slate-500 pb-4 border-b border-slate-100">
+                                <span class="font-bold text-slate-800">${post.author}</span>
+                                <span>•</span>
+                                <span>${post.date}</span>
+                                <span>•</span>
+                                <span>${post.readTime}</span>
+                            </div>
+                        </div>
+
+                        <div class="prose prose-slate max-w-none">
+                            ${post.content}
+                        </div>
+
+                        <div class="bg-brand-bgLight p-5 rounded-2xl border border-slate-200 flex items-center justify-between mt-8">
+                            <div>
+                                <h3 class="font-bold text-brand-purple text-sm">Calculate your numbers live</h3>
+                                <p class="text-xs text-slate-600">Test your allocations using fymint tools.</p>
+                            </div>
+                            <a href="#calculators/${post.calculatorLink || 'sip'}" class="bg-brand-green hover:bg-brand-greenHover text-white px-4 py-2 rounded-xl text-xs font-bold transition-all">
+                                Open Calculator
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            `;
+        }
+
+        function renderCalculatorsHub(container) {
+            container.innerHTML = `
+                <section class="py-10 bg-white">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+                        <div class="text-center max-w-xl mx-auto space-y-2">
+                            <h1 class="text-3xl font-black text-brand-purple">Financial Calculators</h1>
+                            <p class="text-slate-600 text-xs">Select a tool to compute loan EMIs, investments, taxes, or maturity returns.</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                            ${CALCULATORS_LIST.map(c => `
+                                <a href="#calculators/${c.id}" class="bg-brand-bgLight p-5 rounded-2xl border border-slate-200 hover:border-brand-green hover:shadow-md transition-all group">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <div class="w-10 h-10 rounded-xl bg-brand-greenLight text-brand-purple group-hover:bg-brand-green group-hover:text-white transition-colors flex items-center justify-center text-lg font-bold">
+                                            <i class="fa-solid ${c.icon}"></i>
+                                        </div>
+                                        <span class="text-[10px] font-bold text-slate-500 bg-white px-2 py-0.5 rounded-full border border-slate-200">${c.category}</span>
+                                    </div>
+                                    <h2 class="text-base font-extrabold text-brand-purple mb-1">${c.title}</h2>
+                                    <p class="text-xs text-slate-600">${c.desc}</p>
+                                </a>
+                            `).join('')}
+                        </div>
+                    </div>
+                </section>
+            `;
+        }
+
+        function renderCalculatorTool(container, calcType) {
+            const tool = CALCULATORS_LIST.find(c => c.id === calcType) || CALCULATORS_LIST[0];
+            container.innerHTML = `
+                <section class="py-10 bg-white">
+                    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+                        <a href="#calculators" class="inline-flex items-center gap-1.5 text-xs font-bold text-brand-purple hover:text-brand-green">
+                            <i class="fa-solid fa-arrow-left text-[10px]"></i> All Calculators
+                        </a>
+
+                        <div class="bg-brand-purple text-white p-6 rounded-3xl shadow-xl space-y-6 border border-brand-purpleLight">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-2xl bg-brand-green text-white flex items-center justify-center text-xl font-bold">
+                                    <i class="fa-solid ${tool.icon}"></i>
+                                </div>
+                                <div>
+                                    <h1 class="text-2xl font-black">${tool.title}</h1>
+                                    <p class="text-slate-300 text-xs">${tool.desc}</p>
+                                </div>
+                            </div>
+
+                            <div class="bg-white/10 p-4 rounded-2xl border border-white/10 space-y-4 text-xs">
+                                <div>
+                                    <label class="block font-semibold mb-1">Primary Input Amount (₹)</label>
+                                    <input type="number" id="calcInputAmount" value="500000" oninput="calculateLiveTool('${tool.id}')" class="w-full bg-white text-slate-900 font-bold p-3 rounded-xl focus:outline-none">
+                                </div>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div>
+                                        <label class="block font-semibold mb-1">Rate of Interest / Return (%)</label>
+                                        <input type="number" id="calcInputRate" value="10.5" step="0.1" oninput="calculateLiveTool('${tool.id}')" class="w-full bg-white text-slate-900 font-bold p-3 rounded-xl focus:outline-none">
+                                    </div>
+                                    <div>
+                                        <label class="block font-semibold mb-1">Tenure (Years)</label>
+                                        <input type="number" id="calcInputTenure" value="5" oninput="calculateLiveTool('${tool.id}')" class="w-full bg-white text-slate-900 font-bold p-3 rounded-xl focus:outline-none">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-brand-purpleDark/90 p-5 rounded-2xl border border-white/10 text-center space-y-1">
+                                <p class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">ESTIMATED MATURITY / MONTHLY RESULT</p>
+                                <p class="text-3xl font-black text-brand-green" id="toolResultValue">₹ 10,747</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            `;
+            setTimeout(() => calculateLiveTool(tool.id), 50);
+        }
+
+        function calculateLiveTool(id) {
+            const amt = parseFloat(document.getElementById('calcInputAmount')?.value) || 0;
+            const rate = parseFloat(document.getElementById('calcInputRate')?.value) || 0;
+            const tenure = parseFloat(document.getElementById('calcInputTenure')?.value) || 1;
+            const resEl = document.getElementById('toolResultValue');
+            if (!resEl) return;
+
+            if (id === 'sip') {
+                const i = rate / 12 / 100;
+                const n = tenure * 12;
+                const total = amt * ((Math.pow(1 + i, n) - 1) / i) * (1 + i);
+                resEl.textContent = `₹ ${Math.round(total).toLocaleString('en-IN')}`;
+            } else {
+                const r = rate / 12 / 100;
+                const n = tenure * 12;
+                const emi = (amt * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+                resEl.textContent = `₹ ${Math.round(emi || 0).toLocaleString('en-IN')} / mo`;
+            }
+        }
+
+        function renderCareersHub(container) {
+            container.innerHTML = `
+                <section class="py-10 bg-white">
+                    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+                        <div class="text-center space-y-2">
+                            <h1 class="text-3xl font-black text-brand-purple">Careers at fymint</h1>
+                            <p class="text-slate-600 text-xs">Help us build the next generation of personal finance and fintech platforms.</p>
+                        </div>
+
+                        <div class="space-y-4">
+                            ${CAREERS_LIST.map(job => `
+                                <div class="bg-brand-bgLight p-5 rounded-2xl border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                                    <div class="space-y-1">
+                                        <h2 class="text-base font-extrabold text-brand-purple">${job.title}</h2>
+                                        <p class="text-xs text-slate-500">${job.department} • ${job.location} • ${job.type}</p>
+                                    </div>
+                                    <a href="#careers/${job.id}" class="bg-brand-purple text-white hover:bg-brand-purpleDark px-4 py-2 rounded-xl text-xs font-bold text-center">View Position</a>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </section>
+            `;
+        }
+
+        function renderJobDetail(container, jobId) {
+            const job = CAREERS_LIST.find(j => j.id === jobId) || CAREERS_LIST[0];
+            container.innerHTML = `
+                <section class="py-10 bg-white">
+                    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+                        <a href="#careers" class="inline-flex items-center gap-1.5 text-xs font-bold text-brand-purple hover:text-brand-green">
+                            <i class="fa-solid fa-arrow-left text-[10px]"></i> Openings
+                        </a>
+
+                        <div class="bg-brand-bgLight p-6 rounded-2xl border border-slate-200 space-y-4">
+                            <h1 class="text-2xl font-black text-brand-purple">${job.title}</h1>
+                            <p class="text-xs text-slate-500">${job.department} • ${job.location} • ${job.experience}</p>
+                            <p class="text-sm text-slate-700 leading-relaxed">${job.summary}</p>
+                            
+                            <button onclick="triggerToast('Application link opened!')" class="bg-brand-green hover:bg-brand-greenHover text-white px-5 py-2.5 rounded-xl font-bold text-xs">
+                                Apply for this Role
+                            </button>
+                        </div>
+                    </div>
+                </section>
+            `;
+        }
+
+        function renderContact(container) {
+            container.innerHTML = `
+                <section class="py-10 bg-white">
+                    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+                        <div class="text-center space-y-2">
+                            <h1 class="text-3xl font-black text-brand-purple">Contact Us</h1>
+                            <p class="text-slate-600 text-xs">Have questions or feedback? We'd love to hear from you.</p>
+                        </div>
+
+                        <form onsubmit="event.preventDefault(); triggerToast('Message sent successfully!');" class="bg-brand-bgLight p-6 rounded-2xl border border-slate-200 space-y-4 text-xs">
+                            <div>
+                                <label class="block font-bold text-slate-700 mb-1">Your Name</label>
+                                <input type="text" required placeholder="John Doe" class="w-full p-3 rounded-xl border border-slate-200 focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block font-bold text-slate-700 mb-1">Email Address</label>
+                                <input type="email" required placeholder="john@example.com" class="w-full p-3 rounded-xl border border-slate-200 focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block font-bold text-slate-700 mb-1">Message</label>
+                                <textarea rows="4" required placeholder="How can we help?" class="w-full p-3 rounded-xl border border-slate-200 focus:outline-none"></textarea>
+                            </div>
+                            <button type="submit" class="bg-brand-green hover:bg-brand-greenHover text-white px-6 py-3 rounded-xl font-bold text-xs">
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
+                </section>
+            `;
+        }
+
+        function renderLegalPage(container, docType) {
+            const titleMap = {
+                privacy: "Privacy Policy",
+                terms: "Terms & Conditions",
+                disclaimer: "Financial Disclaimer",
+                cookies: "Cookie Policy"
+            };
+            const title = titleMap[docType] || "Legal Information";
+            container.innerHTML = `
+                <section class="py-10 bg-white">
+                    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+                        <h1 class="text-3xl font-black text-brand-purple">${title}</h1>
+                        <div class="prose prose-slate text-xs leading-relaxed text-slate-600 space-y-4">
+                            <p>fymint provides personal finance calculators, educational guides, and mobile management app prototypes for general informational purposes only. Information presented on this website does not constitute formal financial, investment, legal, or tax advice.</p>
+                            <p>We respect your privacy. fymint does not collect sensitive bank login credentials or private PINs. Calculations performed in browser or mobile prototype remain local to your session.</p>
+                        </div>
+                    </div>
+                </section>
+            `;
+        }
+
+        function renderSEOFooter() {
+            const container = document.getElementById('footer-directory-container');
+            if (!container) return;
+            container.innerHTML = SEO_FOOTER_GROUPS.map(group => `
+                <div>
+                    <h4 class="font-bold text-slate-200 mb-2 uppercase text-[10px] tracking-wider">${group.title}</h4>
+                    <div class="flex flex-wrap gap-x-3 gap-y-1">
+                        ${group.items.map(item => `<a href="#calculators" class="hover:text-brand-green transition-colors">${item}</a>`).join(' • ')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Global Search Helpers
+        function openGlobalSearch() {
+            document.getElementById('search-modal')?.classList.remove('hidden');
+            document.getElementById('global-search-input')?.focus();
+        }
+
+        function closeGlobalSearch() {
+            document.getElementById('search-modal')?.classList.add('hidden');
+        }
+
+        function handleGlobalSearch() {
+            const query = document.getElementById('global-search-input')?.value.toLowerCase() || '';
+            const container = document.getElementById('search-results-container');
+            if (!container) return;
+
+            if (!query.trim()) {
+                container.innerHTML = `<p class="text-xs text-slate-500 text-center py-4">Type to search across calculators, blog posts, and app tools...</p>`;
+                return;
+            }
+
+            const matchingCalcs = CALCULATORS_LIST.filter(c => c.title.toLowerCase().includes(query) || c.desc.toLowerCase().includes(query));
+            const matchingBlogs = BLOG_POSTS.filter(b => b.title.toLowerCase().includes(query) || b.summary.toLowerCase().includes(query));
+
+            let html = '';
+            matchingCalcs.forEach(c => {
+                html += `
+                    <a href="#calculators/${c.id}" onclick="closeGlobalSearch()" class="p-2.5 hover:bg-slate-50 rounded-xl flex items-center justify-between transition">
+                        <div class="flex items-center gap-2.5">
+                            <i class="fa-solid ${c.icon} text-brand-green text-sm"></i>
+                            <div>
+                                <h4 class="font-bold text-xs text-brand-purple">${c.title}</h4>
+                                <p class="text-[10px] text-slate-500">${c.desc}</p>
+                            </div>
+                        </div>
+                        <span class="text-[9px] font-bold bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full">Calculator</span>
+                    </a>
+                `;
+            });
+
+            matchingBlogs.forEach(b => {
+                html += `
+                    <a href="#blog/${b.slug}" onclick="closeGlobalSearch()" class="p-2.5 hover:bg-slate-50 rounded-xl flex items-center justify-between transition">
+                        <div class="flex items-center gap-2.5">
+                            <i class="fa-solid fa-newspaper text-brand-purple text-sm"></i>
+                            <div>
+                                <h4 class="font-bold text-xs text-brand-purple">${b.title}</h4>
+                                <p class="text-[10px] text-slate-500">${b.category}</p>
+                            </div>
+                        </div>
+                        <span class="text-[9px] font-bold bg-brand-greenLight text-brand-purple px-2 py-0.5 rounded-full">Guide</span>
+                    </a>
+                `;
+            });
+
+            container.innerHTML = html || `<p class="text-xs text-slate-500 text-center py-4">No results found for "${query}"</p>`;
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('mobile-menu')?.classList.toggle('hidden');
+        }
+
+        function closeMobileMenu() {
+            document.getElementById('mobile-menu')?.classList.add('hidden');
+        }
+
+        window.openGlobalSearch = openGlobalSearch;
+        window.closeGlobalSearch = closeGlobalSearch;
+        window.handleGlobalSearch = handleGlobalSearch;
+        window.toggleMobileMenu = toggleMobileMenu;
+        window.closeMobileMenu = closeMobileMenu;
+    </script>
+</body>
+</html>
